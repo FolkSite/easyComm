@@ -7,9 +7,13 @@ $tmp = array(
 		'type' => 'textfield',
 		'value' => 'tpl.ecMessages.Row',
 	),
+    'tplWrapper' => array(
+        'type' => 'textfield',
+        'value' => '',
+    ),
     'thread' => array(
         'type' => 'textfield',
-        'value' => 'resource-[[*id]]',
+        'value' => '',
     ),
 	'sortby' => array(
 		'type' => 'textfield',
@@ -35,6 +39,14 @@ $tmp = array(
 		'type' => 'combo-boolean',
 		'value' => false,
 	),
+    'toSeparatePlaceholders' => array(
+        'type' => 'combo-boolean',
+        'value' => false,
+    ),
+    'showLog' => array(
+        'type' => 'combo-boolean',
+        'value' => false,
+    ),
 );
 
 foreach ($tmp as $k => $v) {

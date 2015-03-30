@@ -1,6 +1,9 @@
 <div class="well">
-	<p><strong>[[+username]]</strong></p>
+    <p><strong>[[+user_name]]</strong>, [[+date:dateAgo]]</p>
     <p>[[+text]]</p>
-    <p><strong>[[+reply_author]]</strong></p>
-    <p>[[+reply_text]]</p>
+    [[+reply_author]]
+    [[+reply_text]]
 </div>
+
+<!--ec_reply_author <p><strong>[[+reply_author]]</strong></p>-->
+<!--ec_reply_text <p>[[+reply_text]]</p>-->

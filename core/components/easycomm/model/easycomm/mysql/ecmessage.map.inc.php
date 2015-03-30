@@ -1,4 +1,5 @@
 <?php
+
 $xpdo_meta_map['ecMessage']= array (
     'package' => 'easycomm',
     'version' => '1.1',
