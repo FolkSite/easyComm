@@ -30,7 +30,7 @@
     </object>
 	<object class="ecMessage" table="ec_messages" extends="xPDOSimpleObject">
         <field key="thread" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="false" default="0" />
-        <field key="group" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="subject" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="date" dbtype="datetime" phptype="datetime" null="true" />
         <field key="user_name" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="user_email" dbtype="varchar" precision="255" phptype="string" null="false" default="" />

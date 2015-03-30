@@ -3,8 +3,8 @@
 $chunks = array();
 
 $tmp = array(
-	'tpl.easycomm.item' => array(
-		'file' => 'item',
+	'tpl.ecMessages.Row' => array(
+		'file' => 'ec_messages_row',
 		'description' => '',
 	),
 );

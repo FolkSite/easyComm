@@ -5,11 +5,15 @@ $properties = array();
 $tmp = array(
 	'tpl' => array(
 		'type' => 'textfield',
-		'value' => 'tpl.easycomm.item',
+		'value' => 'tpl.ecMessages.Row',
 	),
+    'thread' => array(
+        'type' => 'textfield',
+        'value' => 'resource-[[*id]]',
+    ),
 	'sortby' => array(
 		'type' => 'textfield',
-		'value' => 'name',
+		'value' => 'date',
 	),
 	'sortdir' => array(
 		'type' => 'list',
@@ -17,7 +21,7 @@ $tmp = array(
 			array('text' => 'ASC', 'value' => 'ASC'),
 			array('text' => 'DESC', 'value' => 'DESC'),
 		),
-		'value' => 'ASC'
+		'value' => 'DESC'
 	),
 	'limit' => array(
 		'type' => 'numberfield',

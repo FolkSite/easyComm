@@ -7,7 +7,7 @@ $xpdo_meta_map['ecMessage']= array (
     'fields' =>
         array (
             'thread' => 0,
-            'group' => '',
+            'subject' => '',
             'date' => NULL,
             'user_name' => '',
             'user_email' => '',
@@ -39,7 +39,7 @@ $xpdo_meta_map['ecMessage']= array (
                     'null' => false,
                     'default' => 0,
                 ),
-            'group' =>
+            'subject' =>
                 array (
                     'dbtype' => 'varchar',
                     'precision' => '255',

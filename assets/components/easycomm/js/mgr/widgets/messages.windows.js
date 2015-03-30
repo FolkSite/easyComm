@@ -44,7 +44,7 @@ easyComm.window.getMessageWindowFields = function (config) {
                 cls: 'modx-panel',
                 items: [
                     { xtype:'ec-combo-thread', fieldLabel: _('ec_message_thread'), name: 'thread', id: config.id + '-thread', anchor: '99%', allowBlank: false },
-                    { xtype: 'textfield', fieldLabel: _('ec_message_group'), name: 'group', id: config.id + '-group', anchor: '99%', allowBlank: true },
+                    { xtype: 'textfield', fieldLabel: _('ec_message_subject'), name: 'subject', id: config.id + '-subject', anchor: '99%', allowBlank: true },
                     { xtype: 'textarea', fieldLabel: _('ec_message_extended'), name: 'extended', id: config.id + '-extended', anchor: '99%', allowBlank: true },
                     { xtype: 'xcheckbox', fieldLabel: _('ec_object_published'), name: 'published', id: config.id + '-published', anchor: '99%', allowBlank: true }
                 ]

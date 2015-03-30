@@ -265,7 +265,7 @@ Ext.extend(easyComm.grid.Messages, MODx.grid.Grid, {
     },
 
     getFields: function (config) {
-        return ['id', 'thread', 'thread_name', 'group', 'date', 'user_name', 'user_email', 'user_contacts', 'text', 'reply_author', 'reply_text', 'published', 'deleted'];
+        return ['id', 'thread', 'thread_name', 'subject', 'date', 'user_name', 'user_email', 'user_contacts', 'text', 'reply_author', 'reply_text', 'published', 'deleted'];
     },
 
     getColumns: function (config) {
@@ -280,8 +280,8 @@ Ext.extend(easyComm.grid.Messages, MODx.grid.Grid, {
             sortable: true,
             width: 100
         }, {
-            header: _('ec_message_group'),
-            dataIndex: 'group',
+            header: _('ec_message_subject'),
+            dataIndex: 'subject',
             sortable: true,
             width: 150
         }, {

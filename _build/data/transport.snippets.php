@@ -3,8 +3,8 @@
 $snippets = array();
 
 $tmp = array(
-	'easycomm' => array(
-		'file' => 'easycomm',
+	'ecMessages' => array(
+		'file' => 'ec_messages',
 		'description' => '',
 	),
 );
