@@ -24,6 +24,7 @@ else {
 }
 $pdoFetch->addTime('pdoTools loaded');
 $fastMode = !empty($fastMode);
+$outputSeparator = $modx->getOption('outputSeparator', $scriptProperties, "\n");
 
 $class = 'ecMessage';
 $threadClass = 'ecThread';
@@ -34,6 +35,19 @@ $select = array(
 );
 $innerJoin = array($threadClass => array('alias' => 'Thread', 'on' => "`$class`.`thread` = `Thread`.`id`"));
 $where = array('`Thread`.`name`' => $thread);
+
+if(empty($showUnpublished)) {
+    $where[$class.'.published'] = 1;
+}
+
+if(empty($showDeleted)) {
+    $where[$class.'.deleted'] = 0;
+}
+
+if(!empty($subject)) {
+    $where[$class.'.subject'] = $subject;
+}
+
 // Add custom parameters
 foreach (array('where','select', 'innerJoin') as $v) {
     if (!empty($scriptProperties[$v])) {
@@ -55,7 +69,7 @@ $default = array(
     'select' => $modx->toJSON($select),
     'innerJoin' => $modx->toJSON($innerJoin),
     //'groupby' => $class.'.id',
-    'return' => 'chunks',
+    'return' => 'data',
     'nestedChunkPrefix' => 'ec_'
 );
 
@@ -65,23 +79,32 @@ $pdoFetch->addTime('Query parameters ready');
 $pdoFetch->setConfig(array_merge($default, $scriptProperties), false);
 
 
-$output = $pdoFetch->run();
+$messages = $pdoFetch->run();
 
+$output = array();
+$idx = 0;
+foreach($messages as $row) {
+    $row['idx'] = $idx++;
+    $tpl = $pdoFetch->defineChunk($row);
+    if (empty($tpl)) {
+        $output[] = '<pre>'.$pdoFetch->getChunk('', $row).'</pre>';
+    }
+    else {
+        $output[] = $pdoFetch->getChunk($tpl, $row, $fastMode);
+    }
+}
 $log = '';
 if ($modx->user->hasSessionContext('mgr') && !empty($showLog)) {
     $log .= '<pre class="pdoResourcesLog">' . print_r($pdoFetch->getTime(), 1) . '</pre>';
 }
 
 // Return output
-if (!empty($returnIds)) {
-    $modx->setPlaceholder('pdoUsers.log', $log);
-    return $output;
-}
-elseif (!empty($toSeparatePlaceholders)) {
+if (!empty($toSeparatePlaceholders)) {
     $output['log'] = $log;
     $modx->setPlaceholders($output, $toSeparatePlaceholders);
 }
 else {
+    $output = implode($outputSeparator, $output);
     $output .= $log;
     if (!empty($tplWrapper) && (!empty($wrapIfEmpty) || !empty($output))) {
         $output = $pdoFetch->getChunk($tplWrapper, array('output' => $output), $pdoFetch->config['fastMode']);

@@ -34,7 +34,7 @@ class easyCommMessageGetListProcessor extends modObjectGetListProcessor {
 	public function prepareQueryBeforeCount(xPDOQuery $c) {
         $c->leftJoin('ecThread','Thread','`ecMessage`.`thread` = `Thread`.`id`');
         $c->select($this->modx->getSelectColumns($this->classKey, $this->classKey, ''));
-        $c->select('`Thread`.`name` as `thread_name`');
+        $c->select('`Thread`.`name` as `thread_name`, `Thread`.`title` as `thread_title`');
 
         $resource_id = intval($this->getProperty('resource_id'));
         if(!empty($resource_id)) {
@@ -63,7 +63,12 @@ class easyCommMessageGetListProcessor extends modObjectGetListProcessor {
 	 */
 	public function prepareRow(xPDOObject $object) {
 		$array = $object->toArray();
-        $array['thread_name'] = $array['thread_name'].' ('.$array['thread'].')';
+        if(!empty($array['thread_title'])) {
+            $array['thread_name'] = $array['thread_title'].' ('.$array['thread_name'].')';
+        }
+        else {
+            $array['thread_name'] = $array['thread_name'];
+        }
 		return $array;
 	}
 

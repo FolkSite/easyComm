@@ -76,6 +76,11 @@ $_lang['ec_message_tab2'] = 'Настройки';
 
 
 $_lang['ec_message_err_thread'] = 'Вы должны указать Цепочку';
+$_lang['ec_message_err_user_name'] = 'Вы должны указать Имя';
+$_lang['ec_message_err_user_email'] = 'Вы должны указать Электронную почту';
+$_lang['ec_message_err_user_contacts'] = 'Вы должны указать Контактную информацию';
+$_lang['ec_message_err_subject'] = 'Вы должны указать Тему';
+$_lang['ec_message_err_text'] = 'Вы должны написать Текст сообщения';
 $_lang['ec_message_err_nf'] = 'Сообщение не найдена.';
 $_lang['ec_message_err_ns'] = 'Сообщение не указано.';
 $_lang['ec_message_err_remove'] = 'Ошибка при удалении Сообщения';
@@ -85,3 +90,13 @@ $_lang['ec_object_published'] = 'Опубликован';
 
 $_lang['ec_grid_search'] = 'Поиск';
 $_lang['ec_grid_actions'] = 'Действия';
+
+$_lang['ec_fe_message_user_name'] = 'Ваше имя';
+$_lang['ec_fe_message_user_email'] = 'Электронная почта';
+$_lang['ec_fe_message_user_contacts'] = 'Контактная информация';
+$_lang['ec_fe_message_subject'] = 'Тема сообщения';
+$_lang['ec_fe_message_text'] = 'Ваше сообщение';
+$_lang['ec_fe_send'] = 'Отправить';
+$_lang['ec_fe_send_success'] = 'Ваше сообщение было успешно отправлено. Оно будет опубликовано после одобрения модератором сайта!';
+
+$_lang['ec_unknown_action'] = 'Неизвестное действие';

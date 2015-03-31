@@ -32,7 +32,9 @@ easyComm.window.getMessageWindowFields = function (config) {
                         ]
                     }]
                 },
+                    { xtype: 'textfield', fieldLabel: _('ec_message_subject'), name: 'subject', id: config.id + '-subject', anchor: '99%', allowBlank: true },
                     { xtype: 'textarea', fieldLabel: _('ec_message_text'), name: 'text', id: config.id + '-text', anchor: '99%', allowBlank: true },
+                    { html: '<hr style="margin: 20px 0 0 0;" />', cls: '', style: {margin: '10px 0 0 0'} },
                     { xtype: 'textfield', fieldLabel: _('ec_message_reply_author'), name: 'reply_author', id: config.id + '-reply_author', anchor: '99%', allowBlank: true },
                     { xtype: 'textarea', fieldLabel: _('ec_message_reply_text'), name: 'reply_text', id: config.id + '-reply_text', anchor: '99%', allowBlank: true }]
             }]
@@ -44,7 +46,6 @@ easyComm.window.getMessageWindowFields = function (config) {
                 cls: 'modx-panel',
                 items: [
                     { xtype:'ec-combo-thread', fieldLabel: _('ec_message_thread'), name: 'thread', id: config.id + '-thread', anchor: '99%', allowBlank: false },
-                    { xtype: 'textfield', fieldLabel: _('ec_message_subject'), name: 'subject', id: config.id + '-subject', anchor: '99%', allowBlank: true },
                     { xtype: 'textarea', fieldLabel: _('ec_message_extended'), name: 'extended', id: config.id + '-extended', anchor: '99%', allowBlank: true },
                     { xtype: 'xcheckbox', fieldLabel: _('ec_object_published'), name: 'published', id: config.id + '-published', anchor: '99%', allowBlank: true }
                 ]

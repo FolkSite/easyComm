@@ -7,6 +7,14 @@ $tmp = array(
 		'file' => 'ec_messages_row',
 		'description' => '',
 	),
+    'tpl.ecForm' => array(
+        'file' => 'ec_form',
+        'description' => '',
+    ),
+    'tpl.ecForm.Success' => array(
+        'file' => 'ec_form_success',
+        'description' => '',
+    ),
 );
 
 // Save chunks for setup options

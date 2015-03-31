@@ -12,6 +12,16 @@ $tmp = array(
         'value' => '*',
         'area' => 'ec_main',
     ),
+    'frontend_css' => array(
+        'xtype' => 'textfield',
+        'value' => '[[+cssUrl]]web/ec.default.css',
+        'area' => 'ec_main',
+    ),
+    'frontend_js' => array(
+        'xtype' => 'textfield',
+        'value' => '[[+jsUrl]]web/ec.default.js',
+        'area' => 'ec_main',
+    ),
 );
 
 foreach ($tmp as $k => $v) {

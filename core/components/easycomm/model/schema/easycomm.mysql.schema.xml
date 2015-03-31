@@ -10,7 +10,8 @@
         <field key="message_last" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="false" default="0" />
         <field key="message_last_date" dbtype="datetime" phptype="datetime" null="true" index="index" />
         <field key="count" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="true" default="0" />
-        <field key="extended" dbtype="text" phptype="json" null="true" />
+        <field key="properties" dbtype="text" phptype="json" null="true" />
+        <field key="extended" dbtype="text" phptype="string" null="true" />
 
         <index alias="unique_key" name="unique_key" primary="false" unique="true" type="BTREE">
             <column key="name" length="" collation="A" null="false" />

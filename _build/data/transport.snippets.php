@@ -7,6 +7,10 @@ $tmp = array(
 		'file' => 'ec_messages',
 		'description' => '',
 	),
+    'ecForm' => array(
+        'file' => 'ec_form',
+        'description' => '',
+    ),
 );
 
 foreach ($tmp as $k => $v) {

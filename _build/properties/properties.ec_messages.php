@@ -31,6 +31,18 @@ $tmp = array(
 		'type' => 'numberfield',
 		'value' => 10,
 	),
+    'showUnpublished' => array(
+        'type' => 'combo-boolean',
+        'value' => false,
+    ),
+    'showDeleted' => array(
+        'type' => 'combo-boolean',
+        'value' => false,
+    ),
+    'subject' => array(
+        'type' => 'textfield',
+        'value' => '',
+    ),
 	'outputSeparator' => array(
 		'type' => 'textfield',
 		'value' => "\n",

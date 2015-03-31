@@ -14,6 +14,7 @@ $xpdo_meta_map['ecThread']= array (
             'message_last' => 0,
             'message_last_date' => NULL,
             'count' => 0,
+            'properties' => NULL,
             'extended' => NULL,
         ),
     'fieldMeta' =>
@@ -67,10 +68,16 @@ $xpdo_meta_map['ecThread']= array (
                     'null' => true,
                     'default' => 0,
                 ),
-            'extended' =>
+            'properties' =>
                 array (
                     'dbtype' => 'text',
                     'phptype' => 'json',
+                    'null' => true,
+                ),
+            'extended' =>
+                array (
+                    'dbtype' => 'text',
+                    'phptype' => 'string',
                     'null' => true,
                 ),
         ),
