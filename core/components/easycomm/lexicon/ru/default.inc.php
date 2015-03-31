@@ -92,7 +92,7 @@ $_lang['ec_object_published'] = 'Опубликован';
 $_lang['ec_grid_search'] = 'Поиск';
 $_lang['ec_grid_actions'] = 'Действия';
 
-$_lang['ec_fe_message_add'] = 'Ваше имя';
+$_lang['ec_fe_message_add'] = 'Написать сообщение';
 $_lang['ec_fe_message_user_name'] = 'Ваше имя';
 $_lang['ec_fe_message_user_email'] = 'Электронная почта';
 $_lang['ec_fe_message_user_contacts'] = 'Контактная информация';
