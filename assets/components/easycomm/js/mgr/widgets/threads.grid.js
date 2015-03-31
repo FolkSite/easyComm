@@ -57,6 +57,7 @@ Ext.extend(easyComm.grid.Threads, MODx.grid.Grid, {
             m.push({text: '<i class="x-menu-item-icon icon icon-remove"></i>'+_('ec_threads_remove'),handler: this.removeThread});
         } else {
             m.push({text: '<i class="x-menu-item-icon icon icon-edit"></i>'+_('ec_thread_update'),handler: this.updateThread});
+            m.push({text: '<i class="x-menu-item-icon icon icon-comments"></i>'+_('ec_threads_manage_messages'),handler: this.manageMessages});
             m.push('-');
             m.push({text: '<i class="x-menu-item-icon icon icon-remove"></i>'+_('ec_thread_remove'),handler: this.removeThread});
         }
@@ -120,6 +121,33 @@ Ext.extend(easyComm.grid.Threads, MODx.grid.Grid, {
                 }
             }
         });
+    },
+
+    manageMessages: function(btn, e, row) {
+        if (typeof(row) != 'undefined') {
+            this.menu.record = row.data;
+        }
+        var tid = this.menu.record.id;
+
+        var tab = Ext.getCmp('messages-tab-'+tid);
+        if (typeof(tab) == 'undefined') {
+            var ecTabs = Ext.getCmp('ec-home-tabs') || Ext.getCmp('ec-page-tabs');
+            tab = ecTabs.add({
+                title: this.menu.record.name
+                ,id: 'messages-tab-'+tid
+                ,closable: true
+                ,items: [{
+                    layout: 'anchor',
+                    items: [{
+                        xtype: 'ec-grid-messages',
+                        cls: 'main-wrapper',
+                        id: 'ec-grid-messages-' + tid,
+                        thread: tid
+                    }]
+                }]
+            });
+        }
+        tab.show();
     },
 
     removeThread: function (act, btn, e) {

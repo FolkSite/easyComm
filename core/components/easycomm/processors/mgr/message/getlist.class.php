@@ -41,6 +41,12 @@ class easyCommMessageGetListProcessor extends modObjectGetListProcessor {
             $c->where(array('`Thread`.`resource`' => $resource_id));
         }
 
+        if ($thread_id = $this->getProperty('thread_id')) {
+            if (!empty($thread_id)) {
+                $c->where(array('`Thread`.`id`' => $thread_id));
+            }
+        }
+
 		$query = trim($this->getProperty('query'));
 		if ($query) {
 			$c->where(array(

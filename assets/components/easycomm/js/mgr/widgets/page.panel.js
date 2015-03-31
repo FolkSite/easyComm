@@ -11,6 +11,7 @@ easyComm.panel.Page = function (config) {
             style: {margin: '15px 0'}
         }, */{
             xtype: 'modx-tabs',
+            id: 'ec-page-tabs',
             defaults: {border: false, autoHeight: true},
             border: true,
             hideMode: 'offsets',

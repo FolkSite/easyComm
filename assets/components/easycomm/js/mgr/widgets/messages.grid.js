@@ -13,7 +13,8 @@ easyComm.grid.Messages = function (config) {
         sm: new Ext.grid.CheckboxSelectionModel(),
         baseParams: {
             action: 'mgr/message/getlist',
-            resource_id: config.record.id
+            resource_id: config.record.id,
+            thread_id: config.thread
         },
         listeners: {
             rowDblClick: function (grid, rowIndex, e) {
