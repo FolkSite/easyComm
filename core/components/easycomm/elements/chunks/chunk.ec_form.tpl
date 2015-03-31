@@ -1,3 +1,4 @@
+<h2>[[%ec_fe_message_add]]</h2>
 <form class="form well ec-form" method="post" role="form" id="ec-form-[[+fid]]" data-fid="[[+fid]]" action="">
     <input type="hidden" name="thread" value="[[+thread]]">
 
