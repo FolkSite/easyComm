@@ -22,6 +22,42 @@ $tmp = array(
         'value' => '[[+jsUrl]]web/ec.default.js',
         'area' => 'ec_main',
     ),
+    'mail_notify_user' => array(
+        'xtype' => 'combo-boolean',
+        'value' => true,
+        'area' => 'ec_mail',
+    ),
+    'mail_notify_manager' => array(
+        'xtype' => 'combo-boolean',
+        'value' => true,
+        'area' => 'ec_mail',
+    ),
+    'mail_new_subject_manager' => array(
+        'xtype' => 'textfield',
+        'value' => 'Новое сообщение на сайте [[++site_url]]',
+        'area' => 'ec_mail',
+    ),
+    'mail_new_subject_user' => array(
+        'xtype' => 'textfield',
+        'value' => 'Вы оставили сообщение на сайте [[++site_url]]',
+        'area' => 'ec_mail',
+    ),
+
+    'mail_manager' => array(
+        'xtype' => 'textfield',
+        'value' => '',
+        'area' => 'ec_mail',
+    ),
+    'mail_from' => array(
+        'xtype' => 'textfield',
+        'value' => '',
+        'area' => 'ec_mail',
+    ),
+    'mail_from_name' => array(
+        'xtype' => 'textfield',
+        'value' => '',
+        'area' => 'ec_mail',
+    ),
 );
 
 foreach ($tmp as $k => $v) {

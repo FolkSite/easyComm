@@ -11,6 +11,22 @@ $tmp = array(
         'type' => 'textfield',
         'value' => 'tpl.ecForm.Success',
     ),
+    'newMessageEmailSubjectUser' => array(
+        'type' => 'textfield',
+        'value' => '',
+    ),
+    'tplNewMessageEmailUser' => array(
+        'type' => 'textfield',
+        'value' => 'tpl.ecForm.New.Email.User',
+    ),
+    'newMessageEmailSubjectManager' => array(
+        'type' => 'textfield',
+        'value' => '',
+    ),
+    'tplNewMessageEmailManager' => array(
+        'type' => 'textfield',
+        'value' => 'tpl.ecForm.New.Email.Manager',
+    ),
     'formId' => array(
         'type' => 'textfield',
         'value' => '',

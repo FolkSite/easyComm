@@ -15,6 +15,14 @@ $tmp = array(
         'file' => 'ec_form_success',
         'description' => '',
     ),
+    'tpl.ecForm.New.Email.User' => array(
+        'file' => 'ec_form_new_email_user',
+        'description' => '',
+    ),
+    'tpl.ecForm.New.Email.Manager' => array(
+        'file' => 'ec_form_new_email_manager',
+        'description' => '',
+    ),
 );
 
 // Save chunks for setup options

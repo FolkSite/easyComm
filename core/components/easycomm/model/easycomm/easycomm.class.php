@@ -4,44 +4,44 @@
  * The base class for easyComm.
  */
 class easyComm {
-	/* @var modX $modx */
-	public $modx;
+    /* @var modX $modx */
+    public $modx;
 
 
-	/**
-	 * @param modX $modx
-	 * @param array $config
-	 */
-	function __construct(modX &$modx, array $config = array()) {
-		$this->modx =& $modx;
+    /**
+     * @param modX $modx
+     * @param array $config
+     */
+    function __construct(modX &$modx, array $config = array()) {
+        $this->modx =& $modx;
 
-		$corePath = $this->modx->getOption('ec_core_path', $config, $this->modx->getOption('core_path') . 'components/easycomm/');
-		$assetsUrl = $this->modx->getOption('ec_assets_url', $config, $this->modx->getOption('assets_url') . 'components/easycomm/');
-		$connectorUrl = $assetsUrl . 'connector.php';
+        $corePath = $this->modx->getOption('ec_core_path', $config, $this->modx->getOption('core_path') . 'components/easycomm/');
+        $assetsUrl = $this->modx->getOption('ec_assets_url', $config, $this->modx->getOption('assets_url') . 'components/easycomm/');
+        $connectorUrl = $assetsUrl . 'connector.php';
         $actionUrl = $this->modx->getOption('ec_action_url', $config, $assetsUrl.'action.php');
 
         $this->config = array_merge(array(
-			'assetsUrl' => $assetsUrl,
-			'cssUrl' => $assetsUrl . 'css/',
-			'jsUrl' => $assetsUrl . 'js/',
-			'imagesUrl' => $assetsUrl . 'images/',
-			'connectorUrl' => $connectorUrl,
+            'assetsUrl' => $assetsUrl,
+            'cssUrl' => $assetsUrl . 'css/',
+            'jsUrl' => $assetsUrl . 'js/',
+            'imagesUrl' => $assetsUrl . 'images/',
+            'connectorUrl' => $connectorUrl,
             'actionUrl' => $actionUrl,
 
-			'corePath' => $corePath,
-			'modelPath' => $corePath . 'model/',
-			'chunksPath' => $corePath . 'elements/chunks/',
-			'templatesPath' => $corePath . 'elements/templates/',
-			'chunkSuffix' => '.chunk.tpl',
-			'snippetsPath' => $corePath . 'elements/snippets/',
-			'processorsPath' => $corePath . 'processors/',
+            'corePath' => $corePath,
+            'modelPath' => $corePath . 'model/',
+            'chunksPath' => $corePath . 'elements/chunks/',
+            'templatesPath' => $corePath . 'elements/templates/',
+            'chunkSuffix' => '.chunk.tpl',
+            'snippetsPath' => $corePath . 'elements/snippets/',
+            'processorsPath' => $corePath . 'processors/',
 
             'json_response' => true,
-		), $config);
+        ), $config);
 
-		$this->modx->addPackage('easycomm', $this->config['modelPath']);
-		$this->modx->lexicon->load('easycomm:default');
-	}
+        $this->modx->addPackage('easycomm', $this->config['modelPath']);
+        $this->modx->lexicon->load('easycomm:default');
+    }
 
 
     /**
@@ -157,10 +157,10 @@ class easyComm {
             return $this->error($response->getMessage(), $response->getFieldErrors());
         }
         else{
-            //if ($ticket = $this->modx->getObject('Ticket', $response->response['object']['id'])) {
-            //    $ticket = $ticket->toArray();
-            //    $this->sendTicketMails($ticket);
-            //}
+            /* @var ecMessage $message */
+            if($message = $this->modx->getObject('ecMessage', $response->response['object']['id'])) {
+                $this->sendMessageNotification($message->toArray());
+            }
         }
 
         if(!empty($this->config['tplSuccess'])) {
@@ -169,6 +169,104 @@ class easyComm {
         return $this->success('ec_fe_send_success', $response->response['object']);
     }
 
+    /**
+     * Email notifications about new message
+     *
+     * @param array $message
+     *
+     * @return void
+     */
+    function sendMessageNotification($message = array()) {
+        /* @var ecThread $thread */
+        $thread = $this->modx->getObject('ecThread', $message['thread']);
+        if($thread) {
+            /* @var modResource $resource */
+            $resource = $this->modx->getObject('modResource', $thread->get('resource'));
+            if($resource) {
+                $messageData = array_merge(
+                    $message,
+                    $thread->toArray('thread_'),
+                    $resource->toArray('resource_')
+                );
+
+                // Send a message to the user.
+                if($this->modx->getOption('ec_mail_notify_user', null, true) && !empty($this->config['tplNewMessageEmailUser']) && $this->isValidEmail($message['user_email'])) {
+                    $this->modx->log(modX::LOG_LEVEL_DEBUG,'easyComm: Send a message to the user');
+                    $to = $message['user_email'];
+                    $subject = empty($this->config['newMessageEmailSubjectUser']) ? $this->modx->getOption('ec_mail_new_subject_user', null, '') : $this->config['newMessageEmailSubjectUser'];
+                    $subject = $this->getStringAsChunk($subject);
+                    $body = $this->modx->getChunk($this->config['tplNewMessageEmailUser'], $messageData);
+
+                    $this->sendEmail($to, $subject, $body);
+                }
+                // Send a message to the manager.
+                if($this->modx->getOption('ec_mail_notify_manager', null, true) && !empty($this->config['tplNewMessageEmailManager'])) {
+                    $this->modx->log(modX::LOG_LEVEL_DEBUG,'easyComm: Send a message to the manager');
+                    $to = $this->modx->getOption('ec_mail_manager', null, '');
+                    if(empty($to)) {
+                        $to = $this->modx->getOption('emailsender');
+                    }
+                    $subject = empty($this->config['newMessageEmailSubjectManager']) ? $this->modx->getOption('ec_mail_new_subject_manager', null, '') : $this->config['newMessageEmailSubjectManager'];
+                    $subject = $this->getStringAsChunk($subject);
+                    $body = $this->modx->getChunk($this->config['tplNewMessageEmailManager'], $messageData);
+
+                    $this->sendEmail($to, $subject, $body);
+                }
+            }
+        }
+    }
+
+    private function getStringAsChunk($string, $props = array()) {
+        /* @var modChunk $chunk */
+        $chunk = $this->modx->newObject('modChunk');
+        $chunk->setCacheable(false);
+
+        return $chunk->process($props, $string);
+    }
+
+    private function isValidEmail($email) {
+        if(empty($email)) {
+            return false;
+        }
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return true;
+        }
+        return false;
+    }
+    /**
+     * Send email
+     *
+     * @param string $to
+     * @param string $subject
+     * @param string $body
+     *
+     * @return void
+     */
+    private function sendEmail($to, $subject, $body){
+        if(empty($to)) {
+            $this->modx->log(modX::LOG_LEVEL_WARN,'easyComm can`t send email, because recipient is blank');
+        }
+        $mailTo = array_map('trim', explode(',', $to));
+
+        $mail = $this->modx->getService('mail', 'mail.modPHPMailer');
+        $mail->setHTML(true);
+
+        $mail->set(modMail::MAIL_SUBJECT, $subject);
+        $mail->set(modMail::MAIL_BODY, $body);
+
+        $mail->set(modMail::MAIL_SENDER, $this->modx->getOption('ec_mail_from', null, $this->modx->getOption('emailsender'), true));
+        $mail->set(modMail::MAIL_FROM, $this->modx->getOption('ec_mail_from', null, $this->modx->getOption('emailsender'), true));
+        $mail->set(modMail::MAIL_FROM_NAME, $this->modx->getOption('ec_mail_from_name', null, $this->modx->getOption('site_name'), true));
+
+        foreach($mailTo as $mto){
+            $mail->address('to', $mto);
+        }
+
+        if (!$mail->send()) {
+            $this->modx->log(modX::LOG_LEVEL_ERROR,'An error occurred while trying to send the email: '.$mail->mailer->ErrorInfo);
+        }
+        $mail->reset();
+    }
 
     /**
      * Shorthand for the call of processor
@@ -211,8 +309,8 @@ class easyComm {
     public function error($message = '', $data = array(), $placeholders = array()) {
         $response = array(
             'success' => false
-            ,'message' => $this->modx->lexicon($message, $placeholders)
-            ,'data' => $data
+        ,'message' => $this->modx->lexicon($message, $placeholders)
+        ,'data' => $data
         );
         return $this->config['json_response']
             ? $this->modx->toJSON($response)
@@ -230,8 +328,8 @@ class easyComm {
     public function success($message = '', $data = array(), $placeholders = array()) {
         $response = array(
             'success' => true
-            ,'message' => $this->modx->lexicon($message, $placeholders)
-            ,'data' => $data
+        ,'message' => $this->modx->lexicon($message, $placeholders)
+        ,'data' => $data
         );
         return $this->config['json_response']
             ? $this->modx->toJSON($response)
