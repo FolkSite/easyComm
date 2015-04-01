@@ -40,6 +40,7 @@
         <field key="reply_author" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="reply_text" dbtype="text" phptype="string" null="false" default="" />
         <field key="notify" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="notify_date" dbtype="datetime" phptype="datetime" null="true" />
 
         <field key="createdon" dbtype="datetime" phptype="datetime" null="true" />
         <field key="createdby" dbtype="int" precision="10" phptype="integer" null="true" default="0" />

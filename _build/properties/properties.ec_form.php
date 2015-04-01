@@ -27,6 +27,14 @@ $tmp = array(
         'type' => 'textfield',
         'value' => 'tpl.ecForm.New.Email.Manager',
     ),
+    'publishMessageEmailSubjectUser' => array(
+        'type' => 'textfield',
+        'value' => '',
+    ),
+    'tplPublishMessageEmailUser' => array(
+        'type' => 'textfield',
+        'value' => 'tpl.ecForm.Publish.Email.User',
+    ),
     'formId' => array(
         'type' => 'textfield',
         'value' => '',

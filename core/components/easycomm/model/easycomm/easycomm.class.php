@@ -6,7 +6,8 @@
 class easyComm {
     /* @var modX $modx */
     public $modx;
-
+    /* @var pdoTools $pdoTools */
+    public $pdoTools;
 
     /**
      * @param modX $modx
@@ -37,6 +38,7 @@ class easyComm {
             'processorsPath' => $corePath . 'processors/',
 
             'json_response' => true,
+            'nestedChunkPrefix' => 'ec_',
         ), $config);
 
         $this->modx->addPackage('easycomm', $this->config['modelPath']);
@@ -54,6 +56,8 @@ class easyComm {
      */
     public function initialize($ctx = 'web', $scriptProperties = array()) {
         $this->config = array_merge($this->config, $scriptProperties);
+        if (!$this->pdoTools) {$this->loadPdoTools();}
+        $this->pdoTools->setConfig($this->config);
         $this->config['ctx'] = $ctx;
         if (!empty($this->initialized[$ctx])) {
             return true;
@@ -159,12 +163,12 @@ class easyComm {
         else{
             /* @var ecMessage $message */
             if($message = $this->modx->getObject('ecMessage', $response->response['object']['id'])) {
-                $this->sendMessageNotification($message->toArray());
+                $this->sendNewMessageNotification($message->toArray());
             }
         }
 
         if(!empty($this->config['tplSuccess'])) {
-            return $this->success('ec_fe_send_success', $this->modx->getChunk($this->config['tplSuccess'], $response->response['object']));
+            return $this->success('ec_fe_send_success', $this->getChunk($this->config['tplSuccess'], $response->response['object']));
         }
         return $this->success('ec_fe_send_success', $response->response['object']);
     }
@@ -176,7 +180,7 @@ class easyComm {
      *
      * @return void
      */
-    function sendMessageNotification($message = array()) {
+    function sendNewMessageNotification($message = array()) {
         /* @var ecThread $thread */
         $thread = $this->modx->getObject('ecThread', $message['thread']);
         if($thread) {
@@ -195,7 +199,7 @@ class easyComm {
                     $to = $message['user_email'];
                     $subject = empty($this->config['newMessageEmailSubjectUser']) ? $this->modx->getOption('ec_mail_new_subject_user', null, '') : $this->config['newMessageEmailSubjectUser'];
                     $subject = $this->getStringAsChunk($subject);
-                    $body = $this->modx->getChunk($this->config['tplNewMessageEmailUser'], $messageData);
+                    $body = $this->getChunk($this->config['tplNewMessageEmailUser'], $messageData);
 
                     $this->sendEmail($to, $subject, $body);
                 }
@@ -208,12 +212,57 @@ class easyComm {
                     }
                     $subject = empty($this->config['newMessageEmailSubjectManager']) ? $this->modx->getOption('ec_mail_new_subject_manager', null, '') : $this->config['newMessageEmailSubjectManager'];
                     $subject = $this->getStringAsChunk($subject);
-                    $body = $this->modx->getChunk($this->config['tplNewMessageEmailManager'], $messageData);
+                    $body = $this->getChunk($this->config['tplNewMessageEmailManager'], $messageData);
 
                     $this->sendEmail($to, $subject, $body);
                 }
             }
         }
+    }
+
+    /**
+     * Email notifications about publish message
+     *
+     * @param array $message
+     *
+     * @return bool
+     */
+    public function sendPublishMessageNotification($message = array()){
+        if(empty($message)) {
+            return false;
+        }
+
+        /* @var ecThread $thread */
+        if(!$thread = $this->modx->getObject('ecThread', $message['thread'])){
+            return false;
+        }
+        /* @var modResource $resource*/
+        if(!$resource = $thread->getOne('Resource')) {
+            return false;
+        }
+        $properties = $thread->get('properties');
+        // Send a message to the user.
+        if(!empty($properties['tplPublishMessageEmailUser']) && $this->isValidEmail($message['user_email'])) {
+
+            $this->modx->log(modX::LOG_LEVEL_DEBUG,'easyComm: Send a message to the user');
+            $to = $message['user_email'];
+            $subject = empty($properties['publishMessageEmailSubjectUser']) ? $this->modx->getOption('ec_mail_publish_subject_user', null, '') : $properties['publishMessageEmailSubjectUser'];
+            $subject = $this->getStringAsChunk($subject);
+            $tmp = array(
+                'no_reply_and_published' => empty($message['reply_text']) && !empty($message['published']),
+                'reply_and_published' => !empty($message['reply_text']) && !empty($message['published']),
+                'reply_and_not_published' => !empty($message['reply_text']) && empty($message['published']),
+            );
+            $body = $this->getChunk($properties['tplPublishMessageEmailUser'], array_merge(
+                $tmp,
+                $message,
+                $thread->toArray('thread_'),
+                $resource->toArray('resource_')
+            ));
+
+            $this->sendEmail($to, $subject, $body);
+        }
+        return true;
     }
 
     private function getStringAsChunk($string, $props = array()) {
@@ -266,6 +315,27 @@ class easyComm {
             $this->modx->log(modX::LOG_LEVEL_ERROR,'An error occurred while trying to send the email: '.$mail->mailer->ErrorInfo);
         }
         $mail->reset();
+    }
+
+
+
+    /**
+     * Process and return the output from a Chunk by name.
+     *
+     * @param string $name The name of the chunk.
+     * @param array $properties An associative array of properties to process the Chunk with, treated as placeholders within the scope of the Element.
+     * @param boolean $fastMode If false, all MODX tags in chunk will be processed.
+     *
+     * @return string The processed output of the Chunk.
+     */
+    public function getChunk($name, array $properties = array(), $fastMode = false) {
+        if (!$this->modx->parser) {
+            $this->modx->getParser();
+        }
+        if (!$this->pdoTools) {
+            $this->loadPdoTools();
+        }
+        return $this->pdoTools->getChunk($name, $properties, $fastMode);
     }
 
     /**

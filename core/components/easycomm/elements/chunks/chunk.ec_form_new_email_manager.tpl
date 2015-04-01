@@ -12,7 +12,7 @@
 <br/>
 Текст сообщения:
 <br/>
-<pre>[[+text]]</pre>
+<div style="white-space:pre;background: #f0f0f0;padding: 10px;border: solid 1px #eee;">[[+text]]</div>
 <br /><br />
 Сообщение было оставлено на странице <a target="_blank" href="[[~[[+resource_id]]?scheme=`full`]]">[[+resource_pagetitle]]</a>
 <br />

@@ -77,6 +77,15 @@ class easyCommMessageUpdateProcessor extends modObjectUpdateProcessor {
         */
 
         $this->thread->updateLastMessage();
+
+        /* @var ecMessage $m */
+        if($m = $this->modx->getObject('ecMessage', $this->getProperty('id'))){
+            if($m->notifyUser()){
+                $m->set('notify', 0);
+                $m->set('notify_date', date('Y-m-d H:i:s'));
+                $m->save();
+            }
+        }
         return parent::afterSave();
     }
 }

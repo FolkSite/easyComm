@@ -6,7 +6,7 @@ easyComm.window.getMessageWindowFields = function (config) {
         border: true,
         hideMode: 'offsets',
         items: [{
-            title: _('ec_message_tab1'),
+            title: _('ec_message_tab_main'),
             layout: 'anchor',
             items: [{
                 layout: 'form',
@@ -34,20 +34,31 @@ easyComm.window.getMessageWindowFields = function (config) {
                 },
                     { xtype: 'textfield', fieldLabel: _('ec_message_subject'), name: 'subject', id: config.id + '-subject', anchor: '99%', allowBlank: true },
                     { xtype: 'textarea', fieldLabel: _('ec_message_text'), name: 'text', id: config.id + '-text', anchor: '99%', allowBlank: true },
-                    { html: '<hr style="margin: 20px 0 0 0;" />', cls: '', style: {margin: '10px 0 0 0'} },
-                    { xtype: 'textfield', fieldLabel: _('ec_message_reply_author'), name: 'reply_author', id: config.id + '-reply_author', anchor: '99%', allowBlank: true },
-                    { xtype: 'textarea', fieldLabel: _('ec_message_reply_text'), name: 'reply_text', id: config.id + '-reply_text', anchor: '99%', allowBlank: true }]
+                    { xtype: 'xcheckbox', fieldLabel: _('ec_object_published'), name: 'published', id: config.id + '-published', anchor: '99%', allowBlank: true }
+                ]
             }]
         }, {
-            title: _('ec_message_tab2'),
+            title: _('ec_message_tab_reply'),
+            layout: 'anchor',
+            items: [{
+                layout: 'form',
+                cls: 'modx-panel',
+                items: [
+                    { xtype: 'textfield', fieldLabel: _('ec_message_reply_author'), name: 'reply_author', id: config.id + '-reply_author', anchor: '99%', allowBlank: true },
+                    { xtype: 'textarea', fieldLabel: _('ec_message_reply_text'), name: 'reply_text', id: config.id + '-reply_text', anchor: '99%', allowBlank: true },
+                    { xtype: 'xcheckbox', fieldLabel: _('ec_message_notify'), name: 'notify', id: config.id + '-notify', anchor: '99%', allowBlank: true },
+                    { xtype: 'displayfield', fieldLabel: _('ec_message_notify_date'), name: 'notify_date', id: config.id + '-notify_date', anchor: '99%' }
+                ]
+            }]
+        }, {
+            title: _('ec_message_tab_settings'),
             layout: 'anchor',
             items: [{
                 layout: 'form',
                 cls: 'modx-panel',
                 items: [
                     { xtype:'ec-combo-thread', fieldLabel: _('ec_message_thread'), name: 'thread', id: config.id + '-thread', anchor: '99%', allowBlank: false },
-                    { xtype: 'textarea', fieldLabel: _('ec_message_extended'), name: 'extended', id: config.id + '-extended', anchor: '99%', allowBlank: true },
-                    { xtype: 'xcheckbox', fieldLabel: _('ec_object_published'), name: 'published', id: config.id + '-published', anchor: '99%', allowBlank: true }
+                    { xtype: 'textarea', fieldLabel: _('ec_message_extended'), name: 'extended', id: config.id + '-extended', anchor: '99%', allowBlank: true }
                 ]
             }]
         }]

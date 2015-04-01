@@ -42,7 +42,11 @@ $tmp = array(
         'value' => 'Вы оставили сообщение на сайте [[++site_url]]',
         'area' => 'ec_mail',
     ),
-
+    'mail_publish_subject_user' => array(
+        'xtype' => 'textfield',
+        'value' => 'Уведомление о вашем сообщении на сайте [[++site_url]]',
+        'area' => 'ec_mail',
+    ),
     'mail_manager' => array(
         'xtype' => 'textfield',
         'value' => '',

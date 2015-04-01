@@ -48,6 +48,8 @@ $_lang['ec_message_user_contacts'] = 'Контакты';
 $_lang['ec_message_text'] = 'Текст';
 $_lang['ec_message_reply_author'] = 'Автор ответа';
 $_lang['ec_message_reply_text'] = 'Ответ';
+$_lang['ec_message_notify'] = 'Уведомить о публикации (или ответе) пользователя по почте';
+$_lang['ec_message_notify_date'] = 'Посл. уведомление';
 $_lang['ec_message_extended'] = 'Дополнительно (JSON)';
 
 $_lang['ec_message_create'] = 'Создать';
@@ -72,8 +74,9 @@ $_lang['ec_messages_remove'] = 'Уничтожить сообщения';
 $_lang['ec_message_remove_confirm'] = 'Вы уверены, что хотите удалить это сообщение?';
 $_lang['ec_messages_remove_confirm'] = 'Вы уверены, что хотите удалить эти сообщения?';
 
-$_lang['ec_message_tab1'] = 'Сообщение';
-$_lang['ec_message_tab2'] = 'Настройки';
+$_lang['ec_message_tab_main'] = 'Сообщение';
+$_lang['ec_message_tab_reply'] = 'Ответ';
+$_lang['ec_message_tab_settings'] = 'Настройки';
 
 
 $_lang['ec_message_err_thread'] = 'Вы должны указать Цепочку';
