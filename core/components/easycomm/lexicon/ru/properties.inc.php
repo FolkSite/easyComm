@@ -6,3 +6,5 @@ $_lang['easycomm_prop_sortBy'] = 'Поле сортировки.';
 $_lang['easycomm_prop_sortDir'] = 'Направление сортировки.';
 $_lang['easycomm_prop_tpl'] = 'Чанк оформления каждого ряда Предметов.';
 $_lang['easycomm_prop_toPlaceholder'] = 'Усли указан этот параметр, то результат будет сохранен в плейсхолдер, вместо прямого вывода на странице.';
+
+$_lang['easycomm_prop_antispamField'] = 'Имя поля, используемого как антиспам';

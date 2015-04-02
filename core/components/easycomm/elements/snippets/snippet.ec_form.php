@@ -34,6 +34,7 @@ $thread->save();
 $data = array(
     'fid' => $formId,
     'thread' => $thread->get('name'),
+    'antispam_field' => $modx->getOption('antispamField', $scriptProperties)
 );
 
 

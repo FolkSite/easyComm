@@ -136,6 +136,12 @@ class easyComm {
      * @return array
      */
     public function createMessage($data = array()){
+        if(!empty($this->config['antispamField'])) {
+            if(!empty($data[$this->config['antispamField']])) {
+                return $this->error("ec_fe_spam_detected");
+            }
+        }
+
         $requiredFields = array_map('trim', explode(',', $this->config['requiredFields']));
         $requiredFields = array_unique(array_merge($requiredFields, array('thread')));
         $allowedFields = array_map('trim', explode(',', $this->config['allowedFields']));

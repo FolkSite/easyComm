@@ -51,6 +51,10 @@ $tmp = array(
         'type' => 'textfield',
         'value' => 'user_name,text',
     ),
+    'antispamField' => array(
+        'type' => 'textfield',
+        'value' => 'address',
+    ),
 );
 
 foreach ($tmp as $k => $v) {
