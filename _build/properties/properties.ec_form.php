@@ -3,43 +3,11 @@
 $properties = array();
 
 $tmp = array(
-	'tplForm' => array(
-		'type' => 'textfield',
-		'value' => 'tpl.ecForm',
-	),
-    'tplSuccess' => array(
-        'type' => 'textfield',
-        'value' => 'tpl.ecForm.Success',
-    ),
-    'newMessageEmailSubjectUser' => array(
+    'thread' => array(
         'type' => 'textfield',
         'value' => '',
-    ),
-    'tplNewMessageEmailUser' => array(
-        'type' => 'textfield',
-        'value' => 'tpl.ecForm.New.Email.User',
-    ),
-    'newMessageEmailSubjectManager' => array(
-        'type' => 'textfield',
-        'value' => '',
-    ),
-    'tplNewMessageEmailManager' => array(
-        'type' => 'textfield',
-        'value' => 'tpl.ecForm.New.Email.Manager',
-    ),
-    'publishMessageEmailSubjectUser' => array(
-        'type' => 'textfield',
-        'value' => '',
-    ),
-    'tplPublishMessageEmailUser' => array(
-        'type' => 'textfield',
-        'value' => 'tpl.ecForm.Publish.Email.User',
     ),
     'formId' => array(
-        'type' => 'textfield',
-        'value' => '',
-    ),
-    'thread' => array(
         'type' => 'textfield',
         'value' => '',
     ),
@@ -54,6 +22,38 @@ $tmp = array(
     'antispamField' => array(
         'type' => 'textfield',
         'value' => 'address',
+    ),
+    'tplForm' => array(
+		'type' => 'textfield',
+		'value' => 'tpl.ecForm',
+	),
+    'tplSuccess' => array(
+        'type' => 'textfield',
+        'value' => 'tpl.ecForm.Success',
+    ),
+    'newEmailSubjUser' => array(
+        'type' => 'textfield',
+        'value' => '',
+    ),
+    'tplNewEmailUser' => array(
+        'type' => 'textfield',
+        'value' => 'tpl.ecForm.New.Email.User',
+    ),
+    'newEmailSubjManager' => array(
+        'type' => 'textfield',
+        'value' => '',
+    ),
+    'tplNewEmailManager' => array(
+        'type' => 'textfield',
+        'value' => 'tpl.ecForm.New.Email.Manager',
+    ),
+    'updateEmailSubjUser' => array(
+        'type' => 'textfield',
+        'value' => '',
+    ),
+    'tplUpdateEmailUser' => array(
+        'type' => 'textfield',
+        'value' => 'tpl.ecForm.Update.Email.User',
     ),
 );
 

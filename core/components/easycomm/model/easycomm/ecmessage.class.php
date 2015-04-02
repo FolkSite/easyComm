@@ -10,6 +10,6 @@ class ecMessage extends xPDOSimpleObject {
         if (!($easyComm instanceof easyComm)) {
             return false;
         }
-        return $easyComm->sendPublishMessageNotification($this->toArray());
+        return $easyComm->sendUpdateMessageNotification($this->toArray());
     }
 }

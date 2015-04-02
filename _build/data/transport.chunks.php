@@ -23,8 +23,8 @@ $tmp = array(
         'file' => 'ec_form_new_email_manager',
         'description' => '',
     ),
-    'tpl.ecForm.Publish.Email.User' => array(
-        'file' => 'ec_form_publish_email_user',
+    'tpl.ecForm.Update.Email.User' => array(
+        'file' => 'ec_form_update_email_user',
         'description' => '',
     ),
 );

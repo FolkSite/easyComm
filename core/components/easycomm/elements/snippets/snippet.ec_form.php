@@ -7,12 +7,12 @@ if (!$easyComm = $modx->getService('easyComm', 'easyComm', $modx->getOption('ec_
 $easyComm->initialize($modx->context->key, $scriptProperties);
 
 $tplForm = $modx->getOption('tplForm', $scriptProperties, 'tpl.ecForm');
-$formId = $modx->getOption('formId', $scriptProperties, '');
-$thread = $modx->getOption('thread', $scriptProperties, '');
-if(empty($thread)) {
-    $thread = 'resource-'.$modx->resource->get('id');
-    $scriptProperties['thread'] = $thread;
+$threadName = $modx->getOption('thread', $scriptProperties, '');
+if(empty($threadName)) {
+    $threadName = 'resource-'.$modx->resource->get('id');
+    $scriptProperties['thread'] = $threadName;
 }
+$formId = $modx->getOption('formId', $scriptProperties, '');
 if(empty($formId)) {
     $formId = $thread;
     $scriptProperties['formId'] = $formId;
@@ -24,7 +24,7 @@ if (!$thread = $modx->getObject('ecThread', array('name' => $thread))) {
     $thread = $modx->newObject('ecThread');
     $thread->fromArray(array(
         'resource' => $modx->resource->id,
-        'name' => $thread,
+        'name' => $threadName,
         'title' => $modx->getOption('threadTitle', $scriptProperties, ''),
     ));
 }
@@ -36,6 +36,5 @@ $data = array(
     'thread' => $thread->get('name'),
     'antispam_field' => $modx->getOption('antispamField', $scriptProperties)
 );
-
 
 return $modx->getChunk($tplForm, $data);

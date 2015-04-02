@@ -1,5 +1,4 @@
 <?php
-
 $_lang['area_ec_main'] = 'Основные';
 $_lang['area_ec_mail'] = 'Почта';
 
@@ -23,13 +22,13 @@ $_lang['setting_ec_mail_notify_manager'] = 'Отправлять уведомл�
 $_lang['setting_ec_mail_notify_manager_desc'] = 'Уведомлять администратора о новых сообщениях на сайте';
 
 $_lang['setting_ec_mail_new_subject_user'] = 'Тема письма-уведомления пользователю о новом сообщения';
-$_lang['setting_ec_mail_new_subject_user_desc'] = 'Можно переопределить через параметр newMessageEmailSubjectUser сниппета ecForm';
+$_lang['setting_ec_mail_new_subject_user_desc'] = 'Можно переопределить через параметр newEmailSubjUser сниппета ecForm';
 
 $_lang['setting_ec_mail_new_subject_manager'] = 'Тема письма-уведомления администратора о новом сообщения';
-$_lang['setting_ec_mail_new_subject_manager_desc'] = 'Можно переопределить через параметр newMessageEmailSubjectManager сниппета ecForm';
+$_lang['setting_ec_mail_new_subject_manager_desc'] = 'Можно переопределить через параметр newEmailSubjManager сниппета ecForm';
 
-$_lang['setting_ec_mail_publish_subject_user'] = 'Тема письма-уведомления пользователю об изменении его сообщения (опубликовано или дан ответ)';
-$_lang['setting_ec_mail_publish_subject_user_desc'] = 'Можно переопределить через параметр publishMessageEmailSubjectUser сниппета ecForm';
+$_lang['setting_ec_mail_update_subject_user'] = 'Тема письма-уведомления пользователю об изменении его сообщения (опубликовано или дан ответ)';
+$_lang['setting_ec_mail_update_subject_user_desc'] = 'Можно переопределить через параметр updateEmailSubjUser сниппета ecForm';
 
 $_lang['setting_ec_mail_manager'] = 'Электронная почта администратора для уведомления';
 $_lang['setting_ec_mail_manager_desc'] = 'Если пусто - будет использована системная настройка emailsender';

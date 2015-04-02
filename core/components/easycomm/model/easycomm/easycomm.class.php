@@ -45,7 +45,6 @@ class easyComm {
         $this->modx->lexicon->load('easycomm:default');
     }
 
-
     /**
      * Initializes component into different contexts.
      *
@@ -200,25 +199,25 @@ class easyComm {
                 );
 
                 // Send a message to the user.
-                if($this->modx->getOption('ec_mail_notify_user', null, true) && !empty($this->config['tplNewMessageEmailUser']) && $this->isValidEmail($message['user_email'])) {
+                if($this->modx->getOption('ec_mail_notify_user', null, true) && !empty($this->config['tplNewEmailUser']) && $this->isValidEmail($message['user_email'])) {
                     $this->modx->log(modX::LOG_LEVEL_DEBUG,'easyComm: Send a message to the user');
                     $to = $message['user_email'];
-                    $subject = empty($this->config['newMessageEmailSubjectUser']) ? $this->modx->getOption('ec_mail_new_subject_user', null, '') : $this->config['newMessageEmailSubjectUser'];
+                    $subject = empty($this->config['newEmailSubjUser']) ? $this->modx->getOption('ec_mail_new_subject_user', null, '') : $this->config['newEmailSubjUser'];
                     $subject = $this->getStringAsChunk($subject);
-                    $body = $this->getChunk($this->config['tplNewMessageEmailUser'], $messageData);
+                    $body = $this->getChunk($this->config['tplNewEmailUser'], $messageData);
 
                     $this->sendEmail($to, $subject, $body);
                 }
                 // Send a message to the manager.
-                if($this->modx->getOption('ec_mail_notify_manager', null, true) && !empty($this->config['tplNewMessageEmailManager'])) {
+                if($this->modx->getOption('ec_mail_notify_manager', null, true) && !empty($this->config['tplNewEmailManager'])) {
                     $this->modx->log(modX::LOG_LEVEL_DEBUG,'easyComm: Send a message to the manager');
                     $to = $this->modx->getOption('ec_mail_manager', null, '');
                     if(empty($to)) {
                         $to = $this->modx->getOption('emailsender');
                     }
-                    $subject = empty($this->config['newMessageEmailSubjectManager']) ? $this->modx->getOption('ec_mail_new_subject_manager', null, '') : $this->config['newMessageEmailSubjectManager'];
+                    $subject = empty($this->config['newEmailSubjManager']) ? $this->modx->getOption('ec_mail_new_subject_manager', null, '') : $this->config['newEmailSubjManager'];
                     $subject = $this->getStringAsChunk($subject);
-                    $body = $this->getChunk($this->config['tplNewMessageEmailManager'], $messageData);
+                    $body = $this->getChunk($this->config['tplNewEmailManager'], $messageData);
 
                     $this->sendEmail($to, $subject, $body);
                 }
@@ -233,7 +232,7 @@ class easyComm {
      *
      * @return bool
      */
-    public function sendPublishMessageNotification($message = array()){
+    public function sendUpdateMessageNotification($message = array()){
         if(empty($message)) {
             return false;
         }
@@ -248,18 +247,18 @@ class easyComm {
         }
         $properties = $thread->get('properties');
         // Send a message to the user.
-        if(!empty($properties['tplPublishMessageEmailUser']) && $this->isValidEmail($message['user_email'])) {
+        if(!empty($properties['tplUpdateEmailUser']) && $this->isValidEmail($message['user_email'])) {
 
             $this->modx->log(modX::LOG_LEVEL_DEBUG,'easyComm: Send a message to the user');
             $to = $message['user_email'];
-            $subject = empty($properties['publishMessageEmailSubjectUser']) ? $this->modx->getOption('ec_mail_publish_subject_user', null, '') : $properties['publishMessageEmailSubjectUser'];
+            $subject = empty($properties['updateEmailSubjUser']) ? $this->modx->getOption('ec_mail_update_subject_user', null, '') : $properties['updateEmailSubjUser'];
             $subject = $this->getStringAsChunk($subject);
             $tmp = array(
                 'no_reply_and_published' => empty($message['reply_text']) && !empty($message['published']),
                 'reply_and_published' => !empty($message['reply_text']) && !empty($message['published']),
                 'reply_and_not_published' => !empty($message['reply_text']) && empty($message['published']),
             );
-            $body = $this->getChunk($properties['tplPublishMessageEmailUser'], array_merge(
+            $body = $this->getChunk($properties['tplUpdateEmailUser'], array_merge(
                 $tmp,
                 $message,
                 $thread->toArray('thread_'),

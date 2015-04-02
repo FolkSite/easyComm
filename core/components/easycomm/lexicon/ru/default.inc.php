@@ -71,8 +71,8 @@ $_lang['ec_messages_undelete_confirm'] = 'Вы уверены, что хотит
 
 $_lang['ec_message_remove'] = 'Уничтожить сообщение';
 $_lang['ec_messages_remove'] = 'Уничтожить сообщения';
-$_lang['ec_message_remove_confirm'] = 'Вы уверены, что хотите удалить это сообщение?';
-$_lang['ec_messages_remove_confirm'] = 'Вы уверены, что хотите удалить эти сообщения?';
+$_lang['ec_message_remove_confirm'] = 'Вы уверены, что хотите безвозвратно уничтожить это сообщение?';
+$_lang['ec_messages_remove_confirm'] = 'Вы уверены, что хотите безвозвратно уничтожить эти сообщения?';
 
 $_lang['ec_message_tab_main'] = 'Сообщение';
 $_lang['ec_message_tab_reply'] = 'Ответ';

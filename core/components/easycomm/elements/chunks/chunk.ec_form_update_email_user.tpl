@@ -9,7 +9,6 @@
 <br />
 С уважением, [[++site_name]].
 
-
 <!--ec_no_reply_and_published
 Ваше сообщение было опубликовано. Вы можете его просмотреть <a href="[[~[[+resource_id]]? &scheme=`full`]]#message-[[+id]]">здесь</a>.
 -->

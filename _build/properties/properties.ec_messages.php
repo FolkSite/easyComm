@@ -3,7 +3,15 @@
 $properties = array();
 
 $tmp = array(
-	'tpl' => array(
+    'thread' => array(
+        'type' => 'textfield',
+        'value' => '',
+    ),
+    'subject' => array(
+        'type' => 'textfield',
+        'value' => '',
+    ),
+    'tpl' => array(
 		'type' => 'textfield',
 		'value' => 'tpl.ecMessages.Row',
 	),
@@ -11,11 +19,7 @@ $tmp = array(
         'type' => 'textfield',
         'value' => '',
     ),
-    'thread' => array(
-        'type' => 'textfield',
-        'value' => '',
-    ),
-	'sortby' => array(
+    'sortby' => array(
 		'type' => 'textfield',
 		'value' => 'date',
 	),
@@ -39,11 +43,7 @@ $tmp = array(
         'type' => 'combo-boolean',
         'value' => false,
     ),
-    'subject' => array(
-        'type' => 'textfield',
-        'value' => '',
-    ),
-	'outputSeparator' => array(
+    'outputSeparator' => array(
 		'type' => 'textfield',
 		'value' => "\n",
 	),
