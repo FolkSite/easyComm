@@ -1,10 +1,13 @@
 --------------------
-easycomm
+easyComm
 --------------------
-Author: John Doe <john@doe.com>
+Author: Alexey Naumov <alexei@createit.ru>
 --------------------
 
-A basic Extra for MODx Revolution.
+Компонент предназначен для создания на сайтах таких модулей, как отзывы, комментарии, вопросы пользователей.
 
-Feel free to suggest ideas/improvements/bugs on GitHub:
-http://github.com/username/easycomm/issues
+Название easyComm произошло от Easy Communication, или Easy Comments, кому как больше нравится.
+
+Компонент позволяет пользователям сайта через специальную форму оставить свое сообщение/отзыв/вопрос,
+а администратор увидит их в панели управления сайтом, сможет опубликовать сообщение,
+удалить его или оставить свой ответ.

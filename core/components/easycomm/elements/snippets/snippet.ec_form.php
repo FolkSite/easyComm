@@ -20,7 +20,7 @@ if(empty($formId)) {
 
 // Prepare ecThread
 /** @var ecThread $thread */
-if (!$thread = $modx->getObject('ecThread', array('name' => $thread))) {
+if (!$thread = $modx->getObject('ecThread', array('name' => $threadName))) {
     $thread = $modx->newObject('ecThread');
     $thread->fromArray(array(
         'resource' => $modx->resource->id,
