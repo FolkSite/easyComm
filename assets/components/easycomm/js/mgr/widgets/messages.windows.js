@@ -58,6 +58,7 @@ easyComm.window.getMessageWindowFields = function (config) {
                 cls: 'modx-panel',
                 items: [
                     { xtype:'ec-combo-thread', fieldLabel: _('ec_message_thread'), name: 'thread', id: config.id + '-thread', anchor: '99%', allowBlank: false },
+                    { xtype: 'displayfield', fieldLabel: _('ec_message_ip'), name: 'ip', id: config.id + '-ip', anchor: '99%' },
                     { xtype: 'textarea', fieldLabel: _('ec_message_extended'), name: 'extended', id: config.id + '-extended', anchor: '99%', allowBlank: true }
                 ]
             }]

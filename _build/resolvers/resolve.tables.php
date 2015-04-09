@@ -6,6 +6,7 @@ if ($object->xpdo) {
 
 	switch ($options[xPDOTransport::PACKAGE_ACTION]) {
 		case xPDOTransport::ACTION_INSTALL:
+        case xPDOTransport::ACTION_UPGRADE:
 			$modelPath = $modx->getOption('easycomm_core_path', null, $modx->getOption('core_path') . 'components/easycomm/') . 'model/';
 			$modx->addPackage('easycomm', $modelPath);
 
@@ -17,9 +18,12 @@ if ($object->xpdo) {
 			foreach ($objects as $tmp) {
 				$manager->createObjectContainer($tmp);
 			}
-			break;
 
-		case xPDOTransport::ACTION_UPGRADE:
+            $level = $modx->getLogLevel();
+            $modx->setLogLevel(xPDO::LOG_LEVEL_FATAL);
+            $manager->addField('ecMessage', 'ip');
+            $modx->setLogLevel($level);
+
 			break;
 
 		case xPDOTransport::ACTION_UNINSTALL:

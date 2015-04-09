@@ -34,8 +34,10 @@ class easyCommMessageCreateProcessor extends modObjectCreateProcessor {
         }
 
         $now = date('Y-m-d H:i:s');
+        $ip = $this->modx->request->getClientIp();
         $this->setProperties(array(
             'date' => $now,
+            'ip' => $ip['ip'],
             'createdon' => $now,
             'createdby' => $this->modx->user->isAuthenticated($this->modx->context->key) ? $this->modx->user->id : 0,
             'editedon' => null,

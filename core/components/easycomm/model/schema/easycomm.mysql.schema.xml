@@ -42,6 +42,8 @@
         <field key="notify" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
         <field key="notify_date" dbtype="datetime" phptype="datetime" null="true" />
 
+        <field key="ip" dbtype="varchar" precision="16" phptype="string" null="false" default="0.0.0.0" />
+
         <field key="createdon" dbtype="datetime" phptype="datetime" null="true" />
         <field key="createdby" dbtype="int" precision="10" phptype="integer" null="true" default="0" />
 

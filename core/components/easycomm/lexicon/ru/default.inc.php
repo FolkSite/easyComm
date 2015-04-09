@@ -51,6 +51,7 @@ $_lang['ec_message_reply_text'] = 'Ответ';
 $_lang['ec_message_notify'] = 'Уведомить о публикации (или ответе) пользователя по почте';
 $_lang['ec_message_notify_date'] = 'Посл. уведомление';
 $_lang['ec_message_extended'] = 'Дополнительно (JSON)';
+$_lang['ec_message_ip'] = 'IP адрес';
 
 $_lang['ec_message_create'] = 'Создать';
 $_lang['ec_message_update'] = 'Изменить';
