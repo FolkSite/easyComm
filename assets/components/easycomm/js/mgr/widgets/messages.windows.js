@@ -33,7 +33,7 @@ easyComm.window.getMessageWindowFields = function (config) {
                     }]
                 },
                     { xtype: 'textfield', fieldLabel: _('ec_message_subject'), name: 'subject', id: config.id + '-subject', anchor: '99%', allowBlank: true },
-                    { xtype: 'textarea', fieldLabel: _('ec_message_text'), name: 'text', id: config.id + '-text', anchor: '99%', allowBlank: true },
+                    { xtype: 'textarea', fieldLabel: _('ec_message_text'), name: 'text', id: config.id + '-text', anchor: '99%', allowBlank: true, height: 120 },
                     { xtype: 'xcheckbox', fieldLabel: _('ec_object_published'), name: 'published', id: config.id + '-published', anchor: '99%', allowBlank: true }
                 ]
             }]
@@ -45,7 +45,7 @@ easyComm.window.getMessageWindowFields = function (config) {
                 cls: 'modx-panel',
                 items: [
                     { xtype: 'textfield', fieldLabel: _('ec_message_reply_author'), name: 'reply_author', id: config.id + '-reply_author', anchor: '99%', allowBlank: true },
-                    { xtype: 'textarea', fieldLabel: _('ec_message_reply_text'), name: 'reply_text', id: config.id + '-reply_text', anchor: '99%', allowBlank: true },
+                    { xtype: 'textarea', fieldLabel: _('ec_message_reply_text'), name: 'reply_text', id: config.id + '-reply_text', anchor: '99%', allowBlank: true, height: 200 },
                     { xtype: 'xcheckbox', fieldLabel: _('ec_message_notify'), name: 'notify', id: config.id + '-notify', anchor: '99%', allowBlank: true },
                     { xtype: 'displayfield', fieldLabel: _('ec_message_notify_date'), name: 'notify_date', id: config.id + '-notify_date', anchor: '99%' }
                 ]

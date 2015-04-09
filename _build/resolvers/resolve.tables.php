@@ -7,7 +7,7 @@ if ($object->xpdo) {
 	switch ($options[xPDOTransport::PACKAGE_ACTION]) {
 		case xPDOTransport::ACTION_INSTALL:
 			$modelPath = $modx->getOption('easycomm_core_path', null, $modx->getOption('core_path') . 'components/easycomm/') . 'model/';
-			$modx->addPackage('easyComm', $modelPath);
+			$modx->addPackage('easycomm', $modelPath);
 
 			$manager = $modx->getManager();
 			$objects = array(

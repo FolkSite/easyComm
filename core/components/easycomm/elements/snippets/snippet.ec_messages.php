@@ -85,6 +85,10 @@ $output = array();
 $idx = 0;
 foreach($messages as $row) {
     $row['idx'] = $idx++;
+    $row['text_raw'] = $row['text'];
+    $row['text'] = nl2br($row['text']);
+    $row['reply_text_raw'] = $row['reply_text'];
+    $row['reply_text'] = nl2br($row['reply_text']);
     $tpl = $pdoFetch->defineChunk($row);
     if (empty($tpl)) {
         $output[] = '<pre>'.$pdoFetch->getChunk('', $row).'</pre>';
