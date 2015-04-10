@@ -44,7 +44,7 @@ class easyCommMessageDeleteProcessor extends modObjectProcessor {
         $threads = $this->modx->getCollection('ecThread', array('id:IN' => $threadIds));
         /** @var ecThread $thread */
         foreach($threads as $thread){
-            $thread->updateLastMessage();
+            $thread->updateMessagesInfo();
         }
 
 		return $this->success();

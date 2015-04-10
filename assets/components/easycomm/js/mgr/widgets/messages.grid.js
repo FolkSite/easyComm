@@ -5,12 +5,13 @@ easyComm.grid.Messages = function (config) {
     }
     config.record = config.record || {};
     config.record.id = config.record.id || 0;
+    this.sm = new Ext.grid.CheckboxSelectionModel();
     Ext.applyIf(config, {
         url: easyComm.config.connector_url,
-        fields: this.getFields(config),
+        fields: easyComm.config.message_fields,
         columns: this.getColumns(config),
         tbar: this.getTopBar(config),
-        sm: new Ext.grid.CheckboxSelectionModel(),
+        sm: this.sm,
         baseParams: {
             action: 'mgr/message/getlist',
             resource_id: config.record.id,
@@ -265,70 +266,33 @@ Ext.extend(easyComm.grid.Messages, MODx.grid.Grid, {
         })
     },
 
-    getFields: function (config) {
-        return ['id', 'thread', 'thread_name', 'subject', 'date', 'user_name', 'user_email', 'user_contacts', 'text', 'reply_author', 'reply_text', 'published', 'deleted', 'ip'];
-    },
-
     getColumns: function (config) {
-        return [{
-            header: _('ec_message_id'),
-            dataIndex: 'id',
-            sortable: true,
-            width: 70
-        }, {
-            header: _('ec_message_thread'),
-            dataIndex: 'thread_name',
-            sortable: true,
-            width: 100
-        }, {
-            header: _('ec_message_subject'),
-            dataIndex: 'subject',
-            sortable: true,
-            width: 150
-        }, {
-            header: _('ec_message_date'),
-            dataIndex: 'date',
-            sortable: true,
-            width: 100
-        }, {
-            header: _('ec_message_user_name'),
-            dataIndex: 'user_name',
-            sortable: true,
-            width: 100
-        }, {
-            header: _('ec_message_user_email'),
-            dataIndex: 'user_email',
-            sortable: true,
-            width: 100,
-            hidden: 1
-        }, {
-            header: _('ec_message_user_contacts'),
-            dataIndex: 'user_contacts',
-            sortable: true,
-            width: 100,
-            hidden: 1
-        }, {
-            header: _('ec_message_text'),
-            dataIndex: 'text',
-            sortable: true,
-            width: 200
-        }, {
-            header: _('ec_message_reply_author'),
-            dataIndex: 'reply_author',
-            sortable: true,
-            width: 200
-        }, {
-            header: _('ec_message_reply_text'),
-            dataIndex: 'reply_text',
-            sortable: true,
-            width: 200
-        }, {
-            header: _('ec_message_ip'),
-            dataIndex: 'ip',
-            sortable: true,
-            width: 100,
-            hidden: 1
-        }];
+        var columns = {
+            id: { sortable: true, width: 70 },
+            thread: { sortable: true, width: 100 },
+            subject: { sortable: true, width: 150 },
+            date: { sortable: true, width: 100 },
+            user_name: { sortable: true, width: 100 },
+            user_email: { sortable: true, width: 100 },
+            user_contacts: { sortable: true, width: 100 },
+            rating: { sortable: true, width: 70 },
+            text: { sortable: true, width: 200 },
+            reply_author: { sortable: true, width: 100 },
+            reply_text: { sortable: true, width: 200 },
+            ip: { sortable: true, width: 100 }
+        };
+        var fields = [this.sm];
+        for (var i = 0; i < easyComm.config.message_grid_fields.length; i++) {
+            var field = easyComm.config.message_grid_fields[i];
+            if (columns[field]) {
+                Ext.applyIf(columns[field], {
+                    header: _('ec_message_' + field)
+                    ,dataIndex: field
+                });
+                fields.push(columns[field]);
+            }
+        }
+        return fields;
     },
 
     getTopBar: function (config) {

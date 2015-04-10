@@ -111,6 +111,18 @@ Ext.extend(easyComm.window.UpdateThread, MODx.Window, {
             id: config.id + '-extended',
             anchor: '99%',
             allowBlank: true
+        }, {
+            xtype: 'displayfield',
+            fieldLabel: _('ec_thread_rating_simple'),
+            name: 'rating_simple',
+            id: config.id + '-rating_simple',
+            anchor: '99%'
+        }, {
+            xtype: 'displayfield',
+            fieldLabel: _('ec_thread_rating_wilson'),
+            name: 'rating_wilson',
+            id: config.id + '-rating_wilson',
+            anchor: '99%'
         }];
     }
 

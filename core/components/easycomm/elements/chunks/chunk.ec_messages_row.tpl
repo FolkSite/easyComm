@@ -1,5 +1,8 @@
 <div class="ec-message">
     <p><strong>[[+user_name]]</strong><span class="ec-message__date"> [[+date:dateAgo]]</span></p>
+    <div class="ec-stars">
+        <span class="rating-[[+rating]]"></span>
+    </div>
     <p>[[+text]]</p>
     [[+reply_text]]
 </div>

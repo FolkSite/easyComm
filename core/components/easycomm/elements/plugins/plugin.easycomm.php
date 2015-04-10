@@ -49,11 +49,19 @@ switch ($modx->event->name) {
 
         $modx->controller->addCss($url . 'css/mgr/main.css');
 
+        $fieldsConfig = '
+            easyComm.config.thread_fields = ' . json_encode($easyComm->getThreadFields()) . ';
+            easyComm.config.thread_grid_fields = ' . json_encode($easyComm->getThreadGridFields()) . ';
+            easyComm.config.message_fields = ' . json_encode($easyComm->getMessageFields()) . ';
+            easyComm.config.message_grid_fields = ' . json_encode($easyComm->getMessageGridFields()) . ';
+        ';
+
         if ($modx->getCount('modPlugin', array('name' => 'AjaxManager', 'disabled' => false))) {
             $modx->controller->addHtml('
 			<script type="text/javascript">
 				easyComm.config = ' . $modx->toJSON($easyComm->config) . ';
 				easyComm.config.connector_url = "' . $easyComm->config['connectorUrl'] . '";
+				'.$fieldsConfig.'
 				Ext.onReady(function() {
 					window.setTimeout(function() {
 						var tabs = Ext.getCmp("modx-resource-tabs");
@@ -76,6 +84,7 @@ switch ($modx->event->name) {
 			<script type="text/javascript">
 				easyComm.config = ' . $modx->toJSON($easyComm->config) . ';
 				easyComm.config.connector_url = "' . $easyComm->config['connectorUrl'] . '";
+				'.$fieldsConfig.'
 				Ext.ComponentMgr.onAvailable("modx-resource-tabs", function() {
 					this.on("beforerender", function() {
 						this.add({

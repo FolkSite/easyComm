@@ -44,8 +44,12 @@ easyComm.combo.MessageThread = function(config) {
 Ext.extend(easyComm.combo.MessageThread,MODx.combo.ComboBox);
 Ext.reg('ec-combo-thread',easyComm.combo.MessageThread);
 
-easyComm.utils.renderBoolean = function (value, props, row) {
-	return value
+easyComm.utils.renderBoolean = function (val, props, row) {
+	return val
 		? String.format('<span class="green">{0}</span>', _('yes'))
 		: String.format('<span class="red">{0}</span>', _('no'));
+};
+
+easyComm.utils.renderRating = function(val, props, row) {
+    return val;
 }

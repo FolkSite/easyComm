@@ -11,6 +11,10 @@ $tmp = array(
         'file' => 'ec_form',
         'description' => '',
     ),
+    'ecThreadRating' => array(
+        'file' => 'ec_thread_rating',
+        'description' => '',
+    ),
 );
 
 foreach ($tmp as $k => $v) {

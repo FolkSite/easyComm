@@ -10,6 +10,8 @@
 <br/>
 Тема сообщения: <span style="font-weight: bold">[[+subject]]</span>
 <br/>
+Оценка: <span style="font-weight: bold">[[+rating]]</span>
+<br/>
 Текст сообщения:
 <br/>
 <br/>

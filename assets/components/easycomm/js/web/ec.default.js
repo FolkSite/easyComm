@@ -3,7 +3,7 @@ var easyComm = {
         if(!jQuery().ajaxForm) {
             easyComm.notice.error('Can`t find jQuery ajaxForm plugin!');
         }
-
+        easyComm.rating.initialize();
         $(document).on('submit', 'form.ec-form', function(e){
             easyComm.message.send(this);
             e.preventDefault();
@@ -53,6 +53,40 @@ var easyComm = {
                     easyComm.notice.error('Submit error');
                 }
             });
+        }
+    },
+
+
+    rating: {
+        initialize: function(){
+            var stars = $('.ec-rating').find('.ec-rating-stars>span');
+            stars.on('touchend click', function(e){
+                var starDesc = $(this).data('description');
+                $(this).parent().parent().find('.ec-rating-description').html(starDesc).data('old-text', starDesc);
+                $(this).parent().children().removeClass('active active2 active-disabled');
+                $(this).prevAll().addClass('active');
+                $(this).addClass('active');
+                // save vote
+                var storageId = $(this).closest('.ec-rating').data('storage-id');
+                $('#' + storageId).val($(this).data('rating'));
+            });
+            stars.hover(
+                // hover in
+                function() {
+                    var descEl = $(this).parent().parent().find('.ec-rating-description');
+                    descEl.data('old-text', descEl.html());
+                    descEl.html($(this).data('description'));
+                    $(this).addClass('active2').removeClass('active-disabled');
+                    $(this).prevAll().addClass('active2').removeClass('active-disabled');
+                    $(this).nextAll().removeClass('active2').addClass('active-disabled');
+                },
+                // hover out
+                function(){
+                    var descEl = $(this).parent().parent().find('.ec-rating-description');
+                    descEl.html(descEl.data('old-text'));
+                    $(this).parent().children().removeClass('active2 active-disabled');
+                }
+            );
         }
     },
 

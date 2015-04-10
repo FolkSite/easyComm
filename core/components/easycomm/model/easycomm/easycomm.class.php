@@ -392,7 +392,8 @@ class easyComm {
             : $response;
     }
 
-    /* This method returns an success of the action
+    /**
+     * This method returns an success of the action
 	 *
 	 * @param string $message A lexicon key for success message
 	 * @param array $data.Additional data, for example cart status
@@ -409,5 +410,44 @@ class easyComm {
         return $this->config['json_response']
             ? $this->modx->toJSON($response)
             : $response;
+    }
+
+    /**
+     * This method returns the list of thread fields.
+     * @return array
+     * */
+    public function getThreadFields(){
+        return array_keys($this->modx->getFields('ecThread'));
+    }
+
+    /**
+     * This method returns the list of fields in the thread grid.
+	 * @return array
+	 * */
+    public function getThreadGridFields(){
+        $fields = array_keys($this->modx->getFields('ecThread'));
+
+        $grid_fields = $this->modx->getOption('ec_thread_grid_fields');
+        $grid_fields = array_map('trim', explode(',',$grid_fields));
+        return array_values(array_intersect($grid_fields, $fields ));
+    }
+
+    /**
+     * This method returns the list of message fields.
+     * @return array
+     * */
+    public function getMessageFields(){
+        return array_keys($this->modx->getFields('ecMessage'));
+    }
+    /**
+     * This method returns the list of fields in the message grid.
+     * @return array
+     * */
+    public function getMessageGridFields(){
+        $fields = array_keys($this->modx->getFields('ecMessage'));
+
+        $grid_fields = $this->modx->getOption('ec_message_grid_fields');
+        $grid_fields = array_map('trim', explode(',',$grid_fields));
+        return array_values(array_intersect($grid_fields, $fields ));
     }
 }

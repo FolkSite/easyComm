@@ -22,6 +22,17 @@ $tmp = array(
         'value' => '[[+jsUrl]]web/ec.default.js',
         'area' => 'ec_main',
     ),
+    'thread_grid_fields' => array(
+        'xtype' => 'textfield',
+        'value' => 'id,resource,name,title,count,rating_simple,rating_wilson',
+        'area' => 'ec_main',
+    ),
+    'message_grid_fields' => array(
+        'xtype' => 'textfield',
+        'value' => 'id,thread,subject,date,user_name,user_email,user_contacts,rating,text,reply_author,reply_text,ip',
+        'area' => 'ec_main',
+    ),
+
     'mail_notify_user' => array(
         'xtype' => 'combo-boolean',
         'value' => true,
@@ -62,6 +73,20 @@ $tmp = array(
         'value' => '',
         'area' => 'ec_mail',
     ),
+
+
+    'rating_max' => array(
+        'xtype' => 'numberfield',
+        'value' => '5',
+        'area' => 'ec_rating',
+    ),
+    'rating_wilson_confidence' => array(
+        'xtype' => 'numberfield',
+        'value' => '1.6',
+        'area' => 'ec_rating',
+    ),
+
+
 );
 
 foreach ($tmp as $k => $v) {

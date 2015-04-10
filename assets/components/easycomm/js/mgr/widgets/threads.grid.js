@@ -5,12 +5,13 @@ easyComm.grid.Threads = function (config) {
     }
     config.record = config.record || {};
     config.record.id = config.record.id || 0;
+    this.sm = new Ext.grid.CheckboxSelectionModel();
     Ext.applyIf(config, {
         url: easyComm.config.connector_url,
-        fields: this.getFields(config),
+        fields: easyComm.config.thread_fields,
         columns: this.getColumns(config),
         tbar: this.getTopBar(config),
-        sm: new Ext.grid.CheckboxSelectionModel(),
+        sm: this.sm,
         baseParams: {
             action: 'mgr/thread/getlist',
             resource_id: config.record.id
@@ -220,37 +221,29 @@ Ext.extend(easyComm.grid.Threads, MODx.grid.Grid, {
         })
     },
 
-    getFields: function (config) {
-        return ['id', 'resource', 'name', 'title', 'count', 'actions'];
-    },
-
     getColumns: function (config) {
-        return [{
-            header: _('ec_thread_id'),
-            dataIndex: 'id',
-            sortable: true,
-            width: 70
-        }, {
-            header: _('ec_thread_resource'),
-            dataIndex: 'resource',
-            sortable: true,
-            width: 70
-        }, {
-            header: _('ec_thread_name'),
-            dataIndex: 'name',
-            sortable: true,
-            width: 150
-        }, {
-            header: _('ec_thread_title'),
-            dataIndex: 'title',
-            sortable: true,
-            width: 200
-        }, {
-            header: _('ec_thread_count'),
-            dataIndex: 'count',
-            sortable: true,
-            width: 70
-        }];
+        var columns = {
+            id: { sortable: true, width: 70 },
+            resource: { sortable: true, width: 70 },
+            name: { sortable: true, width: 150 },
+            title: { sortable: true, width: 200 },
+            count: { sortable: true,width: 70 },
+            rating_simple: { sortable: true, width: 70, renderer: easyComm.utils.renderRating },
+            rating_wilson: { sortable: true, width: 70, renderer: easyComm.utils.renderRating }
+        };
+
+        var fields = [this.sm];
+        for (var i = 0; i < easyComm.config.thread_grid_fields.length; i++) {
+            var field = easyComm.config.thread_grid_fields[i];
+            if (columns[field]) {
+                Ext.applyIf(columns[field], {
+                    header: _('ec_thread_' + field)
+                    ,dataIndex: field
+                });
+                fields.push(columns[field]);
+            }
+        }
+        return fields;
     },
 
     getTopBar: function (config) {

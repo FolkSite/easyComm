@@ -27,6 +27,10 @@ $tmp = array(
         'file' => 'ec_form_update_email_user',
         'description' => '',
     ),
+    'tpl.ecThreadRating' => array(
+        'file' => 'ec_thread_rating',
+        'description' => '',
+    ),
 );
 
 // Save chunks for setup options

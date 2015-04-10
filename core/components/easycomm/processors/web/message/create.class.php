@@ -33,11 +33,21 @@ class easyCommMessageCreateProcessor extends modObjectCreateProcessor {
             }
         }
 
+        $rating = intval($this->getProperty('rating'));
+        $ratingMax = intval($this->modx->getOption('ec_rating_max'));
+        if($rating < 0) {
+            $rating = 0;
+        }
+        if($rating > $ratingMax) {
+            $rating = $ratingMax;
+        }
+
         $now = date('Y-m-d H:i:s');
         $ip = $this->modx->request->getClientIp();
         $this->setProperties(array(
             'date' => $now,
             'ip' => $ip['ip'],
+            'rating' => $rating,
             'createdon' => $now,
             'createdby' => $this->modx->user->isAuthenticated($this->modx->context->key) ? $this->modx->user->id : 0,
             'editedon' => null,
@@ -54,7 +64,7 @@ class easyCommMessageCreateProcessor extends modObjectCreateProcessor {
 
     /** {@inheritDoc} */
     public function afterSave() {
-        $this->thread->updateLastMessage();
+        $this->thread->updateMessagesInfo();
         return parent::afterSave();
     }
 

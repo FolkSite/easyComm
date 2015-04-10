@@ -13,7 +13,7 @@ $tmp = array(
     ),
     'allowedFields' => array(
         'type' => 'textfield',
-        'value' => 'user_name,user_email,user_contacts,subject,text',
+        'value' => 'user_name,user_email,user_contacts,subject,rating,text',
     ),
     'requiredFields' => array(
         'type' => 'textfield',

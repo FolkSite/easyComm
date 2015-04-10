@@ -24,8 +24,18 @@ class easyCommMessageCreateProcessor extends modObjectCreateProcessor {
             $this->modx->error->addField('thread', $this->modx->lexicon('ec_message_err_thread'));
         }
 
+        $rating = intval($this->getProperty('rating'));
+        $ratingMax = intval($this->modx->getOption('ec_rating_max'));
+        if($rating < 0) {
+            $rating = 0;
+        }
+        if($rating > $ratingMax) {
+            $rating = $ratingMax;
+        }
+
         $now = date('Y-m-d H:i:s');
         $this->setProperties(array(
+            'rating' => $rating,
             'createdon' => $now,
             'createdby' => $this->modx->user->isAuthenticated($this->modx->context->key) ? $this->modx->user->id : 0,
             'editedon' => null,
@@ -42,7 +52,7 @@ class easyCommMessageCreateProcessor extends modObjectCreateProcessor {
 
     /** {@inheritDoc} */
     public function afterSave() {
-        $this->thread->updateLastMessage();
+        $this->thread->updateMessagesInfo();
 
         /* @var ecMessage $m */
         if($m = $this->modx->getObject('ecMessage', $this->getProperty('id'))){

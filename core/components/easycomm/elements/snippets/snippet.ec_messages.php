@@ -5,10 +5,15 @@ if (!$easyComm = $modx->getService('easyComm', 'easyComm', $modx->getOption('ec_
     return 'Could not load easyComm class!';
 }
 
+/* @var string $thread */
 $thread = $modx->getOption('thread', $scriptProperties, '');
 if(empty($thread)) {
     $thread = 'resource-'.$modx->resource->get('id');
 }
+
+/* @var MODx $modx */
+/* @var ecThread $thread */
+$thread = $modx->getObject('ecThread', array('name' => $thread));
 
 /* @var pdoFetch $pdoFetch */
 $fqn = $modx->getOption('pdoFetch.class', null, 'pdotools.pdofetch', true);
@@ -34,7 +39,7 @@ $select = array(
     $threadClass => $modx->getSelectColumns($threadClass, 'Thread', 'thread_'),
 );
 $innerJoin = array($threadClass => array('alias' => 'Thread', 'on' => "`$class`.`thread` = `Thread`.`id`"));
-$where = array('`Thread`.`name`' => $thread);
+$where = array('`Thread`.`name`' => $thread->get('name'));
 
 if(empty($showUnpublished)) {
     $where[$class.'.published'] = 1;
@@ -111,7 +116,15 @@ else {
     $output = implode($outputSeparator, $output);
     $output .= $log;
     if (!empty($tplWrapper) && (!empty($wrapIfEmpty) || !empty($output))) {
-        $output = $pdoFetch->getChunk($tplWrapper, array('output' => $output), $pdoFetch->config['fastMode']);
+        $data = array_merge(
+            array('output' => $output),
+            $thread->toArray(),
+            array(
+                'rating_wilson_percent' => number_format($thread->get('rating_wilson') / $ratingMax * 100, 3),
+                'rating_simple_percent' => number_format($thread->get('rating_simple') / $ratingMax * 100, 3),
+            )
+        );
+        $output = $pdoFetch->getChunk($tplWrapper, $data, $pdoFetch->config['fastMode']);
     }
     if (!empty($toPlaceholder)) {
         $modx->setPlaceholder($toPlaceholder, $output);

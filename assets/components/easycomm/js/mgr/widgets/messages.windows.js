@@ -33,6 +33,7 @@ easyComm.window.getMessageWindowFields = function (config) {
                     }]
                 },
                     { xtype: 'textfield', fieldLabel: _('ec_message_subject'), name: 'subject', id: config.id + '-subject', anchor: '99%', allowBlank: true },
+                    { xtype: 'numberfield', fieldLabel: _('ec_message_rating'), name: 'rating', id: config.id + '-rating', anchor: '99%', allowBlank: false, allowNegative: false, allowDecimals: false },
                     { xtype: 'textarea', fieldLabel: _('ec_message_text'), name: 'text', id: config.id + '-text', anchor: '99%', allowBlank: true, height: 120 },
                     { xtype: 'xcheckbox', fieldLabel: _('ec_object_published'), name: 'published', id: config.id + '-published', anchor: '99%', allowBlank: true }
                 ]
