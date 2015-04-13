@@ -32,8 +32,23 @@ abstract class easyCommMainController extends modExtraManagerController {
 		</script>
 		');
 
+        $this->loadPlugins();
+
 		parent::initialize();
 	}
+
+    /**
+	 * Loads additional scripts for message form from easyComm plugins
+	 *
+	 * @return void
+	 * */
+    function loadPlugins() {
+        foreach ($this->modx->easyCommPlugins->plugins as $plugin) {
+            if (!empty($plugin['manager']['ecMessage'])) {
+                $this->addJavascript($plugin['manager']['ecMessage']);
+            }
+        }
+    }
 
 
 	/**

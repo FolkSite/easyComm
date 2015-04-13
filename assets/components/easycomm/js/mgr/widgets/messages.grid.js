@@ -281,6 +281,14 @@ Ext.extend(easyComm.grid.Messages, MODx.grid.Grid, {
             reply_text: { sortable: true, width: 200 },
             ip: { sortable: true, width: 100 }
         };
+
+        for (i in easyComm.plugin) {
+            if (typeof(easyComm.plugin[i]['getColumns']) == 'function') {
+                var pluginColumns = easyComm.plugin[i].getColumns();
+                Ext.apply(columns, pluginColumns);
+            }
+        }
+
         var fields = [this.sm];
         for (var i = 0; i < easyComm.config.message_grid_fields.length; i++) {
             var field = easyComm.config.message_grid_fields[i];

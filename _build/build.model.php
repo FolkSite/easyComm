@@ -41,6 +41,27 @@ rrmdir($sources['model'] . PKG_NAME_LOWER . '/mysql');
 $generator->parseSchema($sources['xml'], $sources['model']);
 
 $modx->log(modX::LOG_LEVEL_INFO, 'Model generated.');
+
+add_plugins_call($sources['model'] . PKG_NAME_LOWER, array(
+    'ecMessage',
+));
+
 if (!XPDO_CLI_MODE) {
 	echo '</pre>';
+}
+
+/********************************************************/
+function add_plugins_call($dir, $classes = array()) {
+    foreach ($classes as $name) {
+        $file = $dir . '/mysql/' . strtolower($name) . '.map.inc.php';
+        if (file_exists($file)) {
+            file_put_contents($file, str_replace('				', '', "\n" . '
+				if (!class_exists(\'easyCommPlugins\') || !is_object($this->easyCommPlugins)) {
+					require_once (dirname(dirname(__FILE__)) . \'/easycommplugins.class.php\');
+					$this->easyCommPlugins = new easyCommPlugins($this, array());
+				}
+				$xpdo_meta_map[\'' . $name . '\'] = $this->easyCommPlugins->loadMap(\'' . $name . '\', $xpdo_meta_map[\'' . $name . '\']);')
+                , FILE_APPEND);
+        }
+    }
 }

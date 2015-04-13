@@ -17,6 +17,13 @@ easyComm.window.getMessageWindowFields = function (config) {
         extended: { xtype: 'textarea', anchor: '99%', allowBlank: true }
     };
 
+    for (i in easyComm.plugin) {
+        if (typeof(easyComm.plugin[i]['getFields']) == 'function') {
+            var pluginFields = easyComm.plugin[i].getFields();
+            Ext.apply(availableFields, pluginFields);
+        }
+    }
+
     var tabs = [];
     for (var tab_layout in easyComm.config.message_window_layout) {
         if (easyComm.config.message_window_layout.hasOwnProperty(tab_layout)) {
