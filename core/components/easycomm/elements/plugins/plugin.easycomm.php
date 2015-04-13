@@ -52,10 +52,10 @@ switch ($modx->event->name) {
         $fieldsConfig = '
             easyComm.config.thread_fields = ' . json_encode($easyComm->getThreadFields()) . ';
             easyComm.config.thread_grid_fields = ' . json_encode($easyComm->getThreadGridFields()) . ';
-            easyComm.config.thread_window_fields = ' . json_encode($this->easyComm->getThreadWindowFields()) . ';
+            easyComm.config.thread_window_fields = ' . json_encode($easyComm->getThreadWindowFields()) . ';
             easyComm.config.message_fields = ' . json_encode($easyComm->getMessageFields()) . ';
             easyComm.config.message_grid_fields = ' . json_encode($easyComm->getMessageGridFields()) . ';
-            easyComm.config.message_window_layout = ' . $this->easyComm->getMessageWindowLayout() . ';
+            easyComm.config.message_window_layout = ' . $easyComm->getMessageWindowLayout() . ';
         ';
 
         if ($modx->getCount('modPlugin', array('name' => 'AjaxManager', 'disabled' => false))) {

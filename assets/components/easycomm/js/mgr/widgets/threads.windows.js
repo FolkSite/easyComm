@@ -4,6 +4,9 @@ easyComm.window.getThreadWindowFields = function (config, isCreate) {
         name: {xtype: 'textfield', anchor: '99%',allowBlank: false},
         title: {xtype: 'textfield', anchor: '99%',allowBlank: true},
         extended: {xtype: 'textarea', anchor: '99%',allowBlank: true},
+        count: {xtype: 'displayfield', anchor: '99%'},
+        message_last: {xtype: 'displayfield', anchor: '99%'},
+        message_last_date: {xtype: 'displayfield', anchor: '99%'},
         rating_simple: {xtype: 'displayfield', anchor: '99%'},
         rating_wilson: {xtype: 'displayfield', anchor: '99%'}
     }
