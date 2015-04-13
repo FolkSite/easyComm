@@ -25,8 +25,10 @@ abstract class easyCommMainController extends modExtraManagerController {
 			easyComm.config.connector_url = "' . $this->easyComm->config['connectorUrl'] . '";
 			easyComm.config.thread_fields = ' . json_encode($this->easyComm->getThreadFields()) . ';
 			easyComm.config.thread_grid_fields = ' . json_encode($this->easyComm->getThreadGridFields()) . ';
+			easyComm.config.thread_window_fields = ' . json_encode($this->easyComm->getThreadWindowFields()) . ';
 			easyComm.config.message_fields = ' . json_encode($this->easyComm->getMessageFields()) . ';
 			easyComm.config.message_grid_fields = ' . json_encode($this->easyComm->getMessageGridFields()) . ';
+			easyComm.config.message_window_layout = ' . $this->easyComm->getMessageWindowLayout() . ';
 		</script>
 		');
 

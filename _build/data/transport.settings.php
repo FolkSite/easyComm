@@ -27,9 +27,19 @@ $tmp = array(
         'value' => 'id,resource,name,title,count,rating_simple,rating_wilson',
         'area' => 'ec_main',
     ),
+    'thread_window_fields' => array(
+        'xtype' => 'textfield',
+        'value' => 'resource,name,title,rating_simple,rating_wilson',
+        'area' => 'ec_main',
+    ),
     'message_grid_fields' => array(
         'xtype' => 'textfield',
         'value' => 'id,thread,subject,date,user_name,user_email,user_contacts,rating,text,reply_author,reply_text,ip',
+        'area' => 'ec_main',
+    ),
+    'message_window_layout' => array(
+        'xtype' => 'textfield',
+        'value' => '{"main": {"name": "main","columns": {"column0":["user_name","user_email"],"column1":["date","user_contacts"]},"fields": ["subject","rating","text","published"]},"reply":{"name": "reply", "columns": {}, "fields": ["reply_author","reply_text","notify","notify_date"]},"settings":{"name": "settings", "columns": {}, "fields": [ "thread","ip","extended"]}}',
         'area' => 'ec_main',
     ),
 

@@ -432,6 +432,14 @@ class easyComm {
         return array_values(array_intersect($grid_fields, $fields ));
     }
 
+    public function getThreadWindowFields(){
+        $fields = array_keys($this->modx->getFields('ecThread'));
+
+        $window_fields = $this->modx->getOption('ec_thread_window_fields');
+        $window_fields = array_map('trim', explode(',',$window_fields));
+        return array_values(array_intersect($window_fields, $fields ));
+    }
+
     /**
      * This method returns the list of message fields.
      * @return array
@@ -449,5 +457,9 @@ class easyComm {
         $grid_fields = $this->modx->getOption('ec_message_grid_fields');
         $grid_fields = array_map('trim', explode(',',$grid_fields));
         return array_values(array_intersect($grid_fields, $fields ));
+    }
+
+    public function getMessageWindowLayout(){
+        return $this->modx->getOption('ec_message_window_layout');
     }
 }

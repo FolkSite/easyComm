@@ -48,6 +48,7 @@ $_lang['ec_message_user_name'] = 'Автор';
 $_lang['ec_message_user_email'] = 'Эл. почта';
 $_lang['ec_message_user_contacts'] = 'Контакты';
 $_lang['ec_message_text'] = 'Текст';
+$_lang['ec_message_published'] = 'Опубликовано';
 $_lang['ec_message_reply_author'] = 'Автор ответа';
 $_lang['ec_message_reply_text'] = 'Ответ';
 $_lang['ec_message_notify'] = 'Уведомить о публикации (или ответе) пользователя по почте';

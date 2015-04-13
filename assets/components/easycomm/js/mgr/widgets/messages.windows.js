@@ -1,69 +1,98 @@
 easyComm.window.getMessageWindowFields = function (config) {
+    var availableFields = {
+        user_name: { xtype: 'textfield', anchor: '99%', allowBlank: true },
+        user_email: { xtype: 'textfield', anchor: '99%', allowBlank: true },
+        date: { xtype: 'xdatetime', anchor: '99%', allowBlank: false },
+        user_contacts: { xtype: 'textfield', anchor: '99%', allowBlank: true },
+        subject: { xtype: 'textfield', anchor: '99%', allowBlank: true },
+        rating: { xtype: 'numberfield', anchor: '99%', allowBlank: false, allowNegative: false, allowDecimals: false },
+        text: { xtype: 'textarea', anchor: '99%', allowBlank: true, height: 120 },
+        published: { xtype: 'xcheckbox', anchor: '99%', allowBlank: true },
+        reply_author: { xtype: 'textfield', anchor: '99%', allowBlank: true },
+        reply_text: { xtype: 'textarea', anchor: '99%', allowBlank: true, height: 200 },
+        notify: { xtype: 'xcheckbox', anchor: '99%', allowBlank: true },
+        notify_date: { xtype: 'displayfield', anchor: '99%' },
+        thread: { xtype: 'ec-combo-thread', anchor: '99%', allowBlank: false },
+        ip: { xtype: 'displayfield', anchor: '99%' },
+        extended: { xtype: 'textarea', anchor: '99%', allowBlank: true }
+    };
+
+    var tabs = [];
+    for (var tab_layout in easyComm.config.message_window_layout) {
+        if (easyComm.config.message_window_layout.hasOwnProperty(tab_layout)) {
+            var fields = [];
+            var tab_layout = easyComm.config.message_window_layout[tab_layout];
+            for (var tab_layout_prop in tab_layout) {
+                if (tab_layout.hasOwnProperty(tab_layout_prop)) {
+                    switch (tab_layout_prop) {
+                        case 'fields':
+                            for(var i = 0; i < tab_layout.fields.length; i++){
+                                var f = tab_layout.fields[i];
+                                if (availableFields[f]) {
+                                    Ext.applyIf(availableFields[f], {
+                                        fieldLabel: _('ec_message_' + f),
+                                        name: f,
+                                        id: config.id + '-' + f
+                                    });
+                                    fields.push(availableFields[f]);
+                                }
+                            }
+                            break;
+                        case 'columns':
+                            var cols = [];
+                            for (var column in tab_layout.columns) {
+                                if (tab_layout.columns.hasOwnProperty(column)) {
+                                    var c = tab_layout.columns[column];
+                                    var colFields = [];
+                                    for(var i = 0; i < c.length; i++){
+                                        var f = c[i];
+                                        if (availableFields[f]) {
+                                            Ext.applyIf(availableFields[f], {
+                                                fieldLabel: _('ec_message_' + f),
+                                                name: f,
+                                                id: config.id + '-' + f
+                                            });
+                                            colFields.push(availableFields[f]);
+                                        }
+                                    }
+                                    cols.push({
+                                        columnWidth: .5,
+                                        border: false,
+                                        layout: 'form',
+                                        items: [colFields]
+                                    });
+                                }
+                            }
+                            if(cols.length > 0){
+                                fields.push({
+                                    layout: 'column',
+                                    border: false,
+                                    items: [cols]
+                                });
+                            }
+                            break;
+                    }
+                }
+            }
+            tabs.push({
+                title: _('ec_message_tab_' + tab_layout.name),
+                layout: 'anchor',
+                items: [{
+                    layout: 'form',
+                    cls: 'modx-panel',
+                    items: [fields]
+                }]
+            });
+        }
+    }
+
     return [{
         xtype: 'modx-tabs',
         defaults: {border: false, autoHeight: true},
         deferredRender: false,
         border: true,
         hideMode: 'offsets',
-        items: [{
-            title: _('ec_message_tab_main'),
-            layout: 'anchor',
-            items: [{
-                layout: 'form',
-                cls: 'modx-panel',
-                items: [{
-                    layout: 'column',
-                    border: false,
-                    items: [{
-                        columnWidth: .5,
-                        border: false,
-                        layout: 'form',
-                        items: [
-                            { xtype: 'textfield', fieldLabel: _('ec_message_user_name'), name: 'user_name', id: config.id + '-user_name', anchor: '99%', allowBlank: true },
-                            { xtype: 'textfield', fieldLabel: _('ec_message_user_email'), name: 'user_email', id: config.id + '-user_email', anchor: '99%', allowBlank: true }
-                        ]
-                    }, {
-                        columnWidth: .5,
-                        border: false,
-                        layout: 'form',
-                        items: [
-                            { xtype: 'xdatetime', fieldLabel: _('ec_message_date'), name: 'date', id: config.id + '-date', anchor: '99%', allowBlank: false },
-                            { xtype: 'textfield', fieldLabel: _('ec_message_user_contacts'), name: 'user_contacts', id: config.id + '-user_contacts', anchor: '99%', allowBlank: true }
-                        ]
-                    }]
-                },
-                    { xtype: 'textfield', fieldLabel: _('ec_message_subject'), name: 'subject', id: config.id + '-subject', anchor: '99%', allowBlank: true },
-                    { xtype: 'numberfield', fieldLabel: _('ec_message_rating'), name: 'rating', id: config.id + '-rating', anchor: '99%', allowBlank: false, allowNegative: false, allowDecimals: false },
-                    { xtype: 'textarea', fieldLabel: _('ec_message_text'), name: 'text', id: config.id + '-text', anchor: '99%', allowBlank: true, height: 120 },
-                    { xtype: 'xcheckbox', fieldLabel: _('ec_object_published'), name: 'published', id: config.id + '-published', anchor: '99%', allowBlank: true }
-                ]
-            }]
-        }, {
-            title: _('ec_message_tab_reply'),
-            layout: 'anchor',
-            items: [{
-                layout: 'form',
-                cls: 'modx-panel',
-                items: [
-                    { xtype: 'textfield', fieldLabel: _('ec_message_reply_author'), name: 'reply_author', id: config.id + '-reply_author', anchor: '99%', allowBlank: true },
-                    { xtype: 'textarea', fieldLabel: _('ec_message_reply_text'), name: 'reply_text', id: config.id + '-reply_text', anchor: '99%', allowBlank: true, height: 200 },
-                    { xtype: 'xcheckbox', fieldLabel: _('ec_message_notify'), name: 'notify', id: config.id + '-notify', anchor: '99%', allowBlank: true },
-                    { xtype: 'displayfield', fieldLabel: _('ec_message_notify_date'), name: 'notify_date', id: config.id + '-notify_date', anchor: '99%' }
-                ]
-            }]
-        }, {
-            title: _('ec_message_tab_settings'),
-            layout: 'anchor',
-            items: [{
-                layout: 'form',
-                cls: 'modx-panel',
-                items: [
-                    { xtype:'ec-combo-thread', fieldLabel: _('ec_message_thread'), name: 'thread', id: config.id + '-thread', anchor: '99%', allowBlank: false },
-                    { xtype: 'displayfield', fieldLabel: _('ec_message_ip'), name: 'ip', id: config.id + '-ip', anchor: '99%' },
-                    { xtype: 'textarea', fieldLabel: _('ec_message_extended'), name: 'extended', id: config.id + '-extended', anchor: '99%', allowBlank: true }
-                ]
-            }]
-        }]
+        items: [tabs]
     }];
 }
 

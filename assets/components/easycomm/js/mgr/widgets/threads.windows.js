@@ -1,3 +1,33 @@
+easyComm.window.getThreadWindowFields = function (config, isCreate) {
+    var availableFields = {
+        resource: {xtype: 'ec-combo-resource', anchor: '99%',allowBlank: false},
+        name: {xtype: 'textfield', anchor: '99%',allowBlank: false},
+        title: {xtype: 'textfield', anchor: '99%',allowBlank: true},
+        extended: {xtype: 'textarea', anchor: '99%',allowBlank: true},
+        rating_simple: {xtype: 'displayfield', anchor: '99%'},
+        rating_wilson: {xtype: 'displayfield', anchor: '99%'}
+    }
+
+    var hideInCreationMode = ['count', 'rating_simple', 'rating_wilson', 'message_last', 'message_last_date'];
+
+    var fields = [];
+    for (var i = 0; i < easyComm.config.thread_window_fields.length; i++) {
+        var field = easyComm.config.thread_window_fields[i];
+        if(isCreate && hideInCreationMode.in_array(field)) {
+            continue;
+        }
+        if (availableFields[field]) {
+            Ext.applyIf(availableFields[field], {
+                fieldLabel: _('ec_thread_' + field),
+                name: field,
+                id: config.id + '-' + field
+            });
+            fields.push(availableFields[field]);
+        }
+    }
+    return fields;
+}
+
 easyComm.window.CreateThread = function (config) {
     config = config || {};
     if (!config.id) {
@@ -9,7 +39,7 @@ easyComm.window.CreateThread = function (config) {
         autoHeight: true,
         url: easyComm.config.connector_url,
         action: 'mgr/thread/create',
-        fields: this.getFields(config),
+        fields: easyComm.window.getThreadWindowFields(config, true),
         keys: [{
             key: Ext.EventObject.ENTER, shift: true, fn: function () {
                 this.submit()
@@ -18,41 +48,7 @@ easyComm.window.CreateThread = function (config) {
     });
     easyComm.window.CreateThread.superclass.constructor.call(this, config);
 };
-Ext.extend(easyComm.window.CreateThread, MODx.Window, {
-
-    getFields: function (config) {
-        return [{
-            xtype:'ec-combo-resource',
-            fieldLabel: _('ec_thread_resource'),
-            name: 'resource',
-            id: config.id + '-resource',
-            anchor: '99%',
-            allowBlank: false
-        }, {
-            xtype: 'textfield',
-            fieldLabel: _('ec_thread_name'),
-            name: 'name',
-            id: config.id + '-name',
-            anchor: '99%',
-            allowBlank: false
-        }, {
-            xtype: 'textfield',
-            fieldLabel: _('ec_thread_title'),
-            name: 'title',
-            id: config.id + '-title',
-            anchor: '99%',
-            allowBlank: true
-        }, {
-            xtype: 'textarea',
-            fieldLabel: _('ec_thread_extended'),
-            name: 'extended',
-            id: config.id + '-extended',
-            anchor: '99%',
-            allowBlank: true
-        }];
-    }
-
-});
+Ext.extend(easyComm.window.CreateThread, MODx.Window, {});
 Ext.reg('ec-thread-window-create', easyComm.window.CreateThread);
 
 
@@ -67,7 +63,7 @@ easyComm.window.UpdateThread = function (config) {
         autoHeight: true,
         url: easyComm.config.connector_url,
         action: 'mgr/thread/update',
-        fields: this.getFields(config),
+        fields: easyComm.window.getThreadWindowFields(config, false),
         keys: [{
             key: Ext.EventObject.ENTER, shift: true, fn: function () {
                 this.submit()
@@ -76,55 +72,5 @@ easyComm.window.UpdateThread = function (config) {
     });
     easyComm.window.UpdateThread.superclass.constructor.call(this, config);
 };
-Ext.extend(easyComm.window.UpdateThread, MODx.Window, {
-
-    getFields: function (config) {
-        return [{
-            xtype: 'hidden',
-            name: 'id',
-            id: config.id + '-id'
-        }, {
-            xtype:'ec-combo-resource',
-            fieldLabel: _('ec_thread_resource'),
-            name: 'resource',
-            id: config.id + '-resource',
-            anchor: '99%',
-            allowBlank: false
-        }, {
-            xtype: 'textfield',
-            fieldLabel: _('ec_thread_name'),
-            name: 'name',
-            id: config.id + '-name',
-            anchor: '99%',
-            allowBlank: false
-        }, {
-            xtype: 'textfield',
-            fieldLabel: _('ec_thread_title'),
-            name: 'title',
-            id: config.id + '-title',
-            anchor: '99%',
-            allowBlank: true
-        }, {
-            xtype: 'textarea',
-            fieldLabel: _('ec_thread_extended'),
-            name: 'extended',
-            id: config.id + '-extended',
-            anchor: '99%',
-            allowBlank: true
-        }, {
-            xtype: 'displayfield',
-            fieldLabel: _('ec_thread_rating_simple'),
-            name: 'rating_simple',
-            id: config.id + '-rating_simple',
-            anchor: '99%'
-        }, {
-            xtype: 'displayfield',
-            fieldLabel: _('ec_thread_rating_wilson'),
-            name: 'rating_wilson',
-            id: config.id + '-rating_wilson',
-            anchor: '99%'
-        }];
-    }
-
-});
+Ext.extend(easyComm.window.UpdateThread, MODx.Window, {});
 Ext.reg('ec-thread-window-update', easyComm.window.UpdateThread);
