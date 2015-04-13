@@ -49,6 +49,16 @@ switch ($modx->event->name) {
 
         $modx->controller->addCss($url . 'css/mgr/main.css');
 
+        // TODO: разобраться, почему без этого не работает подключение плагинов
+        $modx->newObject('ecMessage');
+
+        $pluginsJS = $easyComm->getPluginsJS();
+        if(!empty($pluginsJS)){
+            foreach($pluginsJS as $js) {
+                $modx->controller->addJavascript($js);
+            }
+        }
+
         $fieldsConfig = '
             easyComm.config.thread_fields = ' . json_encode($easyComm->getThreadFields()) . ';
             easyComm.config.thread_grid_fields = ' . json_encode($easyComm->getThreadGridFields()) . ';

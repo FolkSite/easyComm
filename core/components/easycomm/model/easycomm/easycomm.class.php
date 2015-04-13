@@ -462,4 +462,22 @@ class easyComm {
     public function getMessageWindowLayout(){
         return $this->modx->getOption('ec_message_window_layout');
     }
+
+    /**
+     * Loads additional scripts for message form from easyComm plugins
+     *
+     * @return void
+     * */
+    public function getPluginsJS() {
+        $result = array();
+        if(!empty($this->modx->easyCommPlugins)) {
+            foreach ($this->modx->easyCommPlugins->plugins as $plugin) {
+                if (!empty($plugin['manager']['ecMessage'])) {
+                    $result[] = $plugin['manager']['ecMessage'];
+                }
+            }
+        }
+        return $result;
+    }
+
 }
