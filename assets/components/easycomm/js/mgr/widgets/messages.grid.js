@@ -270,6 +270,7 @@ Ext.extend(easyComm.grid.Messages, MODx.grid.Grid, {
         var columns = {
             id: { sortable: true, width: 70 },
             thread: { sortable: true, width: 100 },
+            thread_name: { sortable: true, width: 100 },
             subject: { sortable: true, width: 150 },
             date: { sortable: true, width: 100 },
             user_name: { sortable: true, width: 100 },
