@@ -2,7 +2,7 @@ easyComm.window.getMessageWindowFields = function (config) {
     var availableFields = {
         user_name: { xtype: 'textfield', anchor: '99%', allowBlank: true },
         user_email: { xtype: 'textfield', anchor: '99%', allowBlank: true },
-        date: { xtype: 'xdatetime', anchor: '99%', allowBlank: false },
+        date: { xtype: 'xdatetime', anchor: '99%', allowBlank: false, dateFormat: MODx.config.manager_date_format, timeFormat: MODx.config.manager_time_format, startDay: parseInt(MODx.config.manager_week_start) },
         user_contacts: { xtype: 'textfield', anchor: '99%', allowBlank: true },
         subject: { xtype: 'textfield', anchor: '99%', allowBlank: true },
         rating: { xtype: 'numberfield', anchor: '99%', allowBlank: false, allowNegative: false, allowDecimals: false },
