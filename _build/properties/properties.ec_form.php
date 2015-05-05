@@ -23,6 +23,15 @@ $tmp = array(
         'type' => 'textfield',
         'value' => 'address',
     ),
+    'autoPublish' => array(
+        'type' => 'list',
+        'options' => array(
+            array('text' => 'No', 'value' => ''),
+            array('text' => 'Only logged', 'value' => 'OnlyLogged'),
+            array('text' => 'All', 'value' => 'All'),
+        ),
+        'value' => ''
+    ),
     'tplForm' => array(
 		'type' => 'textfield',
 		'value' => 'tpl.ecForm',

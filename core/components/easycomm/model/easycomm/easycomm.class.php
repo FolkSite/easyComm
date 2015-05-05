@@ -143,6 +143,7 @@ class easyComm {
 
         $requiredFields = array_map('trim', explode(',', $this->config['requiredFields']));
         $requiredFields = array_unique(array_merge($requiredFields, array('thread')));
+
         $allowedFields = array_map('trim', explode(',', $this->config['allowedFields']));
         $allowedFields = array_unique(array_merge($allowedFields, $requiredFields));
 
@@ -157,6 +158,19 @@ class easyComm {
 
         if (!empty($fields['thread']) && $thread = $this->modx->getObject('ecThread', array('name' => $fields['thread']))) {
             $fields['thread'] = $thread->get('id');
+        }
+
+        if(!empty($this->config['autoPublish'])) {
+            switch($this->config['autoPublish']) {
+                case 'OnlyLogged':
+                    if ($this->modx->user->hasSessionContext($this->modx->context->get('key'))) {
+                        $fields['published'] = 1;
+                    }
+                    break;
+                case 'All':
+                    $fields['published'] = 1;
+                    break;
+            }
         }
 
         $response = $this->runProcessor('web/message/create', $fields);
