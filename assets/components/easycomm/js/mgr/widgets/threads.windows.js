@@ -14,6 +14,9 @@ easyComm.window.getThreadWindowFields = function (config, isCreate) {
     var hideInCreationMode = ['count', 'rating_simple', 'rating_wilson', 'message_last', 'message_last_date'];
 
     var fields = [];
+    if(!isCreate){
+        fields.push({ xtype: 'hidden', name: 'id', id: config.id + '-id' });
+    }
     for (var i = 0; i < easyComm.config.thread_window_fields.length; i++) {
         var field = easyComm.config.thread_window_fields[i];
         if(isCreate && hideInCreationMode.in_array(field)) {
