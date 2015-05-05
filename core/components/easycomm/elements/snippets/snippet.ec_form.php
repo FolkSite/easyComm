@@ -37,4 +37,13 @@ $data = array(
     'antispam_field' => $modx->getOption('antispamField', $scriptProperties)
 );
 
+if ($modx->user->hasSessionContext($modx->context->get('key'))) {
+    $profile = $modx->user->getOne('Profile');
+    $data['user_name'] = $profile->get('fullname');
+    if(empty($data['user_name'])) {
+        $data['user_name'] = $modx->user->get('username');
+    }
+    $data['user_email'] = $profile->get('email');
+}
+
 return $modx->getChunk($tplForm, $data);
