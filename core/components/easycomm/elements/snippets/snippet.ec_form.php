@@ -14,7 +14,7 @@ if(empty($threadName)) {
 }
 $formId = $modx->getOption('formId', $scriptProperties, '');
 if(empty($formId)) {
-    $formId = $thread;
+    $formId = $threadName;
     $scriptProperties['formId'] = $formId;
 }
 
