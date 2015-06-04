@@ -9,6 +9,8 @@ class easyCommMessageDeleteProcessor extends modObjectProcessor {
 	public $languageTopics = array('easycomm');
 	//public $permission = 'delete';
 
+    public $beforeSaveEvent = 'OnBeforeEcMessageDelete';
+    public $afterSaveEvent = 'OnEcMessageDelete';
 
 	/**
 	 * @return array|string

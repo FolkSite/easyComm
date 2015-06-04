@@ -9,6 +9,9 @@ class easyCommMessageUpdateProcessor extends modObjectUpdateProcessor {
 	public $languageTopics = array('easycomm');
 	//public $permission = 'save';
 
+    public $beforeSaveEvent = 'OnBeforeEcMessageSave';
+    public $afterSaveEvent = 'OnEcMessageSave';
+
     /** @var ecMessage $object */
     public $object;
 

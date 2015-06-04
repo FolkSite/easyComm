@@ -5,16 +5,6 @@ if (!$easyComm = $modx->getService('easyComm', 'easyComm', $modx->getOption('ec_
     return 'Could not load easyComm class!';
 }
 
-/* @var string $thread */
-$thread = $modx->getOption('thread', $scriptProperties, '');
-if(empty($thread)) {
-    $thread = 'resource-'.$modx->resource->get('id');
-}
-
-/* @var MODx $modx */
-/* @var ecThread $thread */
-$thread = $modx->getObject('ecThread', array('name' => $thread));
-
 /* @var pdoFetch $pdoFetch */
 $fqn = $modx->getOption('pdoFetch.class', null, 'pdotools.pdofetch', true);
 if ($pdoClass = $modx->loadClass($fqn, '', false, true)) {
@@ -30,6 +20,23 @@ else {
 $pdoFetch->addTime('pdoTools loaded');
 $fastMode = !empty($fastMode);
 $outputSeparator = $modx->getOption('outputSeparator', $scriptProperties, "\n");
+
+/* @var string $thread */
+$thread = $modx->getOption('thread', $scriptProperties, '');
+if(empty($thread)) {
+    $thread = 'resource-'.$modx->resource->get('id');
+}
+
+/* @var MODx $modx */
+/* @var ecThread $thread */
+$thread = $modx->getObject('ecThread', array('name' => $thread));
+
+if(empty($thread)) {
+    if(!empty($tplEmpty)) {
+        return $pdoFetch->getChunk($tplEmpty);
+    }
+    return '';
+}
 
 $class = 'ecMessage';
 $threadClass = 'ecThread';
@@ -113,7 +120,12 @@ if (!empty($toSeparatePlaceholders)) {
     $modx->setPlaceholders($output, $toSeparatePlaceholders);
 }
 else {
-    $output = implode($outputSeparator, $output);
+    if(empty($output) && !empty($tplEmpty)) {
+        $output = $pdoFetch->getChunk($tplEmpty);
+    }
+    else {
+        $output = implode($outputSeparator, $output);
+    }
     $output .= $log;
     if (!empty($tplWrapper) && (!empty($wrapIfEmpty) || !empty($output))) {
         $data = array_merge(

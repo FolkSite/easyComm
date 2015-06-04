@@ -18,6 +18,7 @@ $_lang['easycomm_prop_tplUpdateEmailUser'] = 'Чанк с шаблоном email
 
 $_lang['easycomm_prop_tpl'] = 'Чанк оформления сообщения в списке';
 $_lang['easycomm_prop_tplWrapper'] = 'Чанк обертка';
+$_lang['easycomm_prop_tplEmpty'] = 'Чанк, который будет показан, если результат пустой';
 $_lang['easycomm_prop_toPlaceholder'] = 'Если указан этот параметр, то результат будет сохранен в плейсхолдер, вместо прямого вывода на странице.';
 
 $_lang['easycomm_prop_tplForm'] = 'Чанк с шаблоном формы';

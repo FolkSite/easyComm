@@ -9,6 +9,8 @@ class easyCommMessageUnDeleteProcessor extends modObjectProcessor {
 	public $languageTopics = array('easycomm');
 	//public $permission = 'undelete';
 
+    public $beforeSaveEvent = 'OnBeforeEcMessageUndelete';
+    public $afterSaveEvent = 'OnEcMessageUndelete';
 
 	/**
 	 * @return array|string

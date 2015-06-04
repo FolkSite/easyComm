@@ -44,11 +44,85 @@ easyComm.combo.MessageThread = function(config) {
 Ext.extend(easyComm.combo.MessageThread,MODx.combo.ComboBox);
 Ext.reg('ec-combo-thread',easyComm.combo.MessageThread);
 
-easyComm.utils.renderBoolean = function (val, props, row) {
+
+MODx.panel.easyCommImageField = function(config) {
+    config = config || {};
+    config.filemanager_url = MODx.config.filemanager_url;
+    Ext.applyIf(config,{
+        layout: 'form'
+        ,autoHeight: true
+        ,border: false
+        ,hideLabels: true
+        ,defaults: {
+            autoHeight: true
+            ,border: false
+        }
+        ,items: [{
+            xtype: 'modx-combo-browser'
+            ,browserEl: config.id + '-browser'
+            //,name: 'browser'+config.id
+            ,name: config.name
+            ,id: config.id + '-browser'
+            //,id: 'browser'+config.id
+            ,triggerClass: 'x-form-image-trigger'
+            //,value: config.relativeValue
+            ,hideFiles: true
+            ,allowedFileTypes: config.allowedFileTypes || 'jpg,jpeg,png,gif'
+            ,source: config.source || MODx.config.default_media_source
+            ,openTo: config.openTo || ''
+            ,hideSourceCombo: true
+            ,listeners: {
+                'select': {fn:function(data) {
+                    //Ext.getCmp(this.config.id + '-browser').setValue(data.relativeUrl);
+                    this.updatePreview(this.config.id, config.source, data.url);
+                    this.fireEvent('select',data);
+                },scope:this}
+                ,'change': {fn:function(cb,nv) {
+                    this.updatePreview(this.config.id, config.source, nv);
+                    this.fireEvent('select',{
+                        relativeUrl: nv
+                        ,url: nv
+                    });
+                },scope:this}
+            }
+        },{
+            id: config.id + '-preview',
+            style: {margin: '10px 0'}
+            ,listeners: {
+                'afterrender': {fn:function(comp) {
+                    this.updatePreview(config.id, config.source, Ext.getCmp(config.id + '-browser').getValue());
+                    this.fireEvent('render',comp);
+                },scope:this}
+            }
+        }]
+    });
+    MODx.panel.easyCommImageField.superclass.constructor.call(this,config);
+    this.addEvents({select: true});
+};
+Ext.extend(MODx.panel.easyCommImageField, MODx.Panel, {
+    updatePreview: function(id, source, url) {
+        var previewPanel = Ext.get(id + '-preview');
+        if (Ext.isEmpty(url)) {
+            previewPanel.update('');
+        } else {
+            previewPanel.update('<a target="_blank" href="' + MODx.config.base_url + url + '"><img src="'+MODx.config.connectors_url+'system/phpthumb.php?h=150&w=150&src='+url+'&source=' + source + '" /></a>');
+        }
+    }
+});
+Ext.reg('ec-image-field',MODx.panel.easyCommImageField);
+
+easyComm.utils.renderBoolean = function (val, cell, row) {
 	return val
 		? String.format('<span class="green">{0}</span>', _('yes'))
 		: String.format('<span class="red">{0}</span>', _('no'));
 };
+
+easyComm.utils.renderImage = function(val, cell, row) {
+    return val ?
+        '<a target="_blank" href="' + MODx.config.base_url + val + '"><img src="'+MODx.config.connectors_url+'system/phpthumb.php?h=50&w=150&src='+val+'&source=' + MODx.config.default_media_source + '" /></a>'
+        :
+        '';
+}
 
 easyComm.utils.renderRating = function(val, props, row) {
     return val;

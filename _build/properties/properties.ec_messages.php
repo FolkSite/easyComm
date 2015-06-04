@@ -19,6 +19,10 @@ $tmp = array(
         'type' => 'textfield',
         'value' => '',
     ),
+    'tplEmpty' => array(
+        'type' => 'textfield',
+        'value' => '',
+    ),
     'sortby' => array(
 		'type' => 'textfield',
 		'value' => 'date',

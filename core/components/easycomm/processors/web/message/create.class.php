@@ -9,6 +9,9 @@ class easyCommMessageCreateProcessor extends modObjectCreateProcessor {
 	public $languageTopics = array('easycomm');
 	//public $permission = 'create';
 
+    public $beforeSaveEvent = 'OnBeforeEcMessageSave';
+    public $afterSaveEvent = 'OnEcMessageSave';
+
     /** @var ecMessage $object */
     public $object;
 
