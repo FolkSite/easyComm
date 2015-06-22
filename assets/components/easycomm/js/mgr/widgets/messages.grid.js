@@ -98,7 +98,8 @@ Ext.extend(easyComm.grid.Messages, MODx.grid.Grid, {
         });
         w.reset();
         w.setValues({
-            published: true
+            published: true,
+            reply_author: easyComm.config.default_reply_author
         });
         w.show(e.target);
     },
@@ -135,6 +136,11 @@ Ext.extend(easyComm.grid.Messages, MODx.grid.Grid, {
                         });
                         w.reset();
                         w.setValues(r.object);
+                        if(!r.object.reply_author && easyComm.config.default_reply_author) {
+                            w.setValues({
+                                reply_author: easyComm.config.default_reply_author
+                            });
+                        }
                         w.show(e.target);
                     }, scope: this
                 }

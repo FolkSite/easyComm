@@ -27,6 +27,9 @@ $_lang['setting_ec_message_grid_fields_desc'] = 'Поля, которые буд
 $_lang['setting_ec_message_window_layout'] = 'Разметка окна редактирования сообщения';
 $_lang['setting_ec_message_window_layout_desc'] = 'Строка в JSON формате';
 
+$_lang['setting_ec_auto_reply_author'] = 'Автоматически заполнять Автор ответа';
+$_lang['setting_ec_auto_reply_author_desc'] = 'При ответе на сообщение будет автоматически заполнен Автор ответа';
+
 
 $_lang['setting_ec_mail_notify_user'] = 'Отправлять уведомления пользователям';
 $_lang['setting_ec_mail_notify_user_desc'] = 'Если пользователь оставит свою электронную почту, ему будет отправлено уведомление о том, что он оставил сообщение на сайте';

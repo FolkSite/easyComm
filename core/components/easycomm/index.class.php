@@ -19,6 +19,11 @@ abstract class easyCommMainController extends modExtraManagerController {
 		$this->addCss($this->easyComm->config['cssUrl'] . 'mgr/main.css');
 		$this->addJavascript($this->easyComm->config['jsUrl'] . 'mgr/easycomm.js');
 
+        $defaultReplyAuthor = '';
+        if($this->modx->getOption('ec_auto_reply_author')) {
+            $defaultReplyAuthor = addslashes($this->modx->user->getOne('Profile')->get('fullname'));
+        }
+
 		$this->addHtml('
 		<script type="text/javascript">
 			easyComm.config = ' . $this->modx->toJSON($this->easyComm->config) . ';
@@ -29,6 +34,7 @@ abstract class easyCommMainController extends modExtraManagerController {
 			easyComm.config.message_fields = ' . json_encode($this->easyComm->getMessageFields()) . ';
 			easyComm.config.message_grid_fields = ' . json_encode($this->easyComm->getMessageGridFields()) . ';
 			easyComm.config.message_window_layout = ' . $this->easyComm->getMessageWindowLayout() . ';
+			easyComm.config.default_reply_author = "' . $defaultReplyAuthor . '";
 		</script>
 		');
 

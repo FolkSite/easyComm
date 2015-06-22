@@ -59,13 +59,19 @@ switch ($modx->event->name) {
             }
         }
 
-        $fieldsConfig = '
+        $defaultReplyAuthor = '';
+        if($modx->getOption('ec_auto_reply_author')) {
+            $defaultReplyAuthor = addslashes($modx->user->getOne('Profile')->get('fullname'));
+        }
+
+        $ecConfig = '
             easyComm.config.thread_fields = ' . json_encode($easyComm->getThreadFields()) . ';
             easyComm.config.thread_grid_fields = ' . json_encode($easyComm->getThreadGridFields()) . ';
             easyComm.config.thread_window_fields = ' . json_encode($easyComm->getThreadWindowFields()) . ';
             easyComm.config.message_fields = ' . json_encode($easyComm->getMessageFields()) . ';
             easyComm.config.message_grid_fields = ' . json_encode($easyComm->getMessageGridFields()) . ';
             easyComm.config.message_window_layout = ' . $easyComm->getMessageWindowLayout() . ';
+            easyComm.config.default_reply_author = "' . $defaultReplyAuthor . '";
         ';
 
         if ($modx->getCount('modPlugin', array('name' => 'AjaxManager', 'disabled' => false))) {
@@ -73,7 +79,7 @@ switch ($modx->event->name) {
 			<script type="text/javascript">
 				easyComm.config = ' . $modx->toJSON($easyComm->config) . ';
 				easyComm.config.connector_url = "' . $easyComm->config['connectorUrl'] . '";
-				'.$fieldsConfig.'
+				'.$ecConfig.'
 				Ext.onReady(function() {
 					window.setTimeout(function() {
 						var tabs = Ext.getCmp("modx-resource-tabs");
@@ -96,7 +102,7 @@ switch ($modx->event->name) {
 			<script type="text/javascript">
 				easyComm.config = ' . $modx->toJSON($easyComm->config) . ';
 				easyComm.config.connector_url = "' . $easyComm->config['connectorUrl'] . '";
-				'.$fieldsConfig.'
+				'.$ecConfig.'
 				Ext.ComponentMgr.onAvailable("modx-resource-tabs", function() {
 					this.on("beforerender", function() {
 						this.add({

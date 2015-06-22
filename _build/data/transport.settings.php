@@ -43,6 +43,12 @@ $tmp = array(
         'area' => 'ec_main',
     ),
 
+    'auto_reply_author' => array(
+        'xtype' => 'combo-boolean',
+        'value' => false,
+        'area' => 'ec_main',
+    ),
+
     'mail_notify_user' => array(
         'xtype' => 'combo-boolean',
         'value' => true,

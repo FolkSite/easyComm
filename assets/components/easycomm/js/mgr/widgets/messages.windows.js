@@ -1,4 +1,4 @@
-easyComm.window.getMessageWindowFields = function (config) {
+easyComm.window.getMessageWindowFields = function (config, isCreate) {
     var availableFields = {
         user_name: { xtype: 'textfield', anchor: '99%', allowBlank: true },
         user_email: { xtype: 'textfield', anchor: '99%', allowBlank: true },
@@ -93,14 +93,20 @@ easyComm.window.getMessageWindowFields = function (config) {
         }
     }
 
-    return [{
+    var result = [];
+    if(!isCreate) {
+        result.push({ xtype: 'hidden', name: 'id', id: config.id + '-id' });
+    }
+
+    result.push({
         xtype: 'modx-tabs',
         defaults: {border: false, autoHeight: true},
         deferredRender: false,
         border: true,
         hideMode: 'offsets',
         items: [tabs]
-    }];
+    });
+    return result;
 }
 
 easyComm.window.CreateMessage = function (config) {
@@ -114,7 +120,7 @@ easyComm.window.CreateMessage = function (config) {
         autoHeight: true,
         url: easyComm.config.connector_url,
         action: 'mgr/message/create',
-        fields: this.getFields(config),
+        fields: easyComm.window.getMessageWindowFields(config, true),
         keys: [{
             key: Ext.EventObject.ENTER, shift: true, fn: function () {
                 this.submit()
@@ -123,15 +129,7 @@ easyComm.window.CreateMessage = function (config) {
     });
     easyComm.window.CreateMessage.superclass.constructor.call(this, config);
 };
-Ext.extend(easyComm.window.CreateMessage, MODx.Window, {
-    getFields: function (config) {
-        return [
-            {
-                items: easyComm.window.getMessageWindowFields(config)
-            }
-        ];
-    }
-});
+Ext.extend(easyComm.window.CreateMessage, MODx.Window, {});
 Ext.reg('ec-message-window-create', easyComm.window.CreateMessage);
 
 
@@ -146,7 +144,8 @@ easyComm.window.UpdateMessage = function (config) {
         autoHeight: true,
         url: easyComm.config.connector_url,
         action: 'mgr/message/update',
-        fields: this.getFields(config),
+        //fields: this.getFields(config),
+        fields: easyComm.window.getMessageWindowFields(config, false),
         keys: [{
             key: Ext.EventObject.ENTER, shift: true, fn: function () {
                 this.submit()
@@ -155,14 +154,5 @@ easyComm.window.UpdateMessage = function (config) {
     });
     easyComm.window.UpdateMessage.superclass.constructor.call(this, config);
 };
-Ext.extend(easyComm.window.UpdateMessage, MODx.Window, {
-    getFields: function (config) {
-        return [
-            { xtype: 'hidden', name: 'id', id: config.id + '-id' },
-            {
-                items: easyComm.window.getMessageWindowFields(config)
-            }
-        ];
-    }
-});
+Ext.extend(easyComm.window.UpdateMessage, MODx.Window, {});
 Ext.reg('ec-message-window-update', easyComm.window.UpdateMessage);
