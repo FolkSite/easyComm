@@ -21,21 +21,21 @@ $pdoFetch->addTime('pdoTools loaded');
 $fastMode = !empty($fastMode);
 $outputSeparator = $modx->getOption('outputSeparator', $scriptProperties, "\n");
 
-/* @var string $thread */
-$thread = $modx->getOption('thread', $scriptProperties, '');
-if(empty($thread)) {
-    $thread = 'resource-'.$modx->resource->get('id');
+/* @var string $threads */
+$threads = $modx->getOption('threads', $scriptProperties, '');
+if($threads == '*') {
+    $threads = array();
 }
-
-/* @var MODx $modx */
-/* @var ecThread $thread */
-$thread = $modx->getObject('ecThread', array('name' => $thread));
-
-if(empty($thread)) {
-    if(!empty($tplEmpty)) {
-        return $pdoFetch->getChunk($tplEmpty);
+else {
+    if(empty($threads)) {
+        /* @var string $thread */
+        $threads = $modx->getOption('thread', $scriptProperties, '');
+        if(empty($threads)) {
+            $threads = 'resource-'.$modx->resource->get('id');
+        }
     }
-    return '';
+    $threads = explode(",", $threads);
+    $threads = array_map('trim', $threads);
 }
 
 $class = 'ecMessage';
@@ -46,7 +46,15 @@ $select = array(
     $threadClass => $modx->getSelectColumns($threadClass, 'Thread', 'thread_'),
 );
 $innerJoin = array($threadClass => array('alias' => 'Thread', 'on' => "`$class`.`thread` = `Thread`.`id`"));
-$where = array('`Thread`.`name`' => $thread->get('name'));
+
+$where = array();
+if(count($threads) == 1) {
+    $where['`Thread`.`name`'] = $threads[0];
+}
+if(count($threads) > 1) {
+    $where['`Thread`.`name`:IN'] = $threads;
+}
+
 
 if(empty($showUnpublished)) {
     $where[$class.'.published'] = 1;

@@ -25,6 +25,7 @@ $_lang['easycomm_prop_tplForm'] = 'Чанк с шаблоном формы';
 $_lang['easycomm_prop_tplSuccess'] = 'Чанк с шаблоном об успешной отправке сообщения';
 $_lang['easycomm_prop_formId'] = 'Идентификатор формы, по умолчанию совпадает с thread, нужен для того, что бы на одной странице можно было разместить несколько форм';
 $_lang['easycomm_prop_thread'] = 'Уникальное имя цепочки сообщений, по умолчанию resource-[[*id]]. Используйте латинские символы';
+$_lang['easycomm_prop_threads'] = 'Список цепочек через запятую, приоритет выше чем у параметра thread. Используйте * для выбора всех цепочек';
 $_lang['easycomm_prop_allowedFields'] = 'Список разрешенных полей для отправки';
 $_lang['easycomm_prop_requiredFields'] = 'Список обязательных полей';
 $_lang['easycomm_prop_antispamField'] = 'Имя поля, используемого как антиспам';

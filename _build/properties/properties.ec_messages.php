@@ -7,6 +7,10 @@ $tmp = array(
         'type' => 'textfield',
         'value' => '',
     ),
+    'threads' => array(
+        'type' => 'textfield',
+        'value' => '',
+    ),
     'subject' => array(
         'type' => 'textfield',
         'value' => '',

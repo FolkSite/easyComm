@@ -153,6 +153,19 @@ easyComm.window.UpdateMessage = function (config) {
         }]
     });
     easyComm.window.UpdateMessage.superclass.constructor.call(this, config);
+
+/*
+    this.on('activate',function(w,e) {
+        if(MODx.loadRTE){
+            MODx.loadRTE(config.id + '-reply_text');
+        }
+    },this);
+    this.on('deactivate',function(w,e) {
+        //tinyMCE.execCommand('mceRemoveControl',true,'question_text');
+        //tinyMCE.execCommand('mceRemoveControl',true,'answer_text');
+    },this);
+*/
+
 };
 Ext.extend(easyComm.window.UpdateMessage, MODx.Window, {});
 Ext.reg('ec-message-window-update', easyComm.window.UpdateMessage);
