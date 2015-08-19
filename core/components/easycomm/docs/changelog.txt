@@ -1,5 +1,8 @@
 Changelog for easycomm.
 
+1.2.3-pl
+==============
+- Добавлен сниппет ecMessagesCount
 
 1.2.2-pl
 ==============

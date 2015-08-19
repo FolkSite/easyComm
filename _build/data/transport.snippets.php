@@ -7,6 +7,10 @@ $tmp = array(
 		'file' => 'ec_messages',
 		'description' => '',
 	),
+    'ecMessagesCount' => array(
+        'file' => 'ec_messages_count',
+        'description' => '',
+    ),
     'ecForm' => array(
         'file' => 'ec_form',
         'description' => '',
