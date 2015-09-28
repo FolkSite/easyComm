@@ -136,14 +136,15 @@ else {
     }
     $output .= $log;
     if (!empty($tplWrapper) && (!empty($wrapIfEmpty) || !empty($output))) {
-        $data = array_merge(
-            array('output' => $output),
-            $thread->toArray(),
-            array(
-                'rating_wilson_percent' => number_format($thread->get('rating_wilson') / $ratingMax * 100, 3),
-                'rating_simple_percent' => number_format($thread->get('rating_simple') / $ratingMax * 100, 3),
-            )
-        );
+        $data = array('output' => $output);
+        if(count($threads) == 1) {
+            $data = array_merge($data, $threads[0]->toArray(),
+                array(
+                    'rating_wilson_percent' => number_format($threads[0]->get('rating_wilson') / $ratingMax * 100, 3),
+                    'rating_simple_percent' => number_format($threads[0]->get('rating_simple') / $ratingMax * 100, 3),
+                )
+            );
+        }
         $output = $pdoFetch->getChunk($tplWrapper, $data, $pdoFetch->config['fastMode']);
     }
     if (!empty($toPlaceholder)) {
