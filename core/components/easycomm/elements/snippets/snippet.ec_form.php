@@ -6,6 +6,18 @@ if (!$easyComm = $modx->getService('easyComm', 'easyComm', $modx->getOption('ec_
 }
 $easyComm->initialize($modx->context->key, $scriptProperties);
 
+$fqn = $modx->getOption('pdoTools.class', null, 'pdotools.pdotools', true);
+if ($pdoClass = $modx->loadClass($fqn, '', false, true)) {
+    $pdoTools = new $pdoClass($modx, $scriptProperties);
+}
+elseif ($pdoClass = $modx->loadClass($fqn, MODX_CORE_PATH . 'components/pdotools/model/', false, true)) {
+    $pdoTools = new $pdoClass($modx, $scriptProperties);
+}
+else {
+    $modx->log(modX::LOG_LEVEL_ERROR, 'Could not load pdoTools from "MODX_CORE_PATH/components/pdotools/model/".');
+    return false;
+}
+
 $tplForm = $modx->getOption('tplForm', $scriptProperties, 'tpl.ecForm');
 $threadName = $modx->getOption('thread', $scriptProperties, '');
 if(empty($threadName)) {
@@ -46,4 +58,4 @@ if ($modx->user->hasSessionContext($modx->context->get('key'))) {
     $data['user_email'] = $profile->get('email');
 }
 
-return $modx->getChunk($tplForm, $data);
+return $pdoTools->getChunk($tplForm, $data);
