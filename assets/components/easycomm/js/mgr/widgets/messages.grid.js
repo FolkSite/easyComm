@@ -62,17 +62,21 @@ Ext.extend(easyComm.grid.Messages, MODx.grid.Grid, {
             //m.push({text: _('ticket_comment_viewauthor'),handler: this.viewAuthor});
             //m.push({text: row.published ? _('ticket_comment_unpublish') : _('ticket_comment_publish'),handler: this.publishComment});
             //m.push('-');
-            m.push({text: '<i class="x-menu-item-icon icon icon-eye"></i>'+_('ec_messages_publish') ,handler: this.publishMessage});
-            m.push({text: '<i class="x-menu-item-icon icon icon-eye-slash"></i>'+_('ec_messages_unpublish') ,handler: this.unpublishMessage});
+            m.push({text: '<i class="x-menu-item-icon icon icon-power-off"></i>'+_('ec_messages_publish') ,handler: this.publishMessage});
+            m.push({text: '<i class="x-menu-item-icon icon icon-power-off"></i>'+_('ec_messages_unpublish') ,handler: this.unpublishMessage});
             m.push('-');
             m.push({text: '<i class="x-menu-item-icon icon icon-remove"></i>'+_('ec_messages_remove'),handler: this.removeMessage});
         } else {
             m.push({text: '<i class="x-menu-item-icon icon icon-edit"></i>'+_('ec_message_update'),handler: this.updateMessage});
             //m.push({text: row.published ? _('ticket_comment_unpublish') : _('ticket_comment_publish'),handler: this.publishComment});
             m.push({
-                text: row.data.published ? '<i class="x-menu-item-icon icon icon-eye-slash"></i>'+_('ec_message_unpublish') : '<i class="x-menu-item-icon icon icon-eye"></i>'+_('ec_message_publish'),
+                text: row.data.published ? '<i class="x-menu-item-icon icon icon-power-off"></i>'+_('ec_message_unpublish') : '<i class="x-menu-item-icon icon icon-power-off action-green"></i>'+_('ec_message_publish'),
                 handler: row.data.published ? this.unpublishMessage : this.publishMessage
             });
+            if(row.data.published) {
+                m.push('-');
+                m.push({text: '<i class="x-menu-item-icon icon icon-eye"></i>'+_('ec_message_view_on_site'),handler: this.viewMessage});
+            }
             m.push('-');
             m.push({
                 text: row.data.deleted ? '<i class="x-menu-item-icon icon icon-undo"></i>'+_('ec_message_undelete') : '<i class="x-menu-item-icon icon icon-trash-o"></i>'+_('ec_message_delete'),
@@ -270,6 +274,10 @@ Ext.extend(easyComm.grid.Messages, MODx.grid.Grid, {
                 }
             }
         })
+    },
+    viewMessage: function(act, btn, e) {
+        window.open(this.menu.record['preview_url'] + '#ec-' + this.menu.record['thread_name'] + '-message-' + this.menu.record['id']);
+        return false;
     },
 
     getColumns: function (config) {

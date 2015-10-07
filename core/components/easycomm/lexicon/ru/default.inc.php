@@ -65,6 +65,8 @@ $_lang['ec_messages_publish'] = 'Опубликовать сообщения';
 $_lang['ec_message_unpublish'] = 'Снять с публикации';
 $_lang['ec_messages_unpublish'] = 'Снять с публикации сообщения';
 
+$_lang['ec_message_view_on_site'] = 'Посмотреть на сайте';
+
 $_lang['ec_message_delete'] = 'Удалить сообщение';
 $_lang['ec_messages_delete'] = 'Удалить сообщения';
 $_lang['ec_message_delete_confirm'] = 'Вы уверены, что хотите удалить это сообщение? В дальнейшем его можно будет восстановить.';
