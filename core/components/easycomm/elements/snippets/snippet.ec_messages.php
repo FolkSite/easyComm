@@ -28,7 +28,6 @@ if($threads == '*') {
 }
 else {
     if(empty($threads)) {
-        /* @var string $thread */
         $threads = $modx->getOption('thread', $scriptProperties, '');
         if(empty($threads)) {
             $threads = 'resource-'.$modx->resource->get('id');
@@ -137,11 +136,12 @@ else {
     $output .= $log;
     if (!empty($tplWrapper) && (!empty($wrapIfEmpty) || !empty($output))) {
         $data = array('output' => $output);
-        if(count($threads) == 1) {
-            $data = array_merge($data, $threads[0]->toArray(),
+        if( (count($threads) == 1) && ($threadObj = $modx->getObject('ecThread', array('name' => $threads[0]))) ) {
+            $ratingMax = (float)$modx->getOption('ec_rating_max', $scriptProperties, 5);
+            $data = array_merge($data, $threadObj->toArray(),
                 array(
-                    'rating_wilson_percent' => number_format($threads[0]->get('rating_wilson') / $ratingMax * 100, 3),
-                    'rating_simple_percent' => number_format($threads[0]->get('rating_simple') / $ratingMax * 100, 3),
+                    'rating_wilson_percent' => number_format($threadObj->get('rating_wilson') / $ratingMax * 100, 3),
+                    'rating_simple_percent' => number_format($threadObj->get('rating_simple') / $ratingMax * 100, 3),
                 )
             );
         }
