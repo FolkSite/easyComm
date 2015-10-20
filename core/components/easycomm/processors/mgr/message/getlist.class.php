@@ -71,6 +71,7 @@ class easyCommMessageGetListProcessor extends modObjectGetListProcessor {
 		$array = $object->toArray();
 
         $array['preview_url'] = $this->modx->makeUrl($array['thread_resource']);
+        $array['reply_text'] = strip_tags($array['reply_text']);
 
         /*
         if(!empty($array['thread_title'])) {

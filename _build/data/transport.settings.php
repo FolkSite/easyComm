@@ -32,6 +32,11 @@ $tmp = array(
         'value' => 'resource,name,title,rating_simple,rating_wilson',
         'area' => 'ec_main',
     ),
+    /*'use_richtext' => array(
+        'xtype' => 'combo-boolean',
+        'value' => false,
+        'area' => 'ec_main',
+    ),*/
     'message_grid_fields' => array(
         'xtype' => 'textfield',
         'value' => 'id,thread_name,subject,date,user_name,user_email,user_contacts,rating,text,reply_author,reply_text,ip',

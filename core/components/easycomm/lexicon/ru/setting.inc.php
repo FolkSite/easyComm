@@ -30,6 +30,9 @@ $_lang['setting_ec_message_window_layout_desc'] = 'Строка в JSON форм
 $_lang['setting_ec_auto_reply_author'] = 'Автоматически заполнять Автор ответа';
 $_lang['setting_ec_auto_reply_author_desc'] = 'При ответе на сообщение будет автоматически заполнен Автор ответа';
 
+//$_lang['setting_ec_use_richtext'] = 'Использовать TinyMCE для поля Ответ';
+//$_lang['setting_ec_use_richtext_desc'] = 'Обязательно наличие установленного TinyMCE';
+
 
 $_lang['setting_ec_mail_notify_user'] = 'Отправлять уведомления пользователям';
 $_lang['setting_ec_mail_notify_user_desc'] = 'Если пользователь оставит свою электронную почту, ему будет отправлено уведомление о том, что он оставил сообщение на сайте';
