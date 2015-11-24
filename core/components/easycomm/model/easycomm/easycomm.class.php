@@ -25,7 +25,7 @@ class easyComm {
             'assetsUrl' => $assetsUrl,
             'cssUrl' => $assetsUrl . 'css/',
             'jsUrl' => $assetsUrl . 'js/',
-            'imagesUrl' => $assetsUrl . 'images/',
+            'imgUrl' => $assetsUrl . 'img/',
             'connectorUrl' => $connectorUrl,
             'actionUrl' => $actionUrl,
 
@@ -74,6 +74,7 @@ class easyComm {
 							ctx: "'.$ctx.'"
 							,jsUrl: "'.$this->config['jsUrl'].'web/"
 							,cssUrl: "'.$this->config['cssUrl'].'web/"
+							,imgUrl: "'.$this->config['imgUrl'].'web/"
 							,actionUrl: "'.$this->config['actionUrl'].'"
 						};
 					');

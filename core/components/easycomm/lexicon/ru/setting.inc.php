@@ -2,6 +2,7 @@
 $_lang['area_ec_main'] = 'Основные';
 $_lang['area_ec_mail'] = 'Почта';
 $_lang['area_ec_rating'] = 'Оценки и рейтинг';
+$_lang['area_ec_gravatar'] = 'Gravatar';
 
 $_lang['setting_ec_show_templates'] = 'Показывать вкладку у ресурсов с перечисленными шаблонами';
 $_lang['setting_ec_show_templates_desc'] = 'Список id шаблонов через запятую, укажите *, что бы показывать у всех шаблонов';
@@ -64,3 +65,6 @@ $_lang['setting_ec_rating_max_desc'] = 'Используется для огра
 
 $_lang['setting_ec_rating_wilson_confidence'] = 'Доверительный уровень для рейтинга по Вильсону';
 $_lang['setting_ec_rating_wilson_confidence_desc'] = 'Доверительный уровень. 1.0 = 85%, 1.6 = 95%. См. <a href="http://habrahabr.ru/company/darudar/blog/143188/" target="_blank">http://habrahabr.ru/company/darudar/blog/143188/</a>';
+
+$_lang['setting_ec_gravatar_size'] = 'Размер иконки аватара';
+$_lang['setting_ec_gravatar_default'] = 'Иконка аватара по-умолчанию';

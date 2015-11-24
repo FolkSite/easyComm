@@ -107,6 +107,17 @@ $tmp = array(
         'area' => 'ec_rating',
     ),
 
+    'gravatar_size' => array(
+        'xtype' => 'textfield',
+        'value' => '50',
+        'area' => 'ec_gravatar',
+    ),
+    'gravatar_default' => array(
+        'xtype' => 'textfield',
+        'value' => '[[++site_url]]assets/components/easycomm/img/web/avatar-simple.png',
+        'area' => 'ec_gravatar',
+    ),
+
 
 );
 

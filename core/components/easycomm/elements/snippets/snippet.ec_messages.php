@@ -100,6 +100,13 @@ $pdoFetch->setConfig(array_merge($default, $scriptProperties), false);
 
 $messages = $pdoFetch->run();
 
+/* @var $tmpChunk modChunk */
+$tmpChunk = $modx->newObject('modChunk', array('name' => "tmp-".uniqid()));
+$tmpChunk->setCacheable(false);
+$gravatarDefault = $tmpChunk->process(null, $modx->getOption('ec_gravatar_default'));
+
+$gravatarSize = $modx->getOption('ec_gravatar_size', null, 50);
+
 $output = array();
 $idx = 0;
 foreach($messages as $row) {
@@ -108,6 +115,15 @@ foreach($messages as $row) {
     $row['text'] = nl2br($row['text']);
     $row['reply_text_raw'] = $row['reply_text'];
     $row['reply_text'] = nl2br($row['reply_text']);
+
+    $row['gravatar'] = $gravatarDefault;
+    if(!empty($row['user_email'])) {
+        $row['gravatar'] = 'https://www.gravatar.com/avatar/'.md5(strtolower($row['user_email'])).'?s=50';
+        if(!empty($gravatarDefault)) {
+            $row['gravatar'] .= '&d='.urlencode($gravatarDefault);
+        }
+    }
+
     $tpl = $pdoFetch->defineChunk($row);
     if (empty($tpl)) {
         $output[] = '<pre>'.$pdoFetch->getChunk('', $row).'</pre>';
