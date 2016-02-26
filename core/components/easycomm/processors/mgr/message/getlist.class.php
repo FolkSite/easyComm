@@ -33,8 +33,10 @@ class easyCommMessageGetListProcessor extends modObjectGetListProcessor {
 	 */
 	public function prepareQueryBeforeCount(xPDOQuery $c) {
         $c->leftJoin('ecThread','Thread','`ecMessage`.`thread` = `Thread`.`id`');
+        $c->leftJoin('modResource','Resource','`Thread`.`resource` = `Resource`.`id`');
         $c->select($this->modx->getSelectColumns($this->classKey, $this->classKey, ''));
         $c->select('`Thread`.`resource` as `thread_resource`,`Thread`.`name` as `thread_name`, `Thread`.`title` as `thread_title`');
+        $c->select('`Resource`.`pagetitle` as `resource_pagetitle`');
 
         $resource_id = intval($this->getProperty('resource_id'));
         if(!empty($resource_id)) {
@@ -78,6 +80,9 @@ class easyCommMessageGetListProcessor extends modObjectGetListProcessor {
             $array['thread_name'] = $array['thread_title'].' ('.$array['thread_name'].')';
         }
         */
+
+        $array['resource_pagetitle'] = '<a href="?a=resource/update&id='.$array['thread_resource'].'" target="_blank">'.$array['resource_pagetitle'].'</a>';
+
 		return $array;
 	}
 
