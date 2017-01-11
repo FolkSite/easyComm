@@ -226,12 +226,22 @@ class easyComm {
                 // Send a message to the manager.
                 if($this->modx->getOption('ec_mail_notify_manager', null, true) && !empty($this->config['tplNewEmailManager'])) {
                     $this->modx->log(modX::LOG_LEVEL_DEBUG,'easyComm: Send a message to the manager');
+
+                    // по-умолчанию получатель указан в настройке ec_mail_manager
                     $to = $this->modx->getOption('ec_mail_manager', null, '');
+                    // но параметр mailManager сниппета ecForm переопределяет получателя
+                    $properties = $thread->get('properties');
+                    if(!empty($properties['mailManager'])) {
+                        $to = $properties['mailManager'];
+                    }
+                    // если везде пусто - письма пойдут на адрес emailsender
                     if(empty($to)) {
                         $to = $this->modx->getOption('emailsender');
                     }
+
                     $subject = empty($this->config['newEmailSubjManager']) ? $this->modx->getOption('ec_mail_new_subject_manager', null, '') : $this->config['newEmailSubjManager'];
                     $subject = $this->getStringAsChunk($subject);
+
                     $body = $this->getChunk($this->config['tplNewEmailManager'], $messageData);
 
                     $this->sendEmail($to, $subject, $body);

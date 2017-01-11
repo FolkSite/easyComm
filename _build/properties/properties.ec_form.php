@@ -40,6 +40,10 @@ $tmp = array(
         'type' => 'textfield',
         'value' => 'tpl.ecForm.Success',
     ),
+    'mailManager' => array(
+        'type' => 'textfield',
+        'value' => '',
+    ),
     'newEmailSubjUser' => array(
         'type' => 'textfield',
         'value' => '',
