@@ -39,12 +39,23 @@ else {
 
 $class = 'ecMessage';
 $threadClass = 'ecThread';
+$resourceClass = 'modResource';
 // Query conditions
 $select = array(
     $class => $modx->getSelectColumns($class, $class),
     $threadClass => $modx->getSelectColumns($threadClass, 'Thread', 'thread_'),
 );
 $innerJoin = array($threadClass => array('alias' => 'Thread', 'on' => "`$class`.`thread` = `Thread`.`id`"));
+$leftJoin = array();
+
+if(!empty($resourceFields)) {
+    $resourceFields = array_merge(array('id', 'pagetitle'), explode(",", $resourceFields));
+    $resourceFields = array_map("trim", $resourceFields);
+
+    $select[$resourceClass] = $modx->getSelectColumns($resourceClass, 'Resource', 'resource_', $resourceFields);
+    $leftJoin[$resourceClass] = array('alias' => 'Resource', 'on' => "`Thread`.`resource` = `Resource`.`id`");
+}
+
 
 $where = array();
 if(count($threads) == 1) {
@@ -87,6 +98,7 @@ $default = array(
     'where' => $modx->toJSON($where),
     'select' => $modx->toJSON($select),
     'innerJoin' => $modx->toJSON($innerJoin),
+    'leftJoin' => $modx->toJSON($leftJoin),
     //'groupby' => $class.'.id',
     'return' => 'data',
     'nestedChunkPrefix' => 'ec_'

@@ -51,6 +51,10 @@ $tmp = array(
         'type' => 'combo-boolean',
         'value' => false,
     ),
+    'resourceFields' => array(
+        'type' => 'textfield',
+        'value' => '',
+    ),
     'outputSeparator' => array(
 		'type' => 'textfield',
 		'value' => "\n",

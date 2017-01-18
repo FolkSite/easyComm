@@ -8,6 +8,7 @@ $_lang['easycomm_prop_sortdir'] = 'Направление сортировки';
 $_lang['easycomm_prop_showUnpublished'] = 'Показывать неопубликованные';
 $_lang['easycomm_prop_showDeleted'] = 'Показывать удаленные';
 $_lang['easycomm_prop_subject'] = 'Фильтровать сообщения по теме';
+$_lang['easycomm_prop_resourceFields'] = 'Выбирать поля ресурса, например: "pagetitle,longtitle". Будут доступны с префиксом resource_';
 
 $_lang['easycomm_prop_mailManager'] = 'E-mail администратора для уведомлений о новых сообщениях, перекрывает настройку ec_mail_manager';
 $_lang['easycomm_prop_newEmailSubjUser'] = 'Тема email письма пользователю о том, что он оставил сообщение, перекрывает настройку ec_mail_new_subject_user';
