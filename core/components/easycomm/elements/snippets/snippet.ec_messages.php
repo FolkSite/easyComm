@@ -79,7 +79,7 @@ if(!empty($subject)) {
 }
 
 // Add custom parameters
-foreach (array('where','select', 'innerJoin') as $v) {
+foreach (array('where','leftJoin','innerJoin','select','groupby') as $v) {
     if (!empty($scriptProperties[$v])) {
         $tmp = $modx->fromJSON($scriptProperties[$v]);
         if (is_array($tmp)) {
