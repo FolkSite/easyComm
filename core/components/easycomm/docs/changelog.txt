@@ -1,6 +1,6 @@
 Changelog for easyComm.
 
-1.2.X-pl
+1.2.9-pl
 ==============
 - Исправлена ошибка с пользовательским leftJoin в ecMessages
 
