@@ -33,6 +33,14 @@ $modx->addPackage('easycomm',$modx->getOption('ec_core_path', null, $modx->getOp
 /* @var ecThread $thread */
 if (!empty($_REQUEST['thread']) && $thread = $modx->getObject('ecThread', array('name' => $_REQUEST['thread']))) {
     $properties = $thread->get('properties');
+
+    /* @var modResource $resource */
+    if ($resource = $thread->getOne('Resource')) {
+        if ($resource->get('context_key') != 'web') {
+            $modx->switchContext($resource->get('context_key'));
+        }
+        // $modx->resource = $resource;
+    }
 }
 
 /* @var easyComm $easyComm */
