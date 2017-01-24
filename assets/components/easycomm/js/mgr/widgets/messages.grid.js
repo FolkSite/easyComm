@@ -185,12 +185,23 @@ Ext.extend(easyComm.grid.Messages, MODx.grid.Grid, {
         })
     },
 
+    publishMessage: function (act, btn, e) {
+        this.messageAction('publish');
+    },
+    unpublishMessage: function (act, btn, e) {
+        this.messageAction('unpublish');
+    },
+
     deleteMessage: function (act, btn, e) {
         this.messageAction('delete');
     },
-
     undeleteMessage: function (act, btn, e) {
         this.messageAction('undelete');
+    },
+
+    viewMessage: function(act, btn, e) {
+        window.open(this.menu.record['preview_url'] + '#ec-' + this.menu.record['thread_name'] + '-message-' + this.menu.record['id']);
+        return false;
     },
 
     removeMessage: function (act, btn, e) {
@@ -205,19 +216,6 @@ Ext.extend(easyComm.grid.Messages, MODx.grid.Grid, {
             },
             this
         );
-    },
-
-    unpublishMessage: function (act, btn, e) {
-        this.messageAction('unpublish');
-    },
-
-    publishMessage: function (act, btn, e) {
-        this.messageAction('publish');
-    },
-
-    viewMessage: function(act, btn, e) {
-        window.open(this.menu.record['preview_url'] + '#ec-' + this.menu.record['thread_name'] + '-message-' + this.menu.record['id']);
-        return false;
     },
 
     getColumns: function (config) {
