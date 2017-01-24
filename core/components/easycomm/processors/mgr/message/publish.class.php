@@ -3,56 +3,51 @@
 /**
  * Publish an ecMessage
  */
-class easyCommMessagePublishProcessor extends modObjectProcessor {
-	public $objectType = 'ecMessage';
-	public $classKey = 'ecMessage';
-	public $languageTopics = array('easycomm');
-	//public $permission = 'delete';
+class easyCommMessagePublishProcessor extends modObjectUpdateProcessor {
+    /** @var ecMessage $object */
+    public $object;
+    public $objectType = 'ecMessage';
+    public $classKey = 'ecMessage';
+    public $languageTopics = array('easycomm');
+    //public $permission = 'publish';
 
     public $beforeSaveEvent = 'OnBeforeEcMessagePublish';
     public $afterSaveEvent = 'OnEcMessagePublish';
 
 
-	/**
-	 * @return array|string
-	 */
-	public function process() {
-		if (!$this->checkPermissions()) {
-			return $this->failure($this->modx->lexicon('access_denied'));
-		}
+    /**
+     * @return bool|null|string
+     */
+    public function beforeSave()
+    {
+        $this->object->fromArray(array(
+            'published' => 1,
+            'publishedon' => date('Y-m-d H:i:s'),
+            'publishedby' => $this->modx->user->get('id'),
+        ));
+        return parent::beforeSave();
+    }
 
-		$ids = $this->modx->fromJSON($this->getProperty('ids'));
-		if (empty($ids)) {
-			return $this->failure($this->modx->lexicon('ec_message_err_ns'));
-		}
-
-        $threadIds = array();
-		foreach ($ids as $id) {
-			/** @var ecMessage $object */
-			if (!$object = $this->modx->getObject($this->classKey, $id)) {
-				return $this->failure($this->modx->lexicon('ec_message_err_nf'));
-			}
-            $threadId = $object->get('thread');
-            if(!array_key_exists($threadId, $threadIds)) {
-                $threadIds[] = $threadId;
-            }
-
-            $object->set('published', 1);
-            $object->set('publishedon', date('Y-m-d H:i:s'));
-            $object->set('publishedby', $this->modx->user->isAuthenticated($this->modx->context->key) ? $this->modx->user->id : 0);
-
-			$object->save();
-		}
-
-        $threads = $this->modx->getCollection('ecThread', array('id:IN' => $threadIds));
+    /**
+     * @return bool
+     */
+    public function afterSave()
+    {
         /** @var ecThread $thread */
-        foreach($threads as $thread){
+        if ($thread = $this->object->getOne('Thread')) {
             $thread->updateMessagesInfo();
         }
+        return parent::afterSave();
+    }
 
-		return $this->success();
-	}
-
+    /**
+     * Log the removal manager action
+     * @return void
+     */
+    public function logManagerAction()
+    {
+        $this->modx->logManagerAction($this->objectType . '_publish', $this->classKey, $this->object->get($this->primaryKeyField));
+    }
 }
 
 return 'easyCommMessagePublishProcessor';

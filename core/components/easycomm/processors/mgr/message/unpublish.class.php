@@ -1,57 +1,53 @@
 <?php
 
 /**
- * Unpublish an ecMessage
+ * Publish an ecMessage
  */
-class easyCommMessageUnPublishProcessor extends modObjectProcessor {
-	public $objectType = 'ecMessage';
-	public $classKey = 'ecMessage';
-	public $languageTopics = array('easycomm');
-	//public $permission = 'delete';
+class easyCommMessageUnPublishProcessor extends modObjectUpdateProcessor {
+    /** @var ecMessage $object */
+    public $object;
+    public $objectType = 'ecMessage';
+    public $classKey = 'ecMessage';
+    public $languageTopics = array('easycomm');
+    //public $permission = 'unpublish';
 
     public $beforeSaveEvent = 'OnBeforeEcMessageUnpublish';
     public $afterSaveEvent = 'OnEcMessageUnpublish';
 
-	/**
-	 * @return array|string
-	 */
-	public function process() {
-		if (!$this->checkPermissions()) {
-			return $this->failure($this->modx->lexicon('access_denied'));
-		}
 
-		$ids = $this->modx->fromJSON($this->getProperty('ids'));
-		if (empty($ids)) {
-			return $this->failure($this->modx->lexicon('ec_message_err_ns'));
-		}
+    /**
+     * @return bool|null|string
+     */
+    public function beforeSave()
+    {
+        $this->object->fromArray(array(
+            'published' => 0,
+            'publishedon' => null,
+            'publishedby' => 0,
+        ));
+        return parent::beforeSave();
+    }
 
-        $threadIds = array();
-		foreach ($ids as $id) {
-			/** @var ecMessage $object */
-			if (!$object = $this->modx->getObject($this->classKey, $id)) {
-				return $this->failure($this->modx->lexicon('ec_message_err_nf'));
-			}
-            $threadId = $object->get('thread');
-            if(!array_key_exists($threadId, $threadIds)) {
-                $threadIds[] = $threadId;
-            }
-
-            $object->set('published', 0);
-            $object->set('publishedon', null);
-            $object->set('publishedby', 0);
-
-			$object->save();
-		}
-
-        $threads = $this->modx->getCollection('ecThread', array('id:IN' => $threadIds));
+    /**
+     * @return bool
+     */
+    public function afterSave()
+    {
         /** @var ecThread $thread */
-        foreach($threads as $thread){
+        if ($thread = $this->object->getOne('Thread')) {
             $thread->updateMessagesInfo();
         }
+        return parent::afterSave();
+    }
 
-		return $this->success();
-	}
-
+    /**
+     * Log the removal manager action
+     * @return void
+     */
+    public function logManagerAction()
+    {
+        $this->modx->logManagerAction($this->objectType . '_unpublish', $this->classKey, $this->object->get($this->primaryKeyField));
+    }
 }
 
 return 'easyCommMessageUnPublishProcessor';

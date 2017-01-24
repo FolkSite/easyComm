@@ -3,7 +3,9 @@
 /**
  * Mark ecMessage as deleted
  */
-class easyCommMessageDeleteProcessor extends modObjectProcessor {
+class easyCommMessageDeleteProcessor extends modObjectUpdateProcessor {
+    /** @var ecMessage $object */
+    public $object;
 	public $objectType = 'ecMessage';
 	public $classKey = 'ecMessage';
 	public $languageTopics = array('easycomm');
@@ -12,46 +14,40 @@ class easyCommMessageDeleteProcessor extends modObjectProcessor {
     public $beforeSaveEvent = 'OnBeforeEcMessageDelete';
     public $afterSaveEvent = 'OnEcMessageDelete';
 
-	/**
-	 * @return array|string
-	 */
-	public function process() {
-		if (!$this->checkPermissions()) {
-			return $this->failure($this->modx->lexicon('access_denied'));
-		}
 
-		$ids = $this->modx->fromJSON($this->getProperty('ids'));
-		if (empty($ids)) {
-			return $this->failure($this->modx->lexicon('ec_message_err_ns'));
-		}
+    /**
+     * @return bool|null|string
+     */
+    public function beforeSave()
+    {
+        $this->object->fromArray(array(
+            'deleted' => 1,
+            'deletedon' => date('Y-m-d H:i:s'),
+            'deletedby' => $this->modx->user->get('id'),
+        ));
+        return parent::beforeSave();
+    }
 
-        $threadIds = array();
-		foreach ($ids as $id) {
-			/** @var ecMessage $object */
-			if (!$object = $this->modx->getObject($this->classKey, $id)) {
-				return $this->failure($this->modx->lexicon('ec_message_err_nf'));
-			}
-            $threadId = $object->get('thread');
-            if(!array_key_exists($threadId, $threadIds)) {
-                $threadIds[] = $threadId;
-            }
-
-            $object->set('deleted', 1);
-            $object->set('deletedon', date('Y-m-d H:i:s'));
-            $object->set('deletedby', $this->modx->user->isAuthenticated($this->modx->context->key) ? $this->modx->user->id : 0);
-
-			$object->save();
-		}
-
-        $threads = $this->modx->getCollection('ecThread', array('id:IN' => $threadIds));
+    /**
+     * @return bool
+     */
+    public function afterSave()
+    {
         /** @var ecThread $thread */
-        foreach($threads as $thread){
+        if ($thread = $this->object->getOne('Thread')) {
             $thread->updateMessagesInfo();
         }
+        return parent::afterSave();
+    }
 
-		return $this->success();
-	}
-
+    /**
+     * Log the removal manager action
+     * @return void
+     */
+    public function logManagerAction()
+    {
+        $this->modx->logManagerAction($this->objectType . '_delete', $this->classKey, $this->object->get($this->primaryKeyField));
+    }
 }
 
 return 'easyCommMessageDeleteProcessor';

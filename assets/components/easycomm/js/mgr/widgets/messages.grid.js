@@ -59,9 +59,6 @@ Ext.extend(easyComm.grid.Messages, MODx.grid.Grid, {
 
         var m = [];
         if (ids.length > 1) {
-            //m.push({text: _('ticket_comment_viewauthor'),handler: this.viewAuthor});
-            //m.push({text: row.published ? _('ticket_comment_unpublish') : _('ticket_comment_publish'),handler: this.publishComment});
-            //m.push('-');
             m.push({text: '<i class="x-menu-item-icon icon icon-power-off"></i>'+_('ec_messages_publish') ,handler: this.publishMessage});
             m.push({text: '<i class="x-menu-item-icon icon icon-power-off"></i>'+_('ec_messages_unpublish') ,handler: this.unpublishMessage});
             m.push('-');
@@ -71,7 +68,6 @@ Ext.extend(easyComm.grid.Messages, MODx.grid.Grid, {
             m.push({text: '<i class="x-menu-item-icon icon icon-remove"></i>'+_('ec_messages_remove'),handler: this.removeMessage});
         } else {
             m.push({text: '<i class="x-menu-item-icon icon icon-edit"></i>'+_('ec_message_update'),handler: this.updateMessage});
-            //m.push({text: row.published ? _('ticket_comment_unpublish') : _('ticket_comment_publish'),handler: this.publishComment});
             m.push({
                 text: row.data.published ? '<i class="x-menu-item-icon icon icon-power-off"></i>'+_('ec_message_unpublish') : '<i class="x-menu-item-icon icon icon-power-off action-green"></i>'+_('ec_message_publish'),
                 handler: row.data.published ? this.unpublishMessage : this.publishMessage
@@ -165,9 +161,9 @@ Ext.extend(easyComm.grid.Messages, MODx.grid.Grid, {
         MODx.Ajax.request({
             url: this.config.url,
             params: {
-                action: 'mgr/message/' + actionMethod,
-                //action: 'mgr/message/multiple',
-                //actionMethod: actionMethod,
+                //action: 'mgr/message/' + actionMethod,
+                action: 'mgr/message/multiple',
+                actionMethod: actionMethod,
                 ids: Ext.util.JSON.encode(ids)
             },
             listeners: {
