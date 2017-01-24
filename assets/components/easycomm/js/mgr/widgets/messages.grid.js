@@ -65,6 +65,9 @@ Ext.extend(easyComm.grid.Messages, MODx.grid.Grid, {
             m.push({text: '<i class="x-menu-item-icon icon icon-power-off"></i>'+_('ec_messages_publish') ,handler: this.publishMessage});
             m.push({text: '<i class="x-menu-item-icon icon icon-power-off"></i>'+_('ec_messages_unpublish') ,handler: this.unpublishMessage});
             m.push('-');
+            m.push({ text: '<i class="x-menu-item-icon icon icon-trash-o"></i>'+_('ec_messages_delete'), handler: this.deleteMessage });
+            m.push({ text: '<i class="x-menu-item-icon icon icon-undo"></i>'+_('ec_messages_undelete'), handler: this.undeleteMessage });
+            m.push('-');
             m.push({text: '<i class="x-menu-item-icon icon icon-remove"></i>'+_('ec_messages_remove'),handler: this.removeMessage});
         } else {
             m.push({text: '<i class="x-menu-item-icon icon icon-edit"></i>'+_('ec_message_update'),handler: this.updateMessage});
@@ -152,129 +155,66 @@ Ext.extend(easyComm.grid.Messages, MODx.grid.Grid, {
         });
     },
 
+    // some action with one or multiple messages
+    messageAction: function(actionMethod) {
+        var ids = this._getSelectedIds();
+        if (!ids.length) {
+            return false;
+        }
+
+        MODx.Ajax.request({
+            url: this.config.url,
+            params: {
+                action: 'mgr/message/' + actionMethod,
+                //action: 'mgr/message/multiple',
+                //actionMethod: actionMethod,
+                ids: Ext.util.JSON.encode(ids)
+            },
+            listeners: {
+                success: {
+                    fn: function () {
+                        this.refresh();
+                    }, scope: this
+                },
+                failure: {
+                    fn: function (response) {
+                        MODx.msg.alert(_('error'), response.message);
+                    }, scope: this
+                }
+            }
+        })
+    },
+
     deleteMessage: function (act, btn, e) {
-        var ids = this._getSelectedIds();
-        if (!ids.length) {
-            return false;
-        }
-        MODx.msg.confirm({
-            title: ids.length > 1
-                ? _('ec_messages_delete')
-                : _('ec_message_delete'),
-            text: ids.length > 1
-                ? _('ec_messages_delete_confirm')
-                : _('ec_message_delete_confirm'),
-            url: this.config.url,
-            params: {
-                action: 'mgr/message/delete',
-                ids: Ext.util.JSON.encode(ids)
-            },
-            listeners: {
-                success: {
-                    fn: function (r) {
-                        this.refresh();
-                    }, scope: this
-                }
-            }
-        });
-        return true;
+        this.messageAction('delete');
     },
+
     undeleteMessage: function (act, btn, e) {
-        var ids = this._getSelectedIds();
-        if (!ids.length) {
-            return false;
-        }
-        MODx.msg.confirm({
-            title: ids.length > 1
-                ? _('ec_messages_undelete')
-                : _('ec_message_undelete'),
-            text: ids.length > 1
-                ? _('ec_messages_undelete_confirm')
-                : _('ec_message_undelete_confirm'),
-            url: this.config.url,
-            params: {
-                action: 'mgr/message/undelete',
-                ids: Ext.util.JSON.encode(ids)
-            },
-            listeners: {
-                success: {
-                    fn: function (r) {
-                        this.refresh();
-                    }, scope: this
-                }
-            }
-        });
-        return true;
+        this.messageAction('undelete');
     },
+
     removeMessage: function (act, btn, e) {
         var ids = this._getSelectedIds();
-        if (!ids.length) {
-            return false;
-        }
-        MODx.msg.confirm({
-            title: ids.length > 1
-                ? _('ec_messages_remove')
-                : _('ec_message_remove'),
-            text: ids.length > 1
-                ? _('ec_messages_remove_confirm')
-                : _('ec_message_remove_confirm'),
-            url: this.config.url,
-            params: {
-                action: 'mgr/message/remove',
-                ids: Ext.util.JSON.encode(ids)
-            },
-            listeners: {
-                success: {
-                    fn: function (r) {
-                        this.refresh();
-                    }, scope: this
+        Ext.MessageBox.confirm(
+            ids.length > 1 ? _('ec_messages_remove') : _('ec_message_remove'),
+            ids.length > 1 ? _('ec_messages_remove_confirm') : _('ec_message_remove_confirm'),
+            function (val) {
+                if (val == 'yes') {
+                    this.messageAction('remove');
                 }
-            }
-        });
-        return true;
+            },
+            this
+        );
     },
 
     unpublishMessage: function (act, btn, e) {
-        var ids = this._getSelectedIds();
-        if (!ids.length) {
-            return false;
-        }
-        MODx.Ajax.request({
-            url: this.config.url,
-            params: {
-                action: 'mgr/message/unpublish',
-                ids: Ext.util.JSON.encode(ids)
-            },
-            listeners: {
-                success: {
-                    fn: function () {
-                        this.refresh();
-                    }, scope: this
-                }
-            }
-        })
+        this.messageAction('unpublish');
     },
 
     publishMessage: function (act, btn, e) {
-        var ids = this._getSelectedIds();
-        if (!ids.length) {
-            return false;
-        }
-        MODx.Ajax.request({
-            url: this.config.url,
-            params: {
-                action: 'mgr/message/publish',
-                ids: Ext.util.JSON.encode(ids)
-            },
-            listeners: {
-                success: {
-                    fn: function () {
-                        this.refresh();
-                    }, scope: this
-                }
-            }
-        })
+        this.messageAction('publish');
     },
+
     viewMessage: function(act, btn, e) {
         window.open(this.menu.record['preview_url'] + '#ec-' + this.menu.record['thread_name'] + '-message-' + this.menu.record['id']);
         return false;
