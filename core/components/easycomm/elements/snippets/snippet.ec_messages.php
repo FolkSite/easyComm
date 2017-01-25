@@ -120,7 +120,7 @@ $gravatarDefault = $tmpChunk->process(null, $modx->getOption('ec_gravatar_defaul
 $gravatarSize = $modx->getOption('ec_gravatar_size', null, 50);
 
 $output = array();
-$idx = 0;
+$idx = $pdoFetch->idx;
 foreach($messages as $row) {
     $row['idx'] = $idx++;
     $row['text_raw'] = $row['text'];
