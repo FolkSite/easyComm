@@ -3,37 +3,26 @@
 /**
  * Remove an ecThread
  */
-class easyCommecThreadRemoveProcessor extends modObjectProcessor {
-	public $objectType = 'ecThread';
-	public $classKey = 'ecThread';
-	public $languageTopics = array('easycomm');
-	//public $permission = 'remove';
+class easyCommThreadRemoveProcessor extends modObjectRemoveProcessor {
+    /** @var ecThread $object */
+    public $object;
+    public $objectType = 'ecThread';
+    public $classKey = 'ecThread';
+    public $languageTopics = array('easycomm');
+    //public $permission = 'remove';
 
+    public $beforeRemoveEvent = 'OnBeforeEcThreadRemove';
+    public $afterRemoveEvent = 'OnEcThreadRemove';
 
-	/**
-	 * @return array|string
-	 */
-	public function process() {
-		if (!$this->checkPermissions()) {
-			return $this->failure($this->modx->lexicon('access_denied'));
-		}
+    /**
+     * Log the removal manager action
+     * @return void
+     */
+    public function logManagerAction()
+    {
+        $this->modx->logManagerAction($this->objectType . '_remove', $this->classKey, $this->object->get($this->primaryKeyField));
+    }
 
-		$ids = $this->modx->fromJSON($this->getProperty('ids'));
-		if (empty($ids)) {
-			return $this->failure($this->modx->lexicon('ec_thread_err_ns'));
-		}
-
-		foreach ($ids as $id) {
-			/** @var ecThread $object */
-			if (!$object = $this->modx->getObject($this->classKey, $id)) {
-				return $this->failure($this->modx->lexicon('ec_thread_err_nf'));
-			}
-
-			$object->remove();
-		}
-
-		return $this->success();
-	}
 }
 
-return 'easyCommecThreadRemoveProcessor';
+return 'easyCommThreadRemoveProcessor';

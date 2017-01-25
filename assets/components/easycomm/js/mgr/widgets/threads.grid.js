@@ -165,7 +165,8 @@ Ext.extend(easyComm.grid.Threads, MODx.grid.Grid, {
                 : _('ec_thread_remove_confirm'),
             url: this.config.url,
             params: {
-                action: 'mgr/thread/remove',
+                action: 'mgr/thread/multiple',
+                actionMethod: 'remove',
                 ids: Ext.util.JSON.encode(ids)
             },
             listeners: {
@@ -177,48 +178,6 @@ Ext.extend(easyComm.grid.Threads, MODx.grid.Grid, {
             }
         });
         return true;
-    },
-
-    disableThread: function (act, btn, e) {
-        var ids = this._getSelectedIds();
-        if (!ids.length) {
-            return false;
-        }
-        MODx.Ajax.request({
-            url: this.config.url,
-            params: {
-                action: 'mgr/thread/disable',
-                ids: Ext.util.JSON.encode(ids)
-            },
-            listeners: {
-                success: {
-                    fn: function () {
-                        this.refresh();
-                    }, scope: this
-                }
-            }
-        })
-    },
-
-    enableThread: function (act, btn, e) {
-        var ids = this._getSelectedIds();
-        if (!ids.length) {
-            return false;
-        }
-        MODx.Ajax.request({
-            url: this.config.url,
-            params: {
-                action: 'mgr/thread/enable',
-                ids: Ext.util.JSON.encode(ids)
-            },
-            listeners: {
-                success: {
-                    fn: function () {
-                        this.refresh();
-                    }, scope: this
-                }
-            }
-        })
     },
 
     getColumns: function (config) {
