@@ -1,6 +1,11 @@
 <?php
 $events = array();
 $tmp = array(
+    // ecThread events
+    'OnBeforeEcThreadRemove' => array(),
+    'OnEcThreadRemove' => array(),
+
+    // ecMessage events
     'OnBeforeEcMessageSave' => array(),
     'OnEcMessageSave' => array(),
 
