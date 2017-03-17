@@ -106,6 +106,11 @@ $tmp = array(
         'value' => '1.6',
         'area' => 'ec_rating',
     ),
+    'rating_visual_editor' => array(
+        'xtype' => 'combo-boolean',
+        'value' => true,
+        'area' => 'ec_rating',
+    ),
 
     'gravatar_size' => array(
         'xtype' => 'textfield',

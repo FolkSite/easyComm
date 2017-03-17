@@ -227,7 +227,7 @@ Ext.extend(easyComm.grid.Messages, MODx.grid.Grid, {
             user_name: { sortable: true, width: 100 },
             user_email: { sortable: true, width: 100 },
             user_contacts: { sortable: true, width: 100 },
-            rating: { sortable: true, width: 70 },
+            rating: { sortable: true, width: 90, renderer: easyComm.utils.renderRating},
             text: { sortable: true, width: 200 },
             reply_author: { sortable: true, width: 100 },
             reply_text: { sortable: true, width: 200 },

@@ -66,5 +66,8 @@ $_lang['setting_ec_rating_max_desc'] = 'Used to restrict the data entered by use
 $_lang['setting_ec_rating_wilson_confidence']      = 'The confidence level rating for Wilson';
 $_lang['setting_ec_rating_wilson_confidence_desc'] = 'Confidence level. 1.0 = 85%, 1.6 = 95%. See. <a href="http://habrahabr.ru/company/darudar/blog/143188/" target="_blank">http://habrahabr.ru/company/darudar/blog/143188/</a>';
 
+$_lang['setting_ec_rating_visual_editor'] = 'Visual display of the rating in the manager';
+$_lang['setting_ec_rating_visual_editor_desc'] = 'Display rating with asterisks or just numbers in the admin area';
+
 $_lang['setting_ec_gravatar_size']    = 'The size of the avatar icons';
 $_lang['setting_ec_gravatar_default'] = 'Default avatar icon';

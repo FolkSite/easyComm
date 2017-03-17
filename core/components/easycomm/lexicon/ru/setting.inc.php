@@ -64,7 +64,10 @@ $_lang['setting_ec_rating_max'] = 'Максимально возможная о�
 $_lang['setting_ec_rating_max_desc'] = 'Используется для ограничения введенных пользователями данных';
 
 $_lang['setting_ec_rating_wilson_confidence'] = 'Доверительный уровень для рейтинга по Вильсону';
-$_lang['setting_ec_rating_wilson_confidence_desc'] = 'Доверительный уровень. 1.0 = 85%, 1.6 = 95%. См. <a href="http://habrahabr.ru/company/darudar/blog/143188/" target="_blank">http://habrahabr.ru/company/darudar/blog/143188/</a>';
+$_lang['setting_ec_rating_wilson_confidence_desc'] = 'Доверительный уровень. 1.0 = 85%, 1.6 = 95%. См. <a href="https://habrahabr.ru/company/darudar/blog/143188/" target="_blank">https://habrahabr.ru/company/darudar/blog/143188/</a>';
+
+$_lang['setting_ec_rating_visual_editor'] = 'Визуальное отображение рейтинга в менеджере';
+$_lang['setting_ec_rating_visual_editor_desc'] = 'Отображать рейтинг звездочками или просто числами в админке';
 
 $_lang['setting_ec_gravatar_size'] = 'Размер иконки аватара';
 $_lang['setting_ec_gravatar_default'] = 'Иконка аватара по-умолчанию';

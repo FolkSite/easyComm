@@ -29,6 +29,14 @@ ul.ec-row-actions .btn {
     text-decoration: line-through;
 }
 
+.ec-grid-rating-stars {
+    color: #777;
+    white-space: nowrap;
+}
+.ec-grid-rating-stars i + i {
+    margin-left: 3px;
+}
+
 .action-red {
 	color: #8b0000 !important;
 }

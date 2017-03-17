@@ -125,5 +125,21 @@ easyComm.utils.renderImage = function(val, cell, row) {
 }
 
 easyComm.utils.renderRating = function(val, props, row) {
+    if(easyComm.config.rating_visual_editor) {
+        var result = [];
+        for(var i = 1; i <= 5; i++) {
+            if(val >= i){
+                result.push('<i class="icon icon-star"></i>');
+            }
+            else if(val > i - 1 && val < i){
+                result.push('<i class="icon icon-star-half-o"></i>');
+            }
+            else {
+                result.push('<i class="icon icon-star-o"></i>');
+            }
+        }
+        result.push('');
+        return '<span title="' + val + '" class="ec-grid-rating-stars">' + result.join('') + '</span>';
+    }
     return val;
 }

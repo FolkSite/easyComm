@@ -65,6 +65,7 @@ switch ($modx->event->name) {
         }
 
         $ecConfig = '
+            easyComm.config.rating_visual_editor = ' . $modx->getOption('ec_rating_visual_editor', null, true ) . ';
             easyComm.config.thread_fields = ' . json_encode($easyComm->getThreadFields()) . ';
             easyComm.config.thread_grid_fields = ' . json_encode($easyComm->getThreadGridFields()) . ';
             easyComm.config.thread_window_fields = ' . json_encode($easyComm->getThreadWindowFields()) . ';
