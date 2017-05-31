@@ -41,7 +41,7 @@ var easyComm = {
                         if(response.data && response.data.length) {
                             jQuery.each(response.data, function(i, error) {
                                 jQuery(form).find('[name="' + error.field + '"]').closest('.form-group').addClass('has-error');
-                                jQuery(form).find('#ec-' + error.field + '-error-' + fid).text(error.message).show();
+                                jQuery(form).find('#ec-' + error.field + '-error-' + fid).text(error.message).show().closest('.form-group').addClass('has-error');
                             });
                         } else {
                             easyComm.notice.error(response.message);
@@ -103,3 +103,16 @@ var easyComm = {
 jQuery(document).ready(function(){
     easyComm.initialize();
 });
+
+var easyCommReCaptchaCallback = function() {
+    if(typeof grecaptcha !== 'undefined'){
+        $('.ec-captcha').each(function(index) {
+            grecaptcha.render($(this).attr('id'), {
+                'sitekey' : easyCommConfig.reCaptchaSiteKey
+            });
+        });
+    }
+    else {
+        easyComm.notice.error('grecaptcha is not defined!');
+    }
+}

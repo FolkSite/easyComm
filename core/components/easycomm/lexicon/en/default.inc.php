@@ -96,6 +96,7 @@ $_lang['ec_message_err_user_contacts'] = ' You must provide contact information'
 $_lang['ec_message_err_subject']       = ' You must specify a Subject';
 $_lang['ec_message_err_rating']        = 'Please, rate us';
 $_lang['ec_message_err_text']          = 'You must write the text of the message ';
+$_lang['ec_message_err_captcha']       = 'Check "I`m not a robot"';
 $_lang['ec_message_err_nf']            = 'Message wasn’t found';
 $_lang['ec_message_err_ns']            = 'Message wasn’t indicated';
 $_lang['ec_message_err_remove']        = 'Error deleting message';

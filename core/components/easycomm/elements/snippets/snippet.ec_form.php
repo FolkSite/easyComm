@@ -58,4 +58,9 @@ if ($modx->user->hasSessionContext($modx->context->get('key'))) {
     $data['user_email'] = $profile->get('email');
 }
 
+if($modx->getOption('ec_captcha_enable')) {
+    $tplFormReCaptcha = $modx->getOption('tplFormReCaptcha', $scriptProperties, 'tpl.ecForm.ReCaptcha');
+    $data['recaptcha'] = $pdoTools->getChunk($tplFormReCaptcha, $data);
+}
+
 return $pdoTools->getChunk($tplForm, $data);

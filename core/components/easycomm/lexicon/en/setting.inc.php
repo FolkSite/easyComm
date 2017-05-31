@@ -3,6 +3,7 @@ $_lang['area_ec_main']     = 'Main';
 $_lang['area_ec_mail']     = 'Mail';
 $_lang['area_ec_rating']   = 'Rating and evaluation';
 $_lang['area_ec_gravatar'] = 'Gravatar';
+$_lang['area_ec_antispam'] = 'Anti-Spam';
 
 $_lang['setting_ec_show_templates']      = 'Display tab at the resources listed templates';
 $_lang['setting_ec_show_templates_desc'] = 'List templates id separated by commas indicate * that would show all templates';
@@ -71,3 +72,12 @@ $_lang['setting_ec_rating_visual_editor_desc'] = 'Display rating with asterisks 
 
 $_lang['setting_ec_gravatar_size']    = 'The size of the avatar icons';
 $_lang['setting_ec_gravatar_default'] = 'Default avatar icon';
+
+$_lang['setting_ec_captcha_enable'] = 'Enable captcha (Google ReCaptcha v2)';
+$_lang['setting_ec_captcha_enable_desc'] = '';
+
+$_lang['setting_ec_recaptcha2_api'] = 'Google ReCaptcha v2 API url';
+
+$_lang['setting_ec_recaptcha2_site_key'] = 'Google ReCaptcha v2 site key';
+
+$_lang['setting_ec_recaptcha2_secret_key'] = 'Google ReCaptcha v2 secret';

@@ -36,6 +36,10 @@ $tmp = array(
 		'type' => 'textfield',
 		'value' => 'tpl.ecForm',
 	),
+    'tplFormReCaptcha' => array(
+        'type' => 'textfield',
+        'value' => 'tpl.ecForm.ReCaptcha',
+    ),
     'tplSuccess' => array(
         'type' => 'textfield',
         'value' => 'tpl.ecForm.Success',

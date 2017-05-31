@@ -53,6 +53,8 @@
         <span class="ec-error help-block" id="ec-text-error-[[+fid]]"></span>
     </div>
 
+    [[+recaptcha]]
+
     <div class="form-actions">
         <input type="submit" class="btn btn-primary" name="send" value="[[%ec_fe_send]]" />
     </div>

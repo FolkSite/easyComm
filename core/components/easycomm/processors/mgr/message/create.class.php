@@ -15,6 +15,7 @@ class easyCommMessageCreateProcessor extends modObjectCreateProcessor {
     /** @var ecMessage $object */
     public $object;
 
+    /** @var ecThread $thread */
     private $thread;
 
     /**

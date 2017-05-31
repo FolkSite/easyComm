@@ -123,6 +123,30 @@ $tmp = array(
         'area' => 'ec_gravatar',
     ),
 
+    'captcha_enable' => array(
+        'xtype' => 'combo-boolean',
+        'value' => false,
+        'area' => 'ec_antispam',
+    ),
+
+    'recaptcha2_api' => array(
+        'xtype' => 'textfield',
+        'value' => 'https://www.google.com/recaptcha/api.js?onload=easyCommReCaptchaCallback&render=explicit&hl=[[+cultureKey]]',
+        'area' => 'ec_antispam',
+    ),
+
+    'recaptcha2_site_key' => array(
+        'xtype' => 'textfield',
+        'value' => '',
+        'area' => 'ec_antispam',
+    ),
+
+    'recaptcha2_secret_key' => array(
+        'xtype' => 'textfield',
+        'value' => '',
+        'area' => 'ec_antispam',
+    ),
+
 
 );
 

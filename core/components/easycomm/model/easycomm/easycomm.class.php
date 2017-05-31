@@ -9,6 +9,9 @@ class easyComm {
     /* @var pdoTools $pdoTools */
     public $pdoTools;
 
+    /** @var array $initialized */
+    private $initialized = array();
+
     /**
      * @param modX $modx
      * @param array $config
@@ -28,6 +31,10 @@ class easyComm {
             'imgUrl' => $assetsUrl . 'img/',
             'connectorUrl' => $connectorUrl,
             'actionUrl' => $actionUrl,
+
+            'cultureKey' => $this->modx->getOption('cultureKey', $config, 'en'),
+            'reCaptchaSiteKey' => $this->modx->getOption('ec_recaptcha2_site_key', $config, ''),
+            'reCaptchaSecretKey' => $this->modx->getOption('ec_recaptcha2_secret_key', $config, ''),
 
             'corePath' => $corePath,
             'modelPath' => $corePath . 'model/',
@@ -69,21 +76,29 @@ class easyComm {
                     if ($css = $this->modx->getOption('ec_frontend_css')) {
                         $this->modx->regClientCSS(str_replace($config['pl'], $config['vl'], $css));
                     }
-                    $config_js = preg_replace(array('/^\n/', '/\t{6}/'), '', '
-						easyCommConfig = {
-							ctx: "'.$ctx.'"
-							,jsUrl: "'.$this->config['jsUrl'].'web/"
-							,cssUrl: "'.$this->config['cssUrl'].'web/"
-							,imgUrl: "'.$this->config['imgUrl'].'web/"
-							,actionUrl: "'.$this->config['actionUrl'].'"
-						};
-					');
-                    $this->modx->regClientStartupScript("<script type=\"text/javascript\">\n".$config_js."\n</script>", true);
+                    $config_js = array(
+                        'ctx' => $ctx,
+                        'jsUrl' => $this->config['jsUrl'].'web/',
+                        'cssUrl' => $this->config['cssUrl'].'web/',
+                        'imgUrl' => $this->config['imgUrl'].'web/',
+                        'actionUrl' => $this->config['actionUrl'],
+                        'reCaptchaSiteKey' => $this->config['reCaptchaSiteKey'],
+                    );
+                    $config_js = json_encode($config_js);
+                    $this->modx->regClientStartupScript('<script type="text/javascript">easyCommConfig = '.$config_js.'</script>', true);
                     if ($js = trim($this->modx->getOption('ec_frontend_js'))) {
                         if (!empty($js) && preg_match('/\.js/i', $js)) {
                             $this->modx->regClientScript(str_replace($config['pl'], $config['vl'], $js));
                         }
                     }
+
+                    if($this->modx->getOption('ec_captcha_enable')) {
+                        $reCaptcha2Api = trim($this->modx->getOption('ec_recaptcha2_api'));
+                        if (!empty($reCaptcha2Api)) {
+                            $this->modx->regClientHTMLBlock('<script src="'.str_replace($config['pl'], $config['vl'], $reCaptcha2Api).'" async defer></script>');
+                        }
+                    }
+
                 }
                 $this->initialized[$ctx] = true;
                 break;
@@ -136,6 +151,7 @@ class easyComm {
      * @return array
      */
     public function createMessage($data = array()){
+        // simple spam check
         if(!empty($this->config['antispamField'])) {
             if(!empty($data[$this->config['antispamField']])) {
                 return $this->error("ec_fe_spam_detected");
@@ -191,6 +207,40 @@ class easyComm {
             return $this->success('ec_fe_send_success', $this->getChunk($this->config['tplSuccess'], $response->response['object']));
         }
         return $this->success('ec_fe_send_success', $response->response['object']);
+    }
+
+
+    public function verifyCaptcha(){
+        if(!$this->modx->getOption('ec_captcha_enable')){
+            return true;
+        }
+
+        return $this->verifyReCaptcha();
+    }
+
+    /**
+     * Validate ReCaptcha
+     *
+     * @return boolean
+     */
+    private function verifyReCaptcha(){
+        require_once($this->config['modelPath'].'recaptcha/autoload.php');
+        $recaptcha = new \ReCaptcha\ReCaptcha($this->config['reCaptchaSecretKey'], new \ReCaptcha\RequestMethod\CurlPost());
+        if (!($recaptcha instanceof \ReCaptcha\ReCaptcha)) {
+            $this->modx->log(modX::LOG_LEVEL_ERROR, 'Failed to load \ReCaptcha\ReCaptcha class.');
+            return false;
+        }
+
+        $gResponse = $_POST['g-recaptcha-response'];
+        $reCaptchaResponse = null;
+        if (!empty($gResponse)) {
+            $reCaptchaResponse = $recaptcha->verify($gResponse, $_SERVER["REMOTE_ADDR"]);
+        }
+        if ($reCaptchaResponse == null || !$reCaptchaResponse->isSuccess()) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -408,9 +458,9 @@ class easyComm {
      */
     public function error($message = '', $data = array(), $placeholders = array()) {
         $response = array(
-            'success' => false
-        ,'message' => $this->modx->lexicon($message, $placeholders)
-        ,'data' => $data
+            'success' => false,
+            'message' => $this->modx->lexicon($message, $placeholders),
+            'data' => $data
         );
         return $this->config['json_response']
             ? $this->modx->toJSON($response)
@@ -428,9 +478,9 @@ class easyComm {
 	 * */
     public function success($message = '', $data = array(), $placeholders = array()) {
         $response = array(
-            'success' => true
-        ,'message' => $this->modx->lexicon($message, $placeholders)
-        ,'data' => $data
+            'success' => true,
+            'message' => $this->modx->lexicon($message, $placeholders),
+            'data' => $data
         );
         return $this->config['json_response']
             ? $this->modx->toJSON($response)

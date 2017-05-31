@@ -96,6 +96,7 @@ $_lang['ec_message_err_user_contacts']  = 'Вы должны указать Ко
 $_lang['ec_message_err_subject']        = 'Вы должны указать Тему';
 $_lang['ec_message_err_rating']         = 'Вы должны поставить Оценку';
 $_lang['ec_message_err_text']           = 'Вы должны написать Текст сообщения';
+$_lang['ec_message_err_captcha']        = 'Поставьте галочку "Я не робот"';
 $_lang['ec_message_err_nf']             = 'Сообщение не найдена.';
 $_lang['ec_message_err_ns']             = 'Сообщение не указано.';
 $_lang['ec_message_err_remove']         = 'Ошибка при удалении Сообщения';

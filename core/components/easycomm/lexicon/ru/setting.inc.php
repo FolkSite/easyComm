@@ -3,6 +3,7 @@ $_lang['area_ec_main'] = 'Основные';
 $_lang['area_ec_mail'] = 'Почта';
 $_lang['area_ec_rating'] = 'Оценки и рейтинг';
 $_lang['area_ec_gravatar'] = 'Gravatar';
+$_lang['area_ec_antispam'] = 'Защита от спама';
 
 $_lang['setting_ec_show_templates'] = 'Показывать вкладку у ресурсов с перечисленными шаблонами';
 $_lang['setting_ec_show_templates_desc'] = 'Список id шаблонов через запятую, укажите *, что бы показывать у всех шаблонов';
@@ -71,3 +72,12 @@ $_lang['setting_ec_rating_visual_editor_desc'] = 'Отображать рейт�
 
 $_lang['setting_ec_gravatar_size'] = 'Размер иконки аватара';
 $_lang['setting_ec_gravatar_default'] = 'Иконка аватара по-умолчанию';
+
+$_lang['setting_ec_captcha_enable'] = 'Включить каптчу (Google ReCaptcha v2)';
+$_lang['setting_ec_captcha_enable_desc'] = '';
+
+$_lang['setting_ec_recaptcha2_api'] = 'Google ReCaptcha v2 API url';
+
+$_lang['setting_ec_recaptcha2_site_key'] = 'Google ReCaptcha v2 site key';
+
+$_lang['setting_ec_recaptcha2_secret_key'] = 'Google ReCaptcha v2 secret';

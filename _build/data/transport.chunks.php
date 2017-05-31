@@ -11,6 +11,10 @@ $tmp = array(
         'file' => 'ec_form',
         'description' => '',
     ),
+    'tpl.ecForm.ReCaptcha' => array(
+        'file' => 'ec_form_recaptcha',
+        'description' => '',
+    ),
     'tpl.ecForm.Success' => array(
         'file' => 'ec_form_success',
         'description' => '',

@@ -36,6 +36,16 @@ class easyCommMessageCreateProcessor extends modObjectCreateProcessor {
             }
         }
 
+        // Если нет иных ошибок - проверяем на спам
+        // в противном случае возникают проблемы при вторичной проверке формы
+        if(!$this->modx->error->hasError()) {
+            /** @var easyComm $easyComm */
+            $easyComm = $this->modx->getService('easyComm');
+            if(!$easyComm->verifyCaptcha()){
+                $this->modx->error->addField('captcha', $this->modx->lexicon('ec_message_err_captcha'));
+            }
+        }
+
         $rating = intval($this->getProperty('rating'));
         $ratingMax = intval($this->modx->getOption('ec_rating_max'));
         if($rating < 0) {
