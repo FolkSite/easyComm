@@ -65,6 +65,16 @@ if(count($threads) > 1) {
     $where['`Thread`.`name`:IN'] = $threads;
 }
 
+// Filter by message ids
+$messages = $modx->getOption('messages', $scriptProperties, '');
+if(!empty($messages)) {
+    $messages = explode(",", $messages);
+    $messages = array_map("trim", $messages);
+    $messages = array_map("intval", $messages);
+    if(!empty($messages)) {
+        $where[$class.'.`id`:IN'] = $messages;
+    }
+}
 
 if(empty($showUnpublished)) {
     $where[$class.'.published'] = 1;
@@ -110,7 +120,7 @@ $pdoFetch->addTime('Query parameters ready');
 $pdoFetch->setConfig(array_merge($default, $scriptProperties), false);
 
 
-$messages = $pdoFetch->run();
+$rows = $pdoFetch->run();
 
 /* @var $tmpChunk modChunk */
 $tmpChunk = $modx->newObject('modChunk', array('name' => "tmp-".uniqid()));
@@ -121,7 +131,7 @@ $gravatarSize = $modx->getOption('ec_gravatar_size', null, 50);
 
 $output = array();
 $idx = $pdoFetch->idx;
-foreach($messages as $row) {
+foreach($rows as $row) {
     $row['idx'] = $idx++;
     $row['text_raw'] = $row['text'];
     $row['text'] = nl2br($row['text']);

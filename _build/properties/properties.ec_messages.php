@@ -11,6 +11,10 @@ $tmp = array(
         'type' => 'textfield',
         'value' => '',
     ),
+    'messages' => array(
+        'type' => 'textfield',
+        'value' => '',
+    ),
     'subject' => array(
         'type' => 'textfield',
         'value' => '',
