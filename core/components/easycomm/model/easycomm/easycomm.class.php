@@ -262,6 +262,7 @@ class easyComm {
                     $thread->toArray('thread_'),
                     $resource->toArray('resource_')
                 );
+                $messageData['site_manager_url'] = rtrim($this->modx->getOption('site_url'), '/').'/'.ltrim($this->modx->getOption('manager_url', null, MODX_MANAGER_URL), '/');
 
                 // Send a message to the user.
                 if($this->modx->getOption('ec_mail_notify_user', null, true) && !empty($this->config['tplNewEmailUser']) && $this->isValidEmail($message['user_email'])) {

@@ -20,4 +20,4 @@
 Сообщение было оставлено на странице <a target="_blank" href="[[~[[+resource_id]]?scheme=`full`]]">[[+resource_pagetitle]]</a>
 <br />
 <br />
-<a target="_blank" href="[[++site_url]]manager/?a=resource/update&id=[[+resource_id]]">Опубликовать или ответить на сообщение &gt;</a>
+<a target="_blank" href="[[+site_manager_url]]?a=resource/update&id=[[+resource_id]]">Опубликовать или ответить на сообщение &gt;</a>
