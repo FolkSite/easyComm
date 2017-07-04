@@ -78,6 +78,7 @@ switch ($modx->event->name) {
             easyComm.config.default_reply_author = "' . $defaultReplyAuthor . '";
             easyComm.config.default_resource = ' . $resource->get('id') . ';
             easyComm.config.default_thread = ' . $defaultThread . ';
+            easyComm.config.default_rating = ' . $modx->getOption('ec_rating_default', null, '""') . ';
         ';
 
         if ($modx->getCount('modPlugin', array('name' => 'AjaxManager', 'disabled' => false))) {

@@ -38,6 +38,7 @@ abstract class easyCommMainController extends modExtraManagerController {
 			easyComm.config.default_reply_author = "' . $defaultReplyAuthor . '";
 			easyComm.config.default_resource = null;
 			easyComm.config.default_thread = null;
+			easyComm.config.default_rating = ' . $this->modx->getOption('ec_rating_default', null, '""') . ';
 		</script>
 		');
 
