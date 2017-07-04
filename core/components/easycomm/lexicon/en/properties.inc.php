@@ -28,6 +28,7 @@ $_lang['easycomm_prop_tplSuccess']     = 'Chunk a pattern of successful sending 
 $_lang['easycomm_prop_formId']         = 'Form, the default identifier coincides with the thread, need for what would be on the same page, you can place multiple forms';
 $_lang['easycomm_prop_thread']         = 'The unique name of a conversation, the default resource - [[* id]]. Use Latin characters';
 $_lang['easycomm_prop_threads']        = 'List of strings separated by a comma, a higher priority than the parameter thread. Use * to select all the chains';
+$_lang['easycomm_prop_messages']       = 'List of specified message ids';
 $_lang['easycomm_prop_allowedFields']  = 'List of allowed fields for sending';
 $_lang['easycomm_prop_requiredFields'] = 'The list of required fields';
 $_lang['easycomm_prop_antispamField']  = 'Field name, used as anti spam';

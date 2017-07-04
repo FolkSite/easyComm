@@ -80,7 +80,8 @@ Ext.extend(easyComm.grid.Threads, MODx.grid.Grid, {
         });
         w.reset();
         w.setValues({
-            //active: true
+            resource: easyComm.config.default_resource,
+            name: easyComm.config.default_resource ? 'resource-' + easyComm.config.default_resource : ''
         });
         w.show(e.target);
     },

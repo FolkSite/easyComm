@@ -64,6 +64,9 @@ switch ($modx->event->name) {
             $defaultReplyAuthor = addslashes($modx->user->getOne('Profile')->get('fullname'));
         }
 
+        $defaultThread = $modx->getObject('ecThread', array('name' => 'resource-'.$resource->get('id')));
+        $defaultThread = $defaultThread ? $defaultThread->get('id') : 'null';
+
         $ecConfig = '
             easyComm.config.rating_visual_editor = ' . $modx->getOption('ec_rating_visual_editor', null, true ) . ';
             easyComm.config.thread_fields = ' . json_encode($easyComm->getThreadFields()) . ';
@@ -73,6 +76,8 @@ switch ($modx->event->name) {
             easyComm.config.message_grid_fields = ' . json_encode($easyComm->getMessageGridFields()) . ';
             easyComm.config.message_window_layout = ' . $easyComm->getMessageWindowLayout() . ';
             easyComm.config.default_reply_author = "' . $defaultReplyAuthor . '";
+            easyComm.config.default_resource = ' . $resource->get('id') . ';
+            easyComm.config.default_thread = ' . $defaultThread . ';
         ';
 
         if ($modx->getCount('modPlugin', array('name' => 'AjaxManager', 'disabled' => false))) {

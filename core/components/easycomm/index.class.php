@@ -36,6 +36,8 @@ abstract class easyCommMainController extends modExtraManagerController {
 			easyComm.config.message_grid_fields = ' . json_encode($this->easyComm->getMessageGridFields()) . ';
 			easyComm.config.message_window_layout = ' . $this->easyComm->getMessageWindowLayout() . ';
 			easyComm.config.default_reply_author = "' . $defaultReplyAuthor . '";
+			easyComm.config.default_resource = null;
+			easyComm.config.default_thread = null;
 		</script>
 		');
 
