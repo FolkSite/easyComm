@@ -103,7 +103,8 @@ Ext.extend(easyComm.grid.Messages, MODx.grid.Grid, {
         w.setValues({
             published: true,
             reply_author: easyComm.config.default_reply_author,
-            thread: easyComm.config.default_thread
+            thread: easyComm.config.default_thread,
+            rating: easyComm.config.default_rating
         });
         w.show(e.target);
     },
